@@ -110,7 +110,7 @@ export const Login = () => {
         <Grid item xs={12} className={classes.developMessage}>
           <Box mt={5}>
             <Typography variant="body2" color="textSecondary" align="center">
-              Developed by Deakin Launchpad Aletest
+              Developed by Deakin Launchpad Test
         </Typography>
           </Box>
         </Grid>
