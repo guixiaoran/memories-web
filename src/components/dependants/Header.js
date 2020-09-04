@@ -1,138 +1,65 @@
-import React, { useState, useContext } from 'react';
-import clsx from 'clsx';
-import { AppBar, Toolbar, Typography, makeStyles, Drawer, Divider, IconButton, useMediaQuery } from '@material-ui/core';
-import { LayoutContext } from 'contexts';
-import { SideMenuItems } from './SideMenuItems';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import React, { useContext } from 'react';
+import { gsap } from "gsap/all";
 
-export const Header = () => {
-  let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
-  const drawerWidth = 240;
-  const useStyles = makeStyles(theme => ({
-    toolbar: {
-      paddingRight: 24, // keep right padding when drawer closed
-    },
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(['width', 'margin'], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    menuButton: {
-      marginRight: 36,
-    },
-    menuButtonHidden: {
-      display: 'none',
-    },
-    toolbarIcon: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: '0 8px',
-      ...theme.mixins.toolbar,
-    },
-    title: {
-      flexGrow: 1,
-    },
-    drawerPaper: {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    drawerPaperClose: {
-      overflowX: 'hidden',
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      width: theme.spacing(7),
-      [theme.breakpoints.up('sm')]: {
-        width: theme.spacing(9),
-      },
-    },
-    container: {
-      paddingTop: theme.spacing(5),
-      paddingBottom: theme.spacing(4),
-      paddingLeft: theme.spacing(6)
-    },
-    paper: {
-      padding: theme.spacing(2),
-      display: 'flex',
-      overflow: 'auto',
-      flexDirection: 'column',
-    },
-    fixedHeight: {
-      height: 240,
-    },
-    button: {
-      margin: theme.spacing(1),
-    }
-  }));
-  const { pageTitle, headerElements, layoutConfiguration } = useContext(LayoutContext);
-  const [open, setOpen] = useState(isItDesktop ? (layoutConfiguration.sideMenu.default === 'open' ? true : false) : false);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  const classes = useStyles();
+import { LayoutContext } from 'contexts';
+import { Link } from "react-router-dom";
+import { Animator } from 'helpers/index';
+
+export const HeaderTop = () => {
+  return <header className="nav-header" style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+    <h1><Link to="/" id="logo">Memories</Link></h1>
+    <div className="burger" onClick={(e) => {
+      if (!e.target.classList.contains("active")) {
+        e.target.classList.add("active")
+        gsap.to(".line1", 0.3, { rotate: "45", y: 5, background: "black" });
+        gsap.to(".line2", 0.3, { rotate: "-45", y: -5, background: "black" });
+        gsap.to(".nav-bar", .75, { clipPath: "circle(4500px at 100% -10%)" })
+        gsap.to("#logo", 1, { color: "black" })
+        document.body.classList.add("hide")
+        document.getElementById("logo").style.display = "none"
+      } else {
+        e.target.classList.remove("active")
+        gsap.to(".line1", 0.3, { rotate: "0", y: 0, background: "white" });
+        gsap.to(".line2", 0.3, { rotate: "0", y: 0, background: "white" });
+        gsap.to(".nav-bar", .75, { clipPath: "circle(50px at 100% -10%)" })
+        gsap.to("#logo", 1, { color: "white" })
+        document.getElementById("logo").style.display = "block"
+        document.body.classList.remove("hide")
+      }
+    }}>
+      <div className="line1"></div>
+      <div className="line2"></div>
+    </div>
+  </header>;
+}
+
+export const HeaderBottom = () => {
+  // let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
+
+  const { layoutConfiguration } = useContext(LayoutContext);
+  const menuItems = layoutConfiguration.menuItems !== undefined ? layoutConfiguration.menuItems : [];
 
   let content = (
-    <>
-      <AppBar elevation={layoutConfiguration.theme !== undefined ? layoutConfiguration.theme.appBarElevation !== undefined ? layoutConfiguration.theme.appBarElevation : 1 : 1} position={layoutConfiguration.sideMenu.permanent ? 'fixed' : 'absolute'} className={layoutConfiguration.sideMenu.permanent ? (isItDesktop ? classes.appBarShift : classes.appBar) : clsx(classes.appBar, open && classes.appBarShift)}
-        color={layoutConfiguration.header.useCustomColor ? null : undefined !== layoutConfiguration.header.color ? layoutConfiguration.header.color : "primaryZ"}
-      >
-        <Toolbar className={classes.toolbar}>
-          {isItDesktop ? layoutConfiguration.sideMenu.permanent ? null : < IconButton
-            edge="start"
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon />
-          </IconButton> : null}
-          {
-            headerElements !== null ? headerElements :
-              <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-                {pageTitle}
-              </Typography>
-          }
-        </Toolbar>
-      </AppBar>
-      {
-        isItDesktop ? <Drawer
-          variant="permanent"
-          classes={{
-            paper: layoutConfiguration.sideMenu.permanent ? classes.drawerPaper : clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
-          }}
-          open={layoutConfiguration.sideMenu.permanent ? true : open}
-        >
-          <div className={classes.toolbarIcon}>
-            {layoutConfiguration.sideMenu.permanent ? null : <IconButton onClick={handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>}
-          </div>
-          <Divider />
-          <SideMenuItems />
-        </Drawer> : null
-      }
-    </ >
+    <nav className="nav-bar" id="nav-bar" onClick={(e) => {
+      Animator.navToggle2(e)
+    }}>
+      <ul className="nav-links">
+        {
+          menuItems.map((value, i) => {
+            return <Link to={value.controller} className="link-views video-stories-link">
+              <h3>{value.name}</h3>
+            </Link>;
+          })
+        }
+      </ul>
+      <div className="contact">
+        <h2>Stay in touch</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, voluptatem aperiam animi laboriosam
+        impedit culpa cupiditate odit optio esse laborum provident velit consectetur, blanditiis voluptates
+            perferendis et vel dolore nobis!</p>
+      </div>
+    </nav>
+
   );
   return content;
 };

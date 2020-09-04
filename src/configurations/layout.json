@@ -2,30 +2,57 @@
   "landingPage": "/home",
   "menuItems": [
     {
-      "name": "HOME",
+      "name": "Documentary",
       "type": "button",
       "icon": "home",
-      "controller": "/home",
+      "controller": "/documentary",
       "customTitle": "Welcome to Boiler Plate",
       "isFavourite": true,
       "subMenuItems": []
     },
     {
-      "name": "Example",
+      "name": "Archive",
       "type": "button",
-      "icon": "code",
-      "controller": "/examples",
-      "customTitle": "Example Code File",
+      "icon": "home",
+      "controller": "/archive",
+      "customTitle": "Welcome to Boiler Plate",
       "isFavourite": true,
       "subMenuItems": []
     },
     {
-      "name": "Logout",
-      "type": "logout",
-      "icon": "logout",
-      "controller": "",
+      "name": "Video Stories",
+      "type": "button",
+      "icon": "home",
+      "controller": "/videostories",
       "customTitle": "Welcome to Boiler Plate",
-      "isFavourite": false,
+      "isFavourite": true,
+      "subMenuItems": []
+    },
+    {
+      "name": "Memory Walks",
+      "type": "button",
+      "icon": "home",
+      "controller": "/memorywalks",
+      "customTitle": "Welcome to Boiler Plate",
+      "isFavourite": true,
+      "subMenuItems": []
+    },
+    {
+      "name": "About",
+      "type": "button",
+      "icon": "home",
+      "controller": "/about",
+      "customTitle": "Welcome to Boiler Plate",
+      "isFavourite": true,
+      "subMenuItems": []
+    },
+    {
+      "name": "Contacts",
+      "type": "button",
+      "icon": "home",
+      "controller": "/contacts",
+      "customTitle": "Welcome to Boiler Plate",
+      "isFavourite": true,
       "subMenuItems": []
     }
   ],

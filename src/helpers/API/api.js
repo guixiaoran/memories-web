@@ -70,6 +70,22 @@ class API {
     }).then(response => performCallback(callback, AccessToken)).catch(error => errorHelper(error));
   }
 
+
+  getVideoStories(callback) {
+    axiosInstance.get("videoStories/getVideoStories").then((response) => {
+      performCallback(callback, response.data.data.stories);
+    }).catch(error => errorHelper(error))
+  }
+
+  getArchieves(callback) {
+    axiosInstance.post("memory/getMemories", {
+      "numberOfRecords": 0,
+      "currentPageNumber": 0
+    }).then((response) => {
+      performCallback(callback, response.data.data.data);
+    }).catch(error => errorHelper(error));
+  }
+
   logoutUser = (callback) => {
     logout();
     performCallback(callback);

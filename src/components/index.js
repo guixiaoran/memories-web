@@ -2,7 +2,7 @@ import EnhancedNotification, { notify } from './common/Notification';
 import { LoadingScreen } from './common/Loading';
 import { DevModeSwitch } from './common/devModeSwitch';
 import { EnhancedIcon } from './common/EnhancedIcon';
-import { Header } from './dependants/Header';
+import { HeaderTop, HeaderBottom } from './dependants/Header';
 import { SideMenuItems } from './dependants/SideMenuItems';
 import { EnhancedModal } from './common/EnhancedModal';
 import { EnhancedTable } from './common/EnhancedTable';
@@ -19,7 +19,7 @@ export {
   EnhancedIcon,
   LoadingScreen,
   DevModeSwitch,
-  Header,
+  HeaderTop, HeaderBottom,
   SideMenuItems,
   EnhancedModal,
   EnhancedTable,
