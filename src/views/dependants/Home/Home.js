@@ -10,8 +10,14 @@ export const Home = () => {
     return Animator.destroy();
   }, []);
   return (<><section className="primary">
-    <div className="parallax hero">
-      <video autoPlay muted loop id="myVideo">
+    <div className="parallax hero" style={{
+      overflow: "hidden"
+    }}>
+      <video autoPlay muted loop id="myVideo" style={{
+        height: 'auto',
+        minHeight: window.innerHeight,
+        maxWidth: '100%'
+      }}>
         <source src="https://s3.au-syd.cloud-object-storage.appdomain.cloud/ipan-v2-bucket/video/video/original/Video_DdF4JPKxC1rZ.mp4" type="video/mp4" />
           Your browser does not support HTML5 video.
         </video>

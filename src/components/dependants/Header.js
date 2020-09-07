@@ -46,7 +46,7 @@ export const HeaderBottom = () => {
       <ul className="nav-links">
         {
           menuItems.map((value, i) => {
-            return <Link to={value.controller} className="link-views video-stories-link">
+            return <Link key={`link${i}`} to={value.controller} className="link-views video-stories-link">
               <h3>{value.name}</h3>
             </Link>;
           })

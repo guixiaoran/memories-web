@@ -12,7 +12,7 @@
 
 
 body {
-  background: #17181a ;
+  background: #17181a !important;
   font-family: "Montserrat", sans-serif;
   overflow-x: hidden;
   overscroll-behavior: none;
@@ -28,6 +28,7 @@ body {
   overscroll-behavior: none;
   display: flex;
   justify-content: center;
+  min-width: 100%;
 }
 
 .body-archive {
@@ -188,10 +189,13 @@ pointer-events: none;
 }
 
 .slide {
+  @media screen  and (min-width: 1440px) {
+    min-height: 100vh;
+    width: 80%;
+
+  }
   position: relative;
-  min-height: 100vh;
   margin: 0 auto 0 auto;
-  width: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -361,7 +365,6 @@ text-align: left;
   height: 150%;
   background: #17181a;
   left: 0;
-  top: -15%;
 }
 
 /* .cursor {
@@ -1089,7 +1092,7 @@ main {
   /* height: 100vh; */
 }
 .slide {
-    margin-top: 15vh;
+    margin-top: 10vh;
     padding: 7vw;
 }
 .hero {

@@ -130,6 +130,25 @@ class Animator {
         });
     }
 
+    enter() {
+        window.scrollTo(0, 0);
+        //An Animation
+        const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
+        tl.fromTo(
+            ".swipe",
+            .5,
+            { x: "0%" },
+
+            { x: "100%", stagger: 0.2 }
+        );
+        tl.fromTo(
+            ".nav-header",
+            1,
+            { y: "-100%" },
+            { y: "0%", ease: "power2.inOut" },
+            "-=1.5"
+        );
+    }
 
     init() {
         gsap.registerPlugin(TweenMax);

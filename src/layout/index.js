@@ -4,13 +4,13 @@ import { HeaderTop, HeaderBottom } from 'components';
 
 
 export const Layout = (props) => {
-  let content = (<>
+  let content = (<div >
     <HeaderTop />
     <main >
       {props.children}
     </main>
     <HeaderBottom />
-  </>);
+  </div>);
   return content;
 };
 
