@@ -8,31 +8,37 @@ import Plyr from 'plyr';
 
 
 const VideoStory = (props) => {
+    const [player, setPlayer] = useState();
 
     useEffect(() => {
-        const player = new Plyr(document.getElementById(props.video._id));
-        let sources = [];
-        props.video.videos.forEach((video) => {
-            sources.push({
-                src: video.link,
-                type: 'video/mp4',
-                size: video.width,
+        if (player === undefined) setPlayer(new Plyr(document.getElementById(props.video._id)));
+        else {
+            let sources = [];
+            props.video.videos.forEach((video) => {
+                sources.push({
+                    src: video.link,
+                    type: 'video/mp4',
+                    size: video.width,
+                });
             });
-        });
 
-        player.source = {
-            type: "video",
-            title: props.video.title,
-            sources,
-            poster: props.video.thumbnail
-        };
-        if (player !== undefined) {
-            if (!props.isVisible) player.pause();
+            player.source = {
+                type: "video",
+                title: props.video.title,
+                sources,
+                poster: props.video.thumbnail
+            };
         }
         return () => {
-            player.destroy();
+            if (player !== undefined)
+                player.destroy();
         }
-    }, [props]);
+    }, [props.video, player]);
+    useEffect(() => {
+        if (props.isVisible === false)
+            if (player !== undefined)
+                player.pause()
+    }, [props.isVisible, player]);
     return (
         <section className="slide">
             <div className="hero-img">
@@ -53,18 +59,20 @@ export const VideoStories = () => {
 
         Animator.enter();
         Animator.init();
-        Animator.animateSlides({ playVideoAutomatically: true, videoPlayerClassName: "video" });
+        Animator.animateSlides("videoPlayer");
 
         return Animator.destroy();
     }, []);
     return <div style={{ width: "100%" }}>
         {videoStories.map((video, index) => {
-            return <section style={index === videoStories.length - 1 && !desktop ? {
+            return <section key={`videoStory${index}`} style={index === videoStories.length - 1 && !desktop ? {
                 paddingBottom: "20vh"
             } : {}} className="slide">
                 <div className="hero-img">
-                    <TrackVisibility>
-                        <VideoStory video={video} />
+                    <TrackVisibility partialVisibility={!desktop} >
+                        {
+                            ({ isVisible }) => <VideoStory isVisible={isVisible} video={video} className="videoPlayer" />
+                        }
                     </TrackVisibility>
                     <div className="reveal-img"></div>
                 </div >

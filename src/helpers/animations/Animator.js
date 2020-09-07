@@ -75,12 +75,8 @@ class Animator {
         }
     }
 
-    animateSlides({ playVideoAutomatically = true, videoPlayerClassName = "video1" }) {
+    animateSlides(videoPlayerClassName) {
         //Init Controller
-        const video = document.querySelectorAll("video")
-
-        if (playVideoAutomatically)
-            video.forEach(item => item.play())
         this.controller = new ScrollMagic.Controller();
         const sliders = document.querySelectorAll(".slide");
         //Loop over each sllide
@@ -117,14 +113,7 @@ class Animator {
                 triggerElement: slide,
                 duration: "100%",
                 triggerHook: 0
-            })
-                // .addIndicators({
-                //   colorStart: "white",
-                //   colorTrigger: "white",
-                //   name: "page",
-                //   indent: 200
-                // })
-                .setPin(slide, { pushFollowers: false })
+            }).setPin(slide, { pushFollowers: false })
                 .setTween(pageTl)
                 .addTo(this.controller);
         });
