@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Animator } from 'helpers/index';
 
 export const HeaderTop = () => {
-  return <header className="nav-header" style={{ paddingLeft: "10px", paddingRight: "10px" }}>
+  return <header className="nav-header" style={{ paddingLeft: "5vw", paddingRight: "5vw" }}>
     <h1><Link to="/" id="logo">Memories</Link></h1>
     <div className="burger" onClick={(e) => {
       if (!e.target.classList.contains("active")) {
@@ -39,7 +39,15 @@ export const HeaderBottom = () => {
   const { layoutConfiguration } = useContext(LayoutContext);
   const menuItems = layoutConfiguration.menuItems !== undefined ? layoutConfiguration.menuItems : [];
 
-  let content = (
+  const renderSwipes = () => {
+    let swipes = [];
+    for (var i = 0; i < 3; i++) {
+      swipes.push(<div key={`swiper${i}`} className={`swipe swipe${i}`} />);
+    }
+    return swipes.map(node => node);
+  }
+
+  let content = (<>
     <nav className="nav-bar" id="nav-bar" onClick={(e) => {
       Animator.navToggle2(e)
     }}>
@@ -59,7 +67,9 @@ export const HeaderBottom = () => {
             perferendis et vel dolore nobis!</p>
       </div>
     </nav>
-
+    {renderSwipes()}
+    <div className="cursor" />
+  </>
   );
   return content;
 };

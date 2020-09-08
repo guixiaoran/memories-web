@@ -51,8 +51,10 @@ const openMedia = (data) => {
     tileOpened.style.pointerEvents = "all"
 }
 
+let elements = [];
+
+
 class ArchiveAnimations {
-    elements = [];
     objects = [];
     targets = { all: [], video: [], helix: [], grid: [] };
     pageX;
@@ -113,64 +115,6 @@ class ArchiveAnimations {
         renderer.render(scene, camera);
     }
 
-
-
-    drag = function (e) {
-        e.preventDefault();
-        this.pageX = e.pageX
-        this.pageY = e.pageY
-        var deltaDrag = this.dragMove - this.dragStart;
-        if (e.type === "touchstart") {
-            this.deltaX = this.dragStart - e.touches[0].pageX;
-
-            const layer = document.querySelector(".layer-super")
-            //*tryin to understand if it's a click or drag here
-            if (this.deltaX < 30 && this.deltaX > -30) {
-                let divToBeClicked = document.elementFromPoint(this.pageX, this.pageY)
-                layer.style.display = "none"
-                if (divToBeClicked.className === "burger active" && !this.burger) {
-                    divToBeClicked.click()
-                }
-                if (divToBeClicked.className !== "burger active" && this.burger) {
-                    this.burger = !this.burger
-                    divToBeClicked.click()
-                }
-                return
-            } else {
-                layer.style.display = "block"
-            }
-            this.dragStart = e.touches[0].pageX;
-        } else if (e.type === "touchmove") {
-            this.dragMove = e.touches[0].pageX;
-        }
-        var vector = new THREE.Vector3();
-        cameraRailPosition += deltaDrag;
-        var factor = 1 / 5000
-        if (cameraRailPosition < 0) {
-            cameraRailPosition = 0
-        }
-        if (cameraRailPosition > (this.tileLength - 1) / factor) {
-            cameraRailPosition = (this.tileLength - 1) / factor
-        }
-        var [y, theta] = this.calcRail(cameraRailPosition, speedX * factor, speedY * factor)
-        camera.position.setFromCylindricalCoords(cameraRadius, theta, y);
-        vector.x = 0;
-        vector.y = camera.position.y;
-        vector.z = 0;
-        camera.lookAt(vector);
-        controls.target = vector
-
-        var skew = Math.max(0, Math.min(20, e.deltaY))
-
-        for (var i = 0; i < this.elements.length; i++) {
-            if (this.elements[i].style.transform.includes("skewY")) {
-                this.elements[i].style.transform = this.elements[i].style.transform.replace(/skewY\([0-9]+deg\)/, `skewY(${skew}deg) `)
-            } else {
-                this.elements[i].style.transform = `${this.elements[i].style.transform} skewY(${skew}deg)`
-            }
-        }
-        controls.update();
-    }
 
     onWindowResize() {
         if (renderer === undefined) {
@@ -236,6 +180,7 @@ class ArchiveAnimations {
 
     async init(archieves) {
         this.tileLength = archieves.length;
+
         for (var i = 0; i < archieves.length; i++) {
 
             /* Create and Open the modal view */
@@ -288,7 +233,7 @@ class ArchiveAnimations {
             objectCSS3DObject.position.y = Math.random() * 4000 - 2000;
             objectCSS3DObject.position.z = Math.random() * 4000 - 2000;
             scene.add(objectCSS3DObject);
-            this.elements.push(element);
+            elements.push(element);
             this.objects.push(objectCSS3DObject);
             var vector = new THREE.Vector3();
             //---initial helix shape
@@ -349,6 +294,67 @@ class ArchiveAnimations {
             controls.target = vector
             controls.update();
         }
+        const drag = function (e) {
+            e.preventDefault();
+            this.pageX = e.pageX
+            this.pageY = e.pageY
+            var deltaDrag = this.dragMove - this.dragStart;
+            if (e.type === "touchstart") {
+                this.deltaX = this.dragStart - e.touches[0].pageX;
+
+                const layer = document.querySelector(".layer-super")
+                //*tryin to understand if it's a click or drag here
+                if (this.deltaX < 30 && this.deltaX > -30) {
+                    let divToBeClicked = document.elementFromPoint(this.pageX, this.pageY)
+                    layer.style.display = "none"
+                    if (divToBeClicked.className === "burger active" && !this.burger) {
+                        divToBeClicked.click()
+                    }
+                    if (divToBeClicked.className !== "burger active" && this.burger) {
+                        this.burger = !this.burger
+                        divToBeClicked.click()
+                    }
+                    return
+                } else {
+                    layer.style.display = "block"
+                }
+                this.dragStart = e.touches[0].pageX;
+            } else if (e.type === "touchmove") {
+                this.dragMove = e.touches[0].pageX;
+            }
+            var vector = new THREE.Vector3();
+            cameraRailPosition += deltaDrag;
+            var factor = 1 / 5000
+            if (cameraRailPosition < 0) {
+                cameraRailPosition = 0
+            }
+            if (cameraRailPosition > (this.tileLength - 1) / factor) {
+                cameraRailPosition = (this.tileLength - 1) / factor
+            }
+            if (this.calcRail === undefined) this.calcRail = (i, speedX, speedY) => {
+                var y = - (i * speedY);
+                var theta = i * speedX + Math.PI;
+                return [y, theta]
+            }
+            var [y, theta] = this.calcRail(cameraRailPosition, speedX * factor, speedY * factor)
+            camera.position.setFromCylindricalCoords(cameraRadius, theta, y);
+            vector.x = 0;
+            vector.y = camera.position.y;
+            vector.z = 0;
+            camera.lookAt(vector);
+            controls.target = vector
+
+            var skew = Math.max(0, Math.min(20, e.deltaY))
+
+            for (var i = 0; i < elements.length; i++) {
+                if (elements[i].style.transform.includes("skewY")) {
+                    elements[i].style.transform = elements[i].style.transform.replace(/skewY\([0-9]+deg\)/, `skewY(${skew}deg) `)
+                } else {
+                    elements[i].style.transform = `${elements[i].style.transform} skewY(${skew}deg)`
+                }
+            }
+            controls.update();
+        }
 
 
         console.log("rotatefunc", this.rotate)
@@ -360,13 +366,16 @@ class ArchiveAnimations {
         evt.deltaY = +1;
         window.dispatchEvent(evt);
 
-        layer.addEventListener("touchstart", this.drag, { passive: false })
-        layer.addEventListener("touchmove", this.drag, { passive: false })
-        layer.addEventListener("touchend", this.drag, { passive: false })
+        layer.addEventListener("touchstart", drag, { passive: false })
+        layer.addEventListener("touchmove", drag, { passive: false })
+        layer.addEventListener("touchend", drag, { passive: false })
         controls.update();
 
         const destroy = () => {
-            window.removeEventListener("wheel", rotate, { passive: false })
+            window.removeEventListener("wheel", rotate, { passive: false });
+            layer.removeEventListener("touchstart", drag, { passive: false })
+            layer.removeEventListener("touchmove", drag, { passive: false })
+            layer.removeEventListener("touchend", drag, { passive: false })
         }
         return destroy
     }

@@ -189,12 +189,13 @@ pointer-events: none;
 }
 
 .slide {
-  @media screen  and (min-width: 1440px) {
-    min-height: 100vh;
+  @media screen  and (min-width: 1024px) {
+    min-height: 50vh;
+    margin-bottom: 10vh; 
+    margin-top: 10vh; 
     width: 80%;
-
   }
-  position: relative;
+
   margin: 0 auto 0 auto;
   display: flex;
   justify-content: space-between;
@@ -202,6 +203,7 @@ pointer-events: none;
   color: white;
   background: #17181a ;
 }
+
 
 .hero {
   width: 100%;

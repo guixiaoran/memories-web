@@ -5,18 +5,24 @@ export const Home = () => {
   useEffect(() => {
     let body = document.querySelector("body");
     body.removeAttribute("class", "body-archive");
+    // let homeVideo = document.getElementById("homeVideo");
+    // homeVideo.play();
     Animator.init();
-    // window.removeEventListener("wheel", rotate, { passive: false })
-    return Animator.destroy();
+    return () => {
+      document.querySelector("body").removeAttribute("class");
+
+      Animator.destroy();
+    }
   }, []);
   return (<><section className="primary">
     <div className="parallax hero" style={{
       overflow: "hidden"
     }}>
-      <video autoPlay muted loop id="myVideo" style={{
+      <video loop playsInline id="homeVideo" autoPlay style={{
         height: 'auto',
         minHeight: window.innerHeight,
-        maxWidth: '100%'
+        maxWidth: '100%',
+        objectFit: "cover"
       }}>
         <source src="https://s3.au-syd.cloud-object-storage.appdomain.cloud/ipan-v2-bucket/video/video/original/Video_DdF4JPKxC1rZ.mp4" type="video/mp4" />
           Your browser does not support HTML5 video.
@@ -28,7 +34,7 @@ export const Home = () => {
     </div>
   </section>
     <section className="landing-desc ">
-      <div className="text-desc" parallax1>
+      <div className="text-desc" parallax1={"parallax1"}>
         <h3 className="text-split">Memories That Make Us is a project created with the collaboration of Co.As.It., Deakin University and Deakin Launchpad</h3>
       </div>
     </section>

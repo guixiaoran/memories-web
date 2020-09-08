@@ -9,9 +9,13 @@ import Plyr from 'plyr';
 
 const VideoStory = (props) => {
     const [player, setPlayer] = useState();
-
     useEffect(() => {
-        if (player === undefined) setPlayer(new Plyr(document.getElementById(props.video._id)));
+        if (player === undefined) setPlayer(new Plyr(document.getElementById(props.video._id),
+            {
+                playsinline: true,
+                clickToPlay: false,
+                controls: ["play", "progress", "fullscreen", "settings"],
+            }));
         else {
             let sources = [];
             props.video.videos.forEach((video) => {
@@ -21,13 +25,13 @@ const VideoStory = (props) => {
                     size: video.width,
                 });
             });
-
             player.source = {
                 type: "video",
                 title: props.video.title,
                 sources,
                 poster: props.video.thumbnail
             };
+
         }
         return () => {
             if (player !== undefined)
@@ -35,14 +39,15 @@ const VideoStory = (props) => {
         }
     }, [props.video, player]);
     useEffect(() => {
-        if (props.isVisible === false)
-            if (player !== undefined)
-                player.pause()
+        if (player !== undefined)
+            if (props.isVisible === false)
+                player.pause();
+
     }, [props.isVisible, player]);
     return (
         <section className="slide">
             <div className="hero-img">
-                <video id={props.video._id} />
+                <video playsInline id={props.video._id} />
             </div>
         </section >
     );
@@ -50,18 +55,16 @@ const VideoStory = (props) => {
 
 export const VideoStories = () => {
     const [videoStories, setVideoStories] = useState([]);
-    const desktop = useMediaQuery('(min-width:1440px)');
+    const desktop = useMediaQuery('(min-width:1024px)');
 
     useEffect(() => {
         API.getVideoStories((data) => {
             setVideoStories(data);
+            Animator.init();
         });
-
-        Animator.enter();
-        Animator.init();
-        Animator.animateSlides("videoPlayer");
-
-        return Animator.destroy();
+        return () => {
+            Animator.destroy();
+        }
     }, []);
     return <div style={{ width: "100%" }}>
         {videoStories.map((video, index) => {
@@ -69,7 +72,7 @@ export const VideoStories = () => {
                 paddingBottom: "20vh"
             } : {}} className="slide">
                 <div className="hero-img">
-                    <TrackVisibility partialVisibility={!desktop} >
+                    <TrackVisibility partialVisibility >
                         {
                             ({ isVisible }) => <VideoStory isVisible={isVisible} video={video} className="videoPlayer" />
                         }

@@ -77,6 +77,12 @@ class API {
     }).catch(error => errorHelper(error))
   }
 
+  getMemoryWalks(callback) {
+    axiosInstance.get("memoryWalk/getAllMemoryWalks").then((response) => {
+      performCallback(callback, response.data.data);
+    }).catch(error => errorHelper(error))
+  }
+
   getArchieves(callback) {
     axiosInstance.post("memory/getMemories", {
       "numberOfRecords": 0,

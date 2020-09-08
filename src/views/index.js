@@ -10,6 +10,8 @@ import { Example } from './dependants/Example/Example';
 import { Documentary } from "./dependants/Documentary/Documentary";
 import { VideoStories } from "./dependants/VideoStories/VideoStories";
 import { Archive } from "./dependants/archive/archive";
+import { MemoryWalks } from "./dependants/MemoryWalks/MemoryWalks";
+import { MemoryWalkDetailed } from "./dependants/MemoryWalkDetailed/MemoryWalkDetailed";
 export {
   Example,
   Login,
@@ -19,5 +21,7 @@ export {
   FourOFour,
   Documentary,
   VideoStories,
-  Archive
+  Archive,
+  MemoryWalks,
+  MemoryWalkDetailed
 };
