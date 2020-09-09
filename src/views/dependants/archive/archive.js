@@ -1,16 +1,129 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { makeStyles, GridList, GridListTile, GridListTileBar, Typography } from "@material-ui/core"
 import { Animator } from "helpers";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 import { API, ArchiveAnimations } from 'helpers/index';
-// import { launchArchive } from '../../../helpers/animations/archive_old';
 import moment from "moment";
+import { LoadingScreen, Zoom, Image, MediaPlayer } from 'components/index';
+
+const galaryStyles = makeStyles(() => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+    },
+    gridList: {
+        width: 500,
+        height: 450,
+        // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+        transform: 'translateZ(0)',
+        "@media screen and (max-width: 1024px)": {
+            '& .plyr--video': {
+                height: "170px !important",
+                width: "50vw"
+            },
+            '& .plyr': {
+                height: '170px !important',
+                width: "50vw"
+            },
+            '& .plyr--audio': {
+                transform: "translate(0px, 70px)"
+            },
+            '& video': {
+                width: "50vw"
+            },
+            "& .plyr__controls": {
+                width: "50vw"
+            },
+            '& audio': {
+                width: "80%"
+            },
+        }
+    },
+    titleBar: {
+        background:
+            'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+            'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+    },
+    icon: {
+        color: 'white',
+    },
+}));
+
+
+
+
+const MobileGallery = (props) => {
+    const classes = galaryStyles();
+    const [tileData, setTileData] = useState();
+    useEffect(() => {
+        if (props.items) {
+            setTileData(props.items);
+        }
+    }, [props.items]);
+
+    const renderItem = (item) => {
+        switch (item.type) {
+            case "audio": return (
+                <GridListTile key={item.url} cols={1} rows={1} style={{
+                    minHeight: "200px", background:
+                        'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+                        'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)'
+                }}>
+                    <MediaPlayer url={item.url} type="audio" id={Math.random()} title={item.title} />
+                </GridListTile>
+            );
+            case "video": return (
+                <GridListTile key={item.url} cols={1} rows={1} style={{
+                    height: "200px", background:
+                        'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+                        'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+                }}>
+                    <Typography style={{ height: "30px", color: "white", paddingLeft: "10px" }}>{item.title}</Typography>
+                    <MediaPlayer url={item.url} type="video" id={Math.random()} title={item.title} />
+                </GridListTile >
+            );
+            default: return (
+                <GridListTile key={item.url} cols={1} rows={1} style={{
+                    minHeight: "200px", background:
+                        'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+                        'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)'
+                }}>
+                    <Zoom>
+                        <GridListTileBar
+                            title={item.title}
+                            titlePosition="top"
+                            actionPosition="left"
+                            className={classes.titleBar}
+                        />
+                        <Image src={item.url} alt={item.title} />
+                    </Zoom>
+                </GridListTile>
+            );
+        }
+    }
+
+    if (tileData === undefined) return <LoadingScreen />
+    return <div className={classes.root}>
+        <GridList cellHeight={200} spacing={0} className={classes.gridList}>
+            {tileData.map((tile) => (
+                renderItem(tile)
+            ))}
+        </GridList>
+    </div >
+}
 
 export const Archive = () => {
     const [archives, setArchives] = useState();
     const [filteredArchives, setFilteredArchives] = useState();
+    const desktop = useMediaQuery('(min-width:1024px)');
+
     useEffect(() => {
         Animator.init();
         let data = [];
-        document.querySelector("body").setAttribute("class", "body-archive");
+        if (desktop) document.querySelector("body").setAttribute("class", "body-archive");
         (() => {
             API.getArchieves((response) => {
                 response.sort((a, b) => moment(a.date).diff(b.date)).forEach(item => {
@@ -31,30 +144,31 @@ export const Archive = () => {
             });
         })()
         return () => {
-            document.querySelector("body").removeAttribute("class");
+            if (desktop) document.querySelector("body").removeAttribute("class");
             Animator.destroy();
         }
 
-    }, []);
+    }, [desktop]);
 
     useEffect(() => {
         let destroy;
         if (filteredArchives !== undefined) {
-            (async () => {
-                try {
-                    await ArchiveAnimations.animate();
-                    destroy = await ArchiveAnimations.performFilteration(destroy, filteredArchives);
-                    Animator.detailAnimation();
-                    ArchiveAnimations.addEventHandlers();
-                } catch (e) {
-                    console.log(e);
-                }
-            })()
+            if (desktop)
+                (async () => {
+                    try {
+                        await ArchiveAnimations.animate();
+                        destroy = await ArchiveAnimations.performFilteration(destroy, filteredArchives);
+                        Animator.detailAnimation();
+                        ArchiveAnimations.addEventHandlers();
+                    } catch (e) {
+                        console.log(e);
+                    }
+                })()
         } return () => {
             if (destroy instanceof Function)
-                destroy();
+                if (desktop) destroy();
         }
-    }, [filteredArchives]);
+    }, [filteredArchives, desktop]);
 
     const filterArchives = useCallback((variant) => {
         switch (variant) {
@@ -77,33 +191,32 @@ export const Archive = () => {
 
 
     return <>
-        <div className="main-archive">
-            <div id="container" />
+        <div className="main-archive" style={desktop ? null : { paddingTop: "20vh" }}>
+            {
+                desktop ? <div id="container" /> : <MobileGallery items={filteredArchives} />
+            }
         </div>
-        <div class="layer-super"></div>
-        <div class="open-tile">
-            <div class="button-media">
-                <button class="close-media-button">X</button>
+        {desktop && <div class="layer-super"></div>}
+        <div className="open-tile">
+            <div className="button-media">
+                <button className="close-media-button">X</button>
             </div>
-            <div class="media-container">
-                <div class="media-content">
-                    <div class="media-title">
+            <div className="media-container">
+                <div className="media-content">
+                    <div className="media-title">
                         <h1>TITLE</h1>
                     </div>
-                    <div class="sub-card">
-                        <div class="media-file">
-
-                        </div>
-
+                    <div className="sub-card">
+                        <div className="media-file" />
                     </div>
                 </div>
-                <div class="media-description-container">
-                    <div class="media-date">12/03/2019</div>
-                    <div class="media-origin">Ladispoli</div>
+                <div className="media-description-container">
+                    <div className="media-date">12/03/2019</div>
+                    <div className="media-origin">Ladispoli</div>
                 </div>
             </div>
         </div>
-        <div class="menu-container">
+        <div className="menu-container">
             <div id="menu">
                 <button id="all" onClick={() => { filterArchives() }}>ALL</button>
                 <button id="images" onClick={() => { filterArchives("image") }}>IMAGES</button>
