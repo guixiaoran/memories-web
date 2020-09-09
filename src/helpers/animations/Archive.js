@@ -4,7 +4,7 @@ import TWEEN from '@tweenjs/tween.js'
 import { CSS3DRenderer, CSS3DObject } from "../renderers/CSS3DRenderer.js"
 import { OrbitControls } from "../controls/OrbitControls.js"
 
-let camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 100);
+let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 100);
 let scene = new THREE.Scene();
 let renderer = new CSS3DRenderer();
 let cameraRailPosition = 0;
@@ -121,7 +121,7 @@ class ArchiveAnimations {
             renderer = new CSS3DRenderer();
         }
         if (camera === undefined) {
-            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 100);
+            camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 100);
         }
         if (scene === undefined)
             scene = new THREE.Scene()
@@ -180,7 +180,7 @@ class ArchiveAnimations {
 
     async init(archieves) {
         this.tileLength = archieves.length;
-
+        document.getElementById('container').innerHTML = "";
         for (var i = 0; i < archieves.length; i++) {
 
             /* Create and Open the modal view */
@@ -372,6 +372,9 @@ class ArchiveAnimations {
         controls.update();
 
         const destroy = () => {
+            while (scene.children.length > 0) {
+                scene.remove(scene.children[0]);
+            }
             window.removeEventListener("wheel", rotate, { passive: false });
             layer.removeEventListener("touchstart", drag, { passive: false })
             layer.removeEventListener("touchmove", drag, { passive: false })
@@ -387,10 +390,9 @@ class ArchiveAnimations {
      * @param {Array} filteredArchieves 
      */
     async performFilteration(destroyFunction, filteredArchieves) {
-        let elem = document.getElementById("container");
-        while (elem.firstChild) await elem.removeChild(elem.lastChild);
-        this.objects = [];
         if (destroyFunction instanceof Function) destroyFunction()
+        document.getElementById("container").innerHTML = "";
+        this.objects = [];
         return this.init(filteredArchieves)
     }
 }
