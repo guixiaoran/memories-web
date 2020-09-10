@@ -56,6 +56,11 @@ const openMedia = (data) => {
 
 let elements = [];
 
+const animateGlobal = () => {
+    requestAnimationFrame(animateGlobal);
+    TWEEN.update();
+
+}
 
 class ArchiveAnimations {
 
@@ -131,12 +136,7 @@ class ArchiveAnimations {
         renderer.render(scene, camera);
     }
 
-    animate() {
-        requestAnimationFrame(() => {
-            TWEEN.update();
-        });
 
-    }
 
 
     addEventHandlers() {
@@ -175,12 +175,8 @@ class ArchiveAnimations {
 
     }
 
-
-    randomiser(value) {
-        let newValue = Math.random() * 4000 - 2000;
-        if (value < -1000) {
-            return newValue;
-        } else return this.randomiser(newValue)
+    animate() {
+        animateGlobal();
     }
 
     async init(archieves) {
@@ -234,23 +230,23 @@ class ArchiveAnimations {
                 video.appendChild(source)
             }
             var objectCSS3DObject = new CSS3DObject(element);
-            objectCSS3DObject.position.x = Math.random() * window.innerHeight - (window.innerHeight / 4);
-            objectCSS3DObject.position.y = Math.random() * window.innerHeight - (window.innerHeight / 4);
-            objectCSS3DObject.position.z = Math.random() * window.innerWidth - (window.innerWidth / 20);
-            console.log(objectCSS3DObject.position)
+            objectCSS3DObject.position.x = Math.random() * 4000 - 2000;
+            objectCSS3DObject.position.y = Math.random() * 4000 - 2000;
+            objectCSS3DObject.position.z = Math.random() * 4000 - 2000;
 
             scene.add(objectCSS3DObject);
             elements.push(element);
             objects.push(objectCSS3DObject);
             var vector = new THREE.Vector3();
             //---initial helix shape
-            var [y, theta] = this.calcRail(i, speedX, speedY)
+            const y = - (i * speedY);
+            const theta = i * speedX + Math.PI;
             var threeObject3dobject = new THREE.Object3D();
             for (var j = 0, l = objects.length; j < l; j++) {
                 threeObject3dobject.position.setFromCylindricalCoords(tilesRadius, theta, y);
                 vector.x = threeObject3dobject.position.x * 2;
                 vector.y = threeObject3dobject.position.y;
-                vector.z = threeObject3dobject.position.z * 1;
+                vector.z = threeObject3dobject.position.z * 2;
                 threeObject3dobject.lookAt(vector);
             }
             targets.all.push(threeObject3dobject);
@@ -272,7 +268,7 @@ class ArchiveAnimations {
         controls.addEventListener('change', () => {
             renderer.render(scene, camera);
         });
-        camera.position.set(110, 120, 2000);
+        camera.position.set(0, 0, 500);
 
         //* drag event rotate the camera as in rotate function
         this.dragStart = 0;
@@ -293,7 +289,8 @@ class ArchiveAnimations {
             if (cameraRailPosition > (archieves.length - 1) / factor) {
                 cameraRailPosition = (archieves.length - 1) / factor
             }
-            var [y, theta] = this.calcRail(cameraRailPosition, speedX * factor, speedY * factor)
+            var y = - (cameraRailPosition * speedY * factor);
+            var theta = cameraRailPosition * (speedX * factor) + Math.PI;
             camera.position.setFromCylindricalCoords(cameraRadius, theta, y);
             vector.x = 0;
             vector.y = camera.position.y;
@@ -303,7 +300,6 @@ class ArchiveAnimations {
             controls.update();
         }
 
-        console.log("rotatefunc", rotate)
         window.addEventListener("wheel", rotate, { passive: false })
 
         //* Trigger scroll and touch tiles to center */
