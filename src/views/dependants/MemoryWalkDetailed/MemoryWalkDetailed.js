@@ -46,7 +46,7 @@ const VideoPlayer = (props) => {
 export const MemoryWalkDetailed = (props) => {
     useEffect(() => {
         Animator.init();
-        Animator.memoryAnimation();
+        // Animator.memoryAnimation();
         return () => {
             Animator.destroy();
         }

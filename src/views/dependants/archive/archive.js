@@ -156,7 +156,7 @@ export const Archive = () => {
             if (desktop)
                 (async () => {
                     try {
-                        await ArchiveAnimations.animate();
+                        ArchiveAnimations.animate();
                         destroy = await ArchiveAnimations.performFilteration(destroy, filteredArchives);
                         Animator.detailAnimation();
                         ArchiveAnimations.addEventHandlers();

@@ -4,12 +4,15 @@ import TWEEN from '@tweenjs/tween.js'
 import { CSS3DRenderer, CSS3DObject } from "../renderers/CSS3DRenderer.js"
 import { OrbitControls } from "../controls/OrbitControls.js"
 
-let camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 100);
+let camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 100);
 let scene = new THREE.Scene();
 let renderer = new CSS3DRenderer();
 let cameraRailPosition = 0;
 let controls = new OrbitControls(camera, renderer.domElement);
 let cameraRadius = 1800;
+let objects = [];
+let targets = { all: [], video: [], helix: [], grid: [] };
+
 const tilesRadius = 1000;
 const tilesSpacing = 1400;
 const speedX = 0.175 * tilesSpacing / tilesRadius;
@@ -55,10 +58,7 @@ let elements = [];
 
 
 class ArchiveAnimations {
-    objects = [];
-    targets = { all: [], video: [], helix: [], grid: [] };
-    pageX;
-    pageY;
+
     tileLength = 0;
 
     constructor() {
@@ -75,27 +75,27 @@ class ArchiveAnimations {
         TWEEN.removeAll();
 
         if (type === "video") {
-            this.objects = targets.video
+            objects = targets.video
         }
-        for (var i = 0; i < this.objects.length; i++) {
+        for (var i = 0; i < objects.length; i++) {
 
-            var object = this.objects[i];
-            var target = this.targets[i];
-            if (object?.position && target?.position)
-                new TWEEN.Tween(object.position)
-                    .to({ x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration)
-                    .easing(TWEEN.Easing.Exponential.InOut)
-                    .start();
-            if (object?.rotation && target?.rotation)
-                new TWEEN.Tween(object.rotation)
-                    .to({ x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration)
-                    .easing(TWEEN.Easing.Exponential.InOut)
-                    .start();
+            var object = objects[i];
+            var target = targets[i];
+            new TWEEN.Tween(object.position)
+                .to({ x: target.position.x, y: target.position.y, z: target.position.z }, Math.random() * duration + duration)
+                .easing(TWEEN.Easing.Exponential.InOut)
+                .start();
+            new TWEEN.Tween(object.rotation)
+                .to({ x: target.rotation.x, y: target.rotation.y, z: target.rotation.z }, Math.random() * duration + duration)
+                .easing(TWEEN.Easing.Exponential.InOut)
+                .start();
         }
 
         new TWEEN.Tween(this)
             .to({}, duration * 2)
-            .onUpdate(this.render)
+            .onUpdate(() => {
+                renderer.render(scene, camera);
+            })
             .start();
     }
 
@@ -121,7 +121,7 @@ class ArchiveAnimations {
             renderer = new CSS3DRenderer();
         }
         if (camera === undefined) {
-            camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 100);
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 100);
         }
         if (scene === undefined)
             scene = new THREE.Scene()
@@ -131,8 +131,8 @@ class ArchiveAnimations {
         renderer.render(scene, camera);
     }
 
-    async animate() {
-        await requestAnimationFrame(() => {
+    animate() {
+        requestAnimationFrame(() => {
             TWEEN.update();
         });
 
@@ -176,7 +176,12 @@ class ArchiveAnimations {
     }
 
 
-
+    randomiser(value) {
+        let newValue = Math.random() * 4000 - 2000;
+        if (value < -1000) {
+            return newValue;
+        } else return this.randomiser(newValue)
+    }
 
     async init(archieves) {
         this.tileLength = archieves.length;
@@ -229,24 +234,26 @@ class ArchiveAnimations {
                 video.appendChild(source)
             }
             var objectCSS3DObject = new CSS3DObject(element);
-            objectCSS3DObject.position.x = Math.random() * 4000 - 2000;
-            objectCSS3DObject.position.y = Math.random() * 4000 - 2000;
-            objectCSS3DObject.position.z = Math.random() * 4000 - 2000;
+            objectCSS3DObject.position.x = Math.random() * window.innerHeight - (window.innerHeight / 4);
+            objectCSS3DObject.position.y = Math.random() * window.innerHeight - (window.innerHeight / 4);
+            objectCSS3DObject.position.z = Math.random() * window.innerWidth - (window.innerWidth / 20);
+            console.log(objectCSS3DObject.position)
+
             scene.add(objectCSS3DObject);
             elements.push(element);
-            this.objects.push(objectCSS3DObject);
+            objects.push(objectCSS3DObject);
             var vector = new THREE.Vector3();
             //---initial helix shape
             var [y, theta] = this.calcRail(i, speedX, speedY)
             var threeObject3dobject = new THREE.Object3D();
-            for (var j = 0, l = this.objects.length; j < l; j++) {
+            for (var j = 0, l = objects.length; j < l; j++) {
                 threeObject3dobject.position.setFromCylindricalCoords(tilesRadius, theta, y);
                 vector.x = threeObject3dobject.position.x * 2;
                 vector.y = threeObject3dobject.position.y;
-                vector.z = threeObject3dobject.position.z * 2;
+                vector.z = threeObject3dobject.position.z * 1;
                 threeObject3dobject.lookAt(vector);
             }
-            this.targets.all.push(threeObject3dobject);
+            targets.all.push(threeObject3dobject);
         }
         //??--------------RENDERS ------------  ------------------------------------//
         this.loadRenderer();
@@ -262,7 +269,9 @@ class ArchiveAnimations {
         controls.maxPolarAngle = Math.PI / 2; // radians
         //lock zoom
         controls.enableZoom = false;
-        controls.addEventListener('change', this.render);
+        controls.addEventListener('change', () => {
+            renderer.render(scene, camera);
+        });
         camera.position.set(110, 120, 2000);
 
         //* drag event rotate the camera as in rotate function
@@ -272,8 +281,7 @@ class ArchiveAnimations {
         this.burger = true;
 
 
-        this.transform(this.targets.all, 2000);
-        const layer = document.querySelector(".layer-super")
+        this.transform(targets.all, 2000);
         const rotate = (e) => {
             e.preventDefault();
             var vector = new THREE.Vector3();
@@ -294,70 +302,8 @@ class ArchiveAnimations {
             controls.target = vector
             controls.update();
         }
-        const drag = function (e) {
-            e.preventDefault();
-            this.pageX = e.pageX
-            this.pageY = e.pageY
-            var deltaDrag = this.dragMove - this.dragStart;
-            if (e.type === "touchstart") {
-                this.deltaX = this.dragStart - e.touches[0].pageX;
 
-                const layer = document.querySelector(".layer-super")
-                //*tryin to understand if it's a click or drag here
-                if (this.deltaX < 30 && this.deltaX > -30) {
-                    let divToBeClicked = document.elementFromPoint(this.pageX, this.pageY)
-                    layer.style.display = "none"
-                    if (divToBeClicked.className === "burger active" && !this.burger) {
-                        divToBeClicked.click()
-                    }
-                    if (divToBeClicked.className !== "burger active" && this.burger) {
-                        this.burger = !this.burger
-                        divToBeClicked.click()
-                    }
-                    return
-                } else {
-                    layer.style.display = "block"
-                }
-                this.dragStart = e.touches[0].pageX;
-            } else if (e.type === "touchmove") {
-                this.dragMove = e.touches[0].pageX;
-            }
-            var vector = new THREE.Vector3();
-            cameraRailPosition += deltaDrag;
-            var factor = 1 / 5000
-            if (cameraRailPosition < 0) {
-                cameraRailPosition = 0
-            }
-            if (cameraRailPosition > (this.tileLength - 1) / factor) {
-                cameraRailPosition = (this.tileLength - 1) / factor
-            }
-            if (this.calcRail === undefined) this.calcRail = (i, speedX, speedY) => {
-                var y = - (i * speedY);
-                var theta = i * speedX + Math.PI;
-                return [y, theta]
-            }
-            var [y, theta] = this.calcRail(cameraRailPosition, speedX * factor, speedY * factor)
-            camera.position.setFromCylindricalCoords(cameraRadius, theta, y);
-            vector.x = 0;
-            vector.y = camera.position.y;
-            vector.z = 0;
-            camera.lookAt(vector);
-            controls.target = vector
-
-            var skew = Math.max(0, Math.min(20, e.deltaY))
-
-            for (var i = 0; i < elements.length; i++) {
-                if (elements[i].style.transform.includes("skewY")) {
-                    elements[i].style.transform = elements[i].style.transform.replace(/skewY\([0-9]+deg\)/, `skewY(${skew}deg) `)
-                } else {
-                    elements[i].style.transform = `${elements[i].style.transform} skewY(${skew}deg)`
-                }
-            }
-            controls.update();
-        }
-
-
-        console.log("rotatefunc", this.rotate)
+        console.log("rotatefunc", rotate)
         window.addEventListener("wheel", rotate, { passive: false })
 
         //* Trigger scroll and touch tiles to center */
@@ -365,10 +311,6 @@ class ArchiveAnimations {
         evt.initEvent('wheel', true, true);
         evt.deltaY = +1;
         window.dispatchEvent(evt);
-
-        layer.addEventListener("touchstart", drag, { passive: false })
-        layer.addEventListener("touchmove", drag, { passive: false })
-        layer.addEventListener("touchend", drag, { passive: false })
         controls.update();
 
         const destroy = () => {
@@ -376,9 +318,6 @@ class ArchiveAnimations {
                 scene.remove(scene.children[0]);
             }
             window.removeEventListener("wheel", rotate, { passive: false });
-            layer.removeEventListener("touchstart", drag, { passive: false })
-            layer.removeEventListener("touchmove", drag, { passive: false })
-            layer.removeEventListener("touchend", drag, { passive: false })
         }
         return destroy
     }
@@ -392,7 +331,7 @@ class ArchiveAnimations {
     async performFilteration(destroyFunction, filteredArchieves) {
         if (destroyFunction instanceof Function) destroyFunction()
         document.getElementById("container").innerHTML = "";
-        this.objects = [];
+        objects = [];
         return this.init(filteredArchieves)
     }
 }
