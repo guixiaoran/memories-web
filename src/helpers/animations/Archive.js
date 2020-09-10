@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js'
+import Plyr from 'plyr';
 
 import { CSS3DRenderer, CSS3DObject } from "../renderers/CSS3DRenderer.js"
 import { OrbitControls } from "../controls/OrbitControls.js"
@@ -12,7 +13,7 @@ let controls = new OrbitControls(camera, renderer.domElement);
 let cameraRadius = 1800;
 let objects = [];
 let targets = { all: [], video: [], helix: [], grid: [] };
-
+let globalPlayerVariable;
 const tilesRadius = 1000;
 const tilesSpacing = 1400;
 const speedX = 0.175 * tilesSpacing / tilesRadius;
@@ -26,19 +27,40 @@ const openMedia = (data) => {
     title.textContent = data.title;
     date.textContent = data.date;
     location.textContent = data.region;
+    let id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     if (data.type === "video") {
         const video = document.createElement('video')
-        video.className = "media-video plyrVideoPlayer plyr__video-embed"
+        video.className = "media-video";
+        video.id = id;
         const controls = document.createAttribute("controls")
+        const playsinline = document.createAttribute("playsinline")
         video.setAttributeNode(controls);
+        video.setAttributeNode(playsinline);
         const source = document.createElement("source")
-        const poster = document.createAttribute("poster")
-        video.setAttributeNode(poster)
-        source.src = `${data.url}#t=100`
+        source.src = `${data.url}`
         video.appendChild(source)
         let mediaContent = document.querySelector(".media-file");
         mediaContent.appendChild(video)
-        // new window.videoPlayer.setup(`.plyrVideoPlayer`)
+        // globalPlayerVariable = new Plyr(video, {
+        //     playsinline: true,
+        //     clickToPlay: false,
+        //     controls: ["play", "progress", "fullscreen", "settings"],
+        // });
+    } else if (data.type === 'audio') {
+        const audio = document.createElement('audio');
+        audio.id = id;
+        const controls = document.createAttribute("playsinline")
+        audio.setAttributeNode(controls);
+        const source = document.createElement("source")
+        source.src = `${data.url}`
+        audio.appendChild(source);
+        let mediaContent = document.querySelector(".media-file");
+        mediaContent.appendChild(audio);
+        globalPlayerVariable = new Plyr(audio, {
+            playsinline: true,
+            clickToPlay: false,
+            controls: ["play", "progress", "fullscreen", "settings"],
+        });
     } else
         if (data.type === "image") {
             const img = document.createElement('img')
@@ -145,7 +167,7 @@ class ArchiveAnimations {
         let tileOpened = document.querySelector(".open-tile");
         buttonCloseMediaModal.addEventListener("click", () => {
             const layer = document.querySelector(".layer-super");
-
+            if (globalPlayerVariable) if (globalPlayerVariable.destroy instanceof Function) globalPlayerVariable.destroy();
             tileOpened.style.opacity = 0;
             tileOpened.style.pointerEvents = "none"
             while (mediaContent.children[0]) mediaContent.removeChild(mediaContent.lastChild);
@@ -153,6 +175,7 @@ class ArchiveAnimations {
         })
         buttonCloseMediaModal.addEventListener("touchstart", () => {
             const layer = document.querySelector(".layer-super")
+            if (globalPlayerVariable) if (globalPlayerVariable.destroy instanceof Function) globalPlayerVariable.destroy();
             layer.style.display = "block"
             tileOpened.style.opacity = 0;
             tileOpened.style.pointerEvents = "none"
@@ -179,6 +202,26 @@ class ArchiveAnimations {
         animateGlobal();
     }
 
+    createExternalDiv(index) {
+        var element = document.createElement('div');
+        element.className = `element item-tile-${index} `;
+        element.style.backgroundColor = 'rgba(0,127,127,' + (Math.random() * 0.5 + 0.25) + ')';
+        return element;
+    }
+
+    createDateComponent(archieves, index) {
+        var date = document.createElement('div');
+        date.className = `date date-${index}`;
+        date.innerHTML = ` ${archieves[index].date}`
+        return date;
+    }
+
+    createContainer(i) {
+        var container = document.createElement('div');
+        container.className = `container container-tile container-tile-${i}`;
+        return container;
+    }
+
     async init(archieves) {
         this.tileLength = archieves.length;
         document.getElementById('container').innerHTML = "";
@@ -187,31 +230,31 @@ class ArchiveAnimations {
             /* Create and Open the modal view */
 
             //??-----------ELEMENTS CREATION ------------------------
-            var element = document.createElement('div');
-            element.className = `element item-tile-${i} `;
-            element.style.backgroundColor = 'rgba(0,127,127,' + (Math.random() * 0.5 + 0.25) + ')';
-            var date = document.createElement('div');
-            date.className = `date date-${i}`;
-            date.innerHTML = ` ${archieves[i].date}`
+            var element = this.createExternalDiv(i);
+            var date = this.createDateComponent(archieves, i);
             element.appendChild(date);
-            var container = document.createElement('div');
-            container.className = `container container-tile container-tile-${i}`;
+            var container = this.createContainer(i);
             element.appendChild(container);
+
             const myData = archieves[i];
+
             element.addEventListener("click", () => openMedia(myData));
-            element.addEventListener("touchstart", () => openMedia(myData))
+            element.addEventListener("touchstart", () => openMedia(myData));
+
             var details = document.createElement('div');
             details.className = 'details';
             details.innerHTML = archieves[i].origin
             container.appendChild(details);
+
+
             var img = document.createElement('img');
-            img.src = archieves[i].type === "audio" ? "./assets/img/audio.svg" : archieves[i].url
+            img.src = archieves[i].type === "audio" ? "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Speaker_Icon.svg/1200px-Speaker_Icon.svg.png" : archieves[i].url
             img.className = archieves[i].type === "audio" ? "image-tile audio-svg" : "image-tile"
             if (archieves[i].type === "image" || archieves[i].type === "audio") {
                 container.appendChild(img)
             }
             var video = document.createElement("video")
-            video.className = "video-tile plyrVideoPlayer plyr__video-embed"
+            video.className = "video-tile"
             var autoplay = document.createAttribute("autoPlay")
             var loop = document.createAttribute("loop")
             var mute = document.createAttribute("mute")
