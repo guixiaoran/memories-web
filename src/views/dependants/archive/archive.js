@@ -30,12 +30,6 @@ const galaryStyles = makeStyles(() => ({
             '& .plyr--audio': {
                 transform: "translate(0px, 70px)"
             },
-            '& video': {
-                width: "50vw"
-            },
-            "& .plyr__controls": {
-                width: "50vw"
-            },
             '& audio': {
                 width: "80%"
             },
