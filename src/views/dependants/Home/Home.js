@@ -1,19 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Animator } from "helpers";
 export const Home = () => {
-
+  const [transationDone, setTransationDone] = useState(false);
   useEffect(() => {
     let body = document.querySelector("body");
     body.removeAttribute("class", "body-archive");
-    // let homeVideo = document.getElementById("homeVideo");
-    // homeVideo.play();
-    Animator.init();
+    (async () => {
+      await Animator.enter();
+      setTransationDone(true);
+      await Animator.init(true);
+
+    })()
+
     return () => {
       document.querySelector("body").removeAttribute("class");
-
       Animator.destroy();
     }
   }, []);
+  if (transationDone === false) return "";
   return (<><section className="primary">
     <div className="parallax hero" style={{
       overflow: "hidden"

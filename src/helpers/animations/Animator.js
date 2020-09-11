@@ -142,7 +142,7 @@ class Animator {
         );
     }
 
-    init() {
+    init(skipEnterTransation) {
         gsap.registerPlugin(TweenMax);
         //init controller
         this.controller = new ScrollMagic.Controller();
@@ -170,6 +170,7 @@ class Animator {
             triggerHook: 0.85,
             reverse: true
         }).setTween(splitWords).addTo(this.controller);
+        if (skipEnterTransation) return;
         this.enter();
     }
 
