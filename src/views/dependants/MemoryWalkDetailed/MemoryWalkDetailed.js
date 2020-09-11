@@ -56,10 +56,13 @@ export const MemoryWalkDetailed = (props) => {
     return (<div style={{ width: "100%" }}>
         <section className={`memory-section`}>
             <div className="memory-container">
-                <div className="memory-img">
+                <div className="memory-img" style={{
+                    margin: "0 auto"
+                }}>
                     <TrackVisibility partialVisibility style={{
                         height: '500px',
-                        maxWidth: '70%%'
+                        maxWidth: '70%',
+                        margin: "0 auto"
                     }} >
                         {
                             ({ isVisible }) => <VideoPlayer isVisible={isVisible} id="video1" url={props.location.params.memory.url} className="videoPlayer" />
@@ -79,8 +82,14 @@ export const MemoryWalkDetailed = (props) => {
         </section>
         <section className={`memory-section memory-${props.location.params.memory.tile} fashion${props.location.params.memory.tile + 1} detail-slide`}>
             <div className="memory-container">
-                <div className="memory-img">
-                    <TrackVisibility partialVisibility >
+                <div className="memory-img" style={{
+                    margin: "0 auto"
+                }}>
+                    <TrackVisibility partialVisibility style={{
+                        height: '500px',
+                        maxWidth: '70%',
+                        margin: "0 auto"
+                    }} >
                         {
                             ({ isVisible }) => <VideoPlayer isVisible={isVisible} id="video2" url={props.location.params.memory.secondUrl} className="videoPlayer" />
                         }
