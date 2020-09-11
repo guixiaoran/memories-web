@@ -68,7 +68,6 @@ export const HeaderBottom = () => {
       </div>
     </nav>
     {renderSwipes()}
-    <div className="cursor" />
   </>
   );
   return content;

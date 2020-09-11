@@ -4,7 +4,6 @@ import SplitText from "react-splittext";
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { TweenMax } from "gsap";
 
-let mouse = document.querySelector(".cursor");
 
 class Animator {
     controller;
@@ -17,23 +16,6 @@ class Animator {
     nav = document.querySelector(".nav-bar");
     root = document.getElementById("root");
 
-    activeCursor(e) {
-        mouse = document.querySelector(".cursor")
-        const item = e.target;
-        if (item.id === "logo" || item.classList.contains("burger")) {
-            mouse.classList.add("nav-active")
-        } else {
-            mouse.classList.remove("nav-active")
-        }
-
-        if (item.classList.contains("explore")) {
-            gsap.to(".title-swipe", .5, { y: "100%" })
-            mouse.classList.add("explore-active")
-        } else {
-            mouse.classList.remove("explore-active")
-            gsap.to(".title-swipe", .5, { y: "0%" })
-        }
-    }
 
     navToggle(e) {
         this.root = document.getElementById("root");

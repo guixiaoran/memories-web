@@ -39,24 +39,28 @@ const VideoPlayer = (props) => {
 
     }, [props.isVisible, player]);
     return <video id={props.id} className="memory-video-single">
-
-        Your browser does not support the video tag.  </video >
+        Your browser does not support the video tag.
+        </video >
 }
 
 export const MemoryWalkDetailed = (props) => {
     useEffect(() => {
         Animator.init();
+
         // Animator.memoryAnimation();
         return () => {
             Animator.destroy();
         }
     }, [props]);
     if (props.location.params === undefined) return <Redirect to="/memorywalks" />;
-    return (<div>
-        <section className={`memory-section memory-${props.location.params.memory.title} fashion${props.location.params.memory.title + 1} detail-slide`}>
+    return (<div style={{ width: "100%" }}>
+        <section className={`memory-section`}>
             <div className="memory-container">
                 <div className="memory-img">
-                    <TrackVisibility partialVisibility >
+                    <TrackVisibility partialVisibility style={{
+                        height: '500px',
+                        maxWidth: '70%%'
+                    }} >
                         {
                             ({ isVisible }) => <VideoPlayer isVisible={isVisible} id="video1" url={props.location.params.memory.url} className="videoPlayer" />
                         }

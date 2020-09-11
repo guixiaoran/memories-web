@@ -53,8 +53,8 @@ export const MemoryWalks = () => {
     useEffect(() => {
         API.getMemoryWalks((data) => {
             setMemoryWalks(data);
+            
             Animator.init();
-            // Animator.animateSlides("videoPlayer");
         });
 
 
