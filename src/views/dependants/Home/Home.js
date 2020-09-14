@@ -11,7 +11,7 @@ export const Home = () => {
       await Animator.init(true);
 
     })()
-
+    if (document?.getElementById("homeVideo")?.play instanceof Function) document.getElementById("homeVideo").play();
     return () => {
       document.querySelector("body").removeAttribute("class");
       Animator.destroy();
@@ -22,7 +22,7 @@ export const Home = () => {
     <div className="parallax hero" style={{
       overflow: "hidden"
     }}>
-      <video loop playsInline id="homeVideo" autoPlay style={{
+      <video loop playsInline id="homeVideo" muted autoPlay style={{
         height: 'auto',
         minHeight: window.innerHeight,
         maxWidth: '100%',
