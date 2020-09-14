@@ -46,7 +46,6 @@ const VideoPlayer = (props) => {
 export const MemoryWalkDetailed = (props) => {
     useEffect(() => {
         Animator.init();
-
         // Animator.memoryAnimation();
         return () => {
             Animator.destroy();
@@ -71,7 +70,7 @@ export const MemoryWalkDetailed = (props) => {
                 </div>
                 <div className="text-memory-title">{props.location.params.memory.title}</div>
                 <div className="memory-text-container">
-                    <div class="memory-text">
+                    <div className="memory-text">
                         <p className="text-class-description">
                             {props.location.params.memory.description}
                         </p>

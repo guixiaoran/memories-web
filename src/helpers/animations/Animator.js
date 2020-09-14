@@ -81,7 +81,7 @@ class Animator {
                 triggerHook: 0.25,
                 reverse: true
             })
-                .setTween(slideTl)
+                // .setTween(slideTl)
                 .addTo(this.controller);
 
             //New Animation
@@ -98,7 +98,7 @@ class Animator {
                 duration: "100%",
                 triggerHook: 0
             }).setPin(slide, { pushFollowers: false })
-                .setTween(pageTl)
+                // .setTween(pageTl)
                 .addTo(this.controller);
         });
     }
@@ -145,7 +145,7 @@ class Animator {
     init(skipEnterTransation) {
         gsap.registerPlugin(TweenMax);
         //init controller
-        this.controller = new ScrollMagic.Controller();
+        if (this.controller === undefined) this.controller = new ScrollMagic.Controller();
         // Select elements
         const text = document.querySelector(".text-split")
         const heroSection = document.querySelectorAll(".parallax");
@@ -169,7 +169,9 @@ class Animator {
             triggerElement: text,
             triggerHook: 0.85,
             reverse: true
-        }).setTween(splitWords).addTo(this.controller);
+        })
+            // .setTween(splitWords)
+            .addTo(this.controller);
         if (skipEnterTransation) return;
         this.enter();
     }

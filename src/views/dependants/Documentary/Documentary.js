@@ -26,7 +26,6 @@ export const Documentary = () => {
             playsinline: true,
             clickToPlay: false,
             controls: ["play", "progress", "mute", "fullscreen","settings"],
-            debug: true,
             loop: { active: true }
         });
         if (!iOS) player.play();
