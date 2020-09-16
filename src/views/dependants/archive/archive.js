@@ -108,6 +108,8 @@ const MobileGallery = (props) => {
     </div >
 }
 
+let currentYear = 0;
+
 export const Archive = () => {
     const [archives, setArchives] = useState();
     const [filteredArchives, setFilteredArchives] = useState();
@@ -150,7 +152,12 @@ export const Archive = () => {
                 (async () => {
                     try {
                         ArchiveAnimations.animate();
-                        destroy = await ArchiveAnimations.performFilteration(destroy, filteredArchives);
+                        destroy = await ArchiveAnimations.performFilteration(destroy, filteredArchives, (currentIndex) => {
+                            if (filteredArchives[currentIndex]?.date !== undefined && currentYear !== filteredArchives[currentIndex]?.date) {
+                                currentYear = filteredArchives[currentIndex].date;
+                                console.log(currentYear);
+                            }
+                        });
                         Animator.detailAnimation();
                         ArchiveAnimations.addEventHandlers();
                     } catch (e) {

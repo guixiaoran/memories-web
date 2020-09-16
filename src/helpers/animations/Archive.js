@@ -222,10 +222,14 @@ class ArchiveAnimations {
         return container;
     }
 
-    async init(archieves) {
+    /**
+     * 
+     * @param {Array} archieves 
+     */
+    async init(archieves, sendCurrentTileIndex) {
         this.tileLength = archieves.length;
         document.getElementById('container').innerHTML = "";
-        for (var i = 0; i < archieves.length; i++) {
+        for (var i = 0; i < this.tileLength; i++) {
 
             /* Create and Open the modal view */
 
@@ -339,7 +343,11 @@ class ArchiveAnimations {
             vector.y = camera.position.y;
             vector.z = 0;
             camera.lookAt(vector);
-            controls.target = vector
+            controls.target = vector;
+            const oneTileVectorSize = -33;
+            let tileIndex = Math.floor(vector.y / oneTileVectorSize);
+            if (sendCurrentTileIndex instanceof Function) sendCurrentTileIndex(tileIndex);
+
             controls.update();
         }
 
@@ -367,11 +375,11 @@ class ArchiveAnimations {
      * @param {Function} destroyFunction 
      * @param {Array} filteredArchieves 
      */
-    async performFilteration(destroyFunction, filteredArchieves) {
+    async performFilteration(destroyFunction, filteredArchieves, sendCurrentTileIndex) {
         if (destroyFunction instanceof Function) destroyFunction()
         document.getElementById("container").innerHTML = "";
         objects = [];
-        return this.init(filteredArchieves)
+        return this.init(filteredArchieves, sendCurrentTileIndex)
     }
 }
 
