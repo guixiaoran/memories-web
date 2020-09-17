@@ -11,7 +11,6 @@ export const Home = () => {
       await Animator.init(true);
 
     })()
-    if (document?.getElementById("homeVideo")?.play instanceof Function) document.getElementById("homeVideo").play();
     return () => {
       document.querySelector("body").removeAttribute("class");
       Animator.destroy();
@@ -24,7 +23,7 @@ export const Home = () => {
     }}>
       <video loop playsInline id="homeVideo" muted autoPlay style={{
         height: 'auto',
-        minHeight: window.innerHeight,
+        minHeight: window.innerHeight + 110,
         maxWidth: '100%',
         objectFit: "cover"
       }}>
