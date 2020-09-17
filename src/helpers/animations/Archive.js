@@ -49,8 +49,6 @@ const openMedia = (data) => {
     } else if (data.type === 'audio') {
         const audio = document.createElement('audio');
         audio.id = id;
-        const controls = document.createAttribute("playsinline")
-        audio.setAttributeNode(controls);
         const source = document.createElement("source")
         source.src = `${data.url}`
         audio.appendChild(source);
@@ -60,6 +58,9 @@ const openMedia = (data) => {
             playsinline: true,
             clickToPlay: false,
             controls: ["play", "progress", "fullscreen", "settings"],
+            fullscreen:{
+                iosNative: true
+            }
         });
     } else
         if (data.type === "image") {

@@ -16,6 +16,9 @@ const MemoryWalk = (props) => {
                     playsinline: true,
                     clickToPlay: false,
                     controls: ["play", "progress", "fullscreen", "settings"],
+                    fullscreen:{
+                        iosNative: true
+                    }
                 }));
             else {
                 player.source = {
@@ -37,13 +40,7 @@ const MemoryWalk = (props) => {
             if (player !== undefined)
                 player.pause()
     }, [props.isVisible, player]);
-    return (
-        <section className="slide">
-            <div className="hero-img">
-                <video playsInline id={props._id} />
-            </div>
-        </section >
-    );
+    return (<video id={props._id} /> );
 }
 
 export const MemoryWalks = () => {
@@ -68,6 +65,10 @@ export const MemoryWalks = () => {
                 marginTop: "5vh !important",
                 "@media screen and (max-width: 1024px)": {
                     marginTop: "5vh !important"
+                },
+                '& .plyr':{
+                  width:"100%",
+                  margin:0  
                 }
             }}>
                 <div className="hero-img">

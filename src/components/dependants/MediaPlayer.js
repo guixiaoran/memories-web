@@ -11,6 +11,9 @@ export const MediaPlayer = (props) => {
                     playsinline: true,
                     clickToPlay: false,
                     controls: ["play", "progress", "fullscreen", "settings"],
+                    fullscreen:{
+                        iosNative: true
+                    } 
                 });
             player.source = {
                 type: props.type,
@@ -26,7 +29,7 @@ export const MediaPlayer = (props) => {
         }
     }, [props.id, props.url, props.title, props.type]);
     if (props.type === 'video')
-        return (<video playsInline id={props.id} />
+        return (<video id={props.id} />
         );
     else return <audio style={{ bottom: 0, position: "absolute" }} playsInline id={props.id} />
 }

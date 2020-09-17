@@ -15,6 +15,9 @@ const VideoStory = (props) => {
                 playsinline: true,
                 clickToPlay: false,
                 controls: ["play", "progress", "fullscreen", "settings"],
+                fullscreen:{
+                    iosNative: true
+                }
             }));
         else {
             let sources = [];
@@ -44,13 +47,7 @@ const VideoStory = (props) => {
                 player.pause();
 
     }, [props.isVisible, player]);
-    return (
-        <section className="slide">
-            <div className="hero-img">
-                <video playsInline id={props.video._id} />
-            </div>
-        </section >
-    );
+    return (<video id={props.video._id} />  );
 }
 
 export const VideoStories = () => {

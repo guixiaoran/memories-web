@@ -26,7 +26,9 @@ export const Documentary = () => {
             playsinline: true,
             clickToPlay: false,
             controls: ["play", "progress", "mute", "fullscreen","settings"],
-            loop: { active: true }
+            fullscreen:{
+                iosNative: true
+            }
         });
         if (!iOS) player.play();
         return () => {
@@ -38,7 +40,7 @@ export const Documentary = () => {
 
     return (
         <section className={classes.documentary} >
-            <video playsinline id="documentryPlayer" style={{
+            <video id="documentryPlayer" style={{
                 borderRadius: "0px",
                 height: window.innerHeight,
                 minHeight: window.innerHeight,
