@@ -264,6 +264,7 @@ text-align: left;
 /* disabling animaiton */
 .hero-desc > p {
   z-index: 1;
+  align-self: baseline;
 }
 
 .hero-img {
@@ -913,6 +914,7 @@ main {
 .hero-desc p {
   font-size: 1rem;
   padding: 1rem 0rem;
+
 }
 
 .text-split > div {
