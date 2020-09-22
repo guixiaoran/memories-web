@@ -32,7 +32,7 @@ export const Home = () => {
         </video>
       <div className="content hero-title">
         <h2>MEMORIES THAT MAKE US</h2>
-        <h3>Storying Italian Migration after the end of the Second World War</h3>
+        <h3>Storying Italian Migration after the end of the Second World War.</h3>
       </div>
     </div>
   </section>
