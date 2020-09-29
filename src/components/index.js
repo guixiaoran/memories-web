@@ -2,7 +2,7 @@ import EnhancedNotification, { notify } from './common/Notification';
 import { LoadingScreen } from './common/Loading';
 import { DevModeSwitch } from './common/devModeSwitch';
 import { EnhancedIcon } from './common/EnhancedIcon';
-import { Header } from './dependants/Header';
+import { HeaderTop, HeaderBottom } from './dependants/Header';
 import { SideMenuItems } from './dependants/SideMenuItems';
 import { EnhancedModal } from './common/EnhancedModal';
 import { EnhancedTable } from './common/EnhancedTable';
@@ -13,13 +13,15 @@ import { EnhancedEditor } from './common/EnhancedEditor';
 import { EnhancedDrawer } from './common/EnhancedDrawer';
 import { LoginCheck } from './helpers/LoginCheck.js';
 import { VideoCall } from './common/VideoCall';
+import { Zoom } from "./dependants/Zoom";
+import { MediaPlayer } from "./dependants/MediaPlayer";
 export {
   EnhancedNotification as Notification,
   notify,
   EnhancedIcon,
   LoadingScreen,
   DevModeSwitch,
-  Header,
+  HeaderTop, HeaderBottom,
   SideMenuItems,
   EnhancedModal,
   EnhancedTable,
@@ -29,5 +31,7 @@ export {
   EnhancedEditor,
   EnhancedDrawer,
   LoginCheck,
-  VideoCall
+  VideoCall,
+  Zoom,
+  MediaPlayer
 };

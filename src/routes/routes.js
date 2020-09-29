@@ -2,30 +2,26 @@
  *  Created by Sanchit Dang
  ***/
 import React, { useContext } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { LoginContext } from 'contexts';
-import { Login, Register, Home, MobileMenu, FourOFour, Example } from 'views';
+import { Documentary, Home, FourOFour, VideoStories, Archive, MemoryWalks ,MemoryWalkDetailed} from 'views';
 import { Layout } from '../layout';
-import { LayoutConfig } from 'configurations';
 import { LoadingScreen } from 'components';
 
 export const AppRoutes = (props) => {
   const { loginStatus } = useContext(LoginContext);
-  let landingPage = (LayoutConfig.landingPage !== undefined ? LayoutConfig.landingPage !== '' ? LayoutConfig.landingPage : '/home' : '/home');
   if (loginStatus === undefined) return <LoadingScreen />;
   return (
     <Switch>
-      <Route exact path='/' render={() => (((!loginStatus) ? <Redirect to={{ pathname: '/login' }} {...props} /> : <Redirect to={{
-        pathname: landingPage
-      }} {...props} />))} />
+      <Route exact path='/' render={() => <Layout><Home {...props} /></Layout>} />
+      <Route exact path='/documentary' render={() => <Layout><Documentary {...props} /></Layout>} />
+      <Route exact path='/videostories' render={() => <Layout><VideoStories {...props} /></Layout>} />
+      <Route exact path='/memorywalks' render={() => <Layout><MemoryWalks {...props} /></Layout>} />
+      <Route exact path='/memorywalks/detailed' render={() => <Layout><MemoryWalkDetailed {...props} /></Layout>} />
+      <Route exact path='/archive' render={() => <Layout><Archive {...props} /></Layout>} />
 
-      <Route exact path='/login' render={() => ((!loginStatus ? <Login  {...props} /> : <Redirect to={{ pathname: landingPage }} {...props} />))} />
-      <Route exact path='/register' render={() => ((!loginStatus ? <Register {...props} /> : <Redirect to={{ pathname: landingPage }} {...props} />))} />
 
-      <Route exact path='/home' render={() => ((loginStatus === false ? <Redirect to={{ pathname: '/login' }} {...props} /> : <Layout><Home {...props} /></Layout>))} />
-      <Route exact path='/menu' render={() => ((loginStatus === false ? <Redirect to={{ pathname: '/login' }}  {...props} /> : <Layout> <MobileMenu  {...props} /></Layout>))} />
-      <Route exact path='/examples' render={() => ((loginStatus === false ? <Redirect to={{ pathname: '/login' }}  {...props} /> : <Layout> <Example  {...props} /></Layout>))} />
-      <Route render={() => ((loginStatus === false ? <Redirect to={{ pathname: '/login' }}  {...props} /> : <Layout><FourOFour  {...props} /></Layout>))} />
+      <Route render={() => <Layout><FourOFour  {...props} /></Layout>} />
     </Switch >
   );
 };

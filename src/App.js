@@ -10,11 +10,17 @@ import { AppRoutes } from './routes/routes';
 import { ContextManager } from 'contexts';
 import { Notification, DevModeSwitch, LoginCheck } from 'components';
 import { DevModeConfig } from 'configurations';
+import { Animator } from 'helpers/index';
 
 
 const App = (props) => {
   useEffect(() => {
     document.title = process.env.REACT_APP_NAME;
+    window.addEventListener("mouseover", Animator.activeCursor);
+    return () => {
+      window.removeEventListener("mouseover", Animator.activeCursor);
+    }
+
   }, []);
   return (
     <ContextManager>

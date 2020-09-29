@@ -19,7 +19,7 @@ export const LoginCheck = (props) => {
         })();
       }
   }, [accessToken]);
-  return (<div>{props.children}</div>);
+  return (<div id="loginCheckContainer" style={{ width: "100%" }}>{props.children}</div>);
 };
 
 LoginCheck.propTypes = {

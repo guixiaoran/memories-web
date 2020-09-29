@@ -1,5 +1,5 @@
 import { AccessToken, logout } from 'contexts/helpers';
-import { axiosInstance, errorHelper, generateSuccess } from './axiosInstance';
+import { axiosInstance, errorHelper, generateSuccess, performCallback } from './axiosInstance';
 
 class API {
   displayAccessToken() {
@@ -32,20 +32,30 @@ class API {
   }
 
 
-  /**
-  * @author Sanchit Dang
-  * @description logoutUser Login API endpoint
-  * @returns {Object} responseObject
-  */
-  logoutUser() {
-    return axiosInstance.put('logout', {}, {
-      headers: {
-        authorization: "Bearer " + AccessToken
-      }
-    }).then(() => {
-      logout();
-      return generateSuccess(true);
+  getVideoStories(callback) {
+    axiosInstance.get("videoStories/getVideoStories").then((response) => {
+      performCallback(callback, response.data.data.stories);
     }).catch(error => errorHelper(error));
+  }
+
+  getMemoryWalks(callback) {
+    axiosInstance.get("memoryWalk/getAllMemoryWalks").then((response) => {
+      performCallback(callback, response.data.data);
+    }).catch(error => errorHelper(error));
+  }
+
+  getArchieves(callback) {
+    axiosInstance.post("memory/getMemories", {
+      "numberOfRecords": 0,
+      "currentPageNumber": 0
+    }).then((response) => {
+      performCallback(callback, response.data.data.data);
+    }).catch(error => errorHelper(error));
+  }
+
+  logoutUser(callback) {
+    logout();
+    performCallback(callback);
   }
 }
 const instance = new API();

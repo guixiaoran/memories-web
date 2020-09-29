@@ -4,6 +4,8 @@ import TextHelper from './data/TextHelper';
 import OutputHelper from './data/OutputHelper';
 import { useKeyPress, useLocalStorage, useLocation } from './hooks';
 import { socketInstance, useSocket, socketAuthCallback } from './socket';
+import Animator from "./animations/Animator";
+import ArchiveAnimations from "./animations/Archive";
 export {
   axiosInstance,
   API,
@@ -14,5 +16,7 @@ export {
   useLocation,
   socketInstance,
   useSocket,
-  socketAuthCallback
+  socketAuthCallback,
+  Animator,
+  ArchiveAnimations
 };
