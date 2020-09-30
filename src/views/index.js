@@ -13,6 +13,7 @@ import { Archive } from "./dependants/archive/archive";
 import { MemoryWalks } from "./dependants/MemoryWalks/MemoryWalks";
 import { MemoryWalkDetailed } from "./dependants/MemoryWalkDetailed/MemoryWalkDetailed";
 import { Navigator } from "./dependants/Navigator/Navigator";
+import { Plaza } from "./dependants/Plaza/Plaza";
 export {
   Example,
   Login,
@@ -25,5 +26,6 @@ export {
   Archive,
   MemoryWalks,
   MemoryWalkDetailed,
-  Navigator
+  Navigator,
+  Plaza
 };
