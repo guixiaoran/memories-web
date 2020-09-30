@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { makeStyles, GridList, GridListTile, GridListTileBar, Typography } from "@material-ui/core"
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
-import { API, ArchiveAnimations, Animator } from 'helpers/index';
+import { API, ArchiveAnimations, Animator, AnimatedObject } from 'helpers/index';
 import moment from "moment";
 import { LoadingScreen, Zoom, Image, MediaPlayer } from 'components/index';
 
@@ -190,7 +190,7 @@ export const Archive = () => {
     }, [archives]);
 
 
-    return <>
+    return <AnimatedObject initial="bottom">
         <div className="main-archive" style={desktop ? null : { paddingTop: "20vh" }}>
             {
                 desktop ? <div id="container" /> : <MobileGallery items={filteredArchives} />
@@ -224,5 +224,5 @@ export const Archive = () => {
                 <button id="video" onClick={() => { filterArchives("video") }}>VIDEO</button>
             </div>
         </div>
-    </>;
+    </AnimatedObject>;
 }

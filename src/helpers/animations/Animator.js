@@ -1,21 +1,62 @@
+import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import ScrollMagic from 'scrollmagic';
 import { gsap } from "gsap/all";
 import SplitText from "react-splittext";
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { TweenMax } from "gsap";
+import { AnimationContext } from "contexts/index";
+import { AnimatePresence, motion } from "framer-motion";
 
+
+
+export const AnimationWrapper = (props) => {
+    return (<AnimatePresence>{props.children}</AnimatePresence>);
+};
+
+AnimationWrapper.propTypes = {
+    children: PropTypes.node.isRequired
+};
+
+export const AnimatedObject = (props) => {
+    const { pageStyle, pageVariants, pageTransition } = useContext(AnimationContext);
+    return (<motion.div
+        style={pageStyle}
+        initial={props.initial}
+        animate={props.animate}
+        exit={props.exit}
+        variants={pageVariants}
+        transition={pageTransition}
+    >
+        {props.children}
+    </motion.div>);
+}
+
+
+AnimatedObject.propTypes = {
+    children: PropTypes.node.isRequired,
+    initial: PropTypes.oneOf(["top", "bottom", "left", "right", "fade"]).isRequired,
+    animate: PropTypes.string,
+    exit: PropTypes.string
+};
+
+AnimatedObject.defaultProps = {
+    animate: "in",
+    exit: "out"
+}
 
 class Animator {
-    controller;
-    slideScene;
-    pageScene;
-    detailScene;
-    landingTextScene;
-    slideTextLanding;
-    burger = document.querySelector(".burger");
-    nav = document.querySelector(".nav-bar");
-    root = document.getElementById("root");
-
+    constructor() {
+        this.controller = undefined;
+        this.slideScene = undefined;
+        this.pageScene = undefined;
+        this.detailScene = undefined;
+        this.landingTextScene = undefined;
+        this.slideTextLanding = undefined;
+        this.burger = document.querySelector(".burger");
+        this.nav = document.querySelector(".nav-bar");
+        this.root = document.getElementById("root");
+    }
 
     navToggle(e) {
         this.root = document.getElementById("root");
@@ -106,42 +147,18 @@ class Animator {
     enter() {
         window.scrollTo(0, 0);
         //An Animation
-        const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
-        tl.fromTo(
-            ".swipe",
-            .5,
-            { x: "0%" },
 
-            { x: "100%", stagger: 0.2 }
-        );
-        tl.fromTo(
-            ".nav-header",
-            1,
-            { y: "-100%" },
-            { y: "0%", ease: "power2.inOut" },
-            "-=1.5"
-        );
     }
 
     exit() {
         //An Animation
-        const tl = gsap.timeline({ defaults: { ease: "power2.inOut" } });
-        tl.fromTo(
-            ".swipe",
-            0.5,
-            { x: "-100%" },
-            { x: "0%" },
-            "-=0.5"
-        );
-        tl.fromTo(
-            ".nav-header",
-            1,
-            { y: "-100%" },
-            { y: "0%", ease: "power2.inOut" },
-            "-=1.5"
-        );
+
     }
 
+    /**
+     * 
+     * @param {Boolean} skipEnterTransation - Skip Animation 
+     */
     init(skipEnterTransation) {
         gsap.registerPlugin(TweenMax);
         //init controller
@@ -178,7 +195,7 @@ class Animator {
 
 
 
-    detailAnimation = () => {
+    detailAnimation() {
         gsap.registerPlugin(ScrollTrigger);
         let slides = document.querySelectorAll(".detail-slide");
         slides.forEach((slide, index, slides) => {
@@ -201,7 +218,7 @@ class Animator {
         });
     }
 
-    memoryAnimation = () => {
+    memoryAnimation() {
         if (window.innerWidth > 600) {
             gsap.registerPlugin(ScrollTrigger);
             let medias = document.querySelectorAll(".memory-img")

@@ -10,7 +10,7 @@ import { AppRoutes } from './routes/routes';
 import { ContextManager } from 'contexts';
 import { Notification, DevModeSwitch, LoginCheck } from 'components';
 import { DevModeConfig } from 'configurations';
-import { Animator } from 'helpers/index';
+import { Animator, AnimationWrapper } from 'helpers/index';
 
 
 const App = (props) => {
@@ -19,14 +19,16 @@ const App = (props) => {
     window.addEventListener("mouseover", Animator.activeCursor);
     return () => {
       window.removeEventListener("mouseover", Animator.activeCursor);
-    }
+    };
 
   }, []);
   return (
     <ContextManager>
       <LoginCheck>
         <CssBaseline />
-        <AppRoutes {...props} />
+        <AnimationWrapper>
+          <AppRoutes {...props} />
+        </AnimationWrapper>
         {DevModeConfig.visible ? <DevModeSwitch /> : ''}
         <Notification />
       </LoginCheck>

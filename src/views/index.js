@@ -12,6 +12,7 @@ import { VideoStories } from "./dependants/VideoStories/VideoStories";
 import { Archive } from "./dependants/archive/archive";
 import { MemoryWalks } from "./dependants/MemoryWalks/MemoryWalks";
 import { MemoryWalkDetailed } from "./dependants/MemoryWalkDetailed/MemoryWalkDetailed";
+import { Navigator } from "./dependants/Navigator/Navigator";
 export {
   Example,
   Login,
@@ -23,5 +24,6 @@ export {
   VideoStories,
   Archive,
   MemoryWalks,
-  MemoryWalkDetailed
+  MemoryWalkDetailed,
+  Navigator
 };
