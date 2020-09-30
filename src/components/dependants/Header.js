@@ -27,8 +27,8 @@ export const HeaderTop = () => {
         document.body.classList.remove("hide");
       }
     }}>
-      <div id="line1" className="line1"></div>
-      <div id="line2" className="line2"></div>
+      {/* <div id="line1" className="line1"></div>
+      <div id="line2" className="line2"></div> */}
     </div>
   </header>;
 };

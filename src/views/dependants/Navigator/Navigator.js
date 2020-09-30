@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { AnimatedObject } from "helpers/index";
 
 const ButtonWithLink = (props) => {
   let button = (
-    <Button variant="contained" component={Link} to={props.to}>
-      {props.children}
-    </Button>
+    <Grid item xs={12}>
+      <Button fullWidth variant="contained" component={Link} to={props.to}>
+        {props.children}
+      </Button>
+    </Grid>
   );
   return button;
 };
@@ -17,7 +19,7 @@ export const Navigator = () => {
   }, []);
   let router = (
     <AnimatedObject initial="fade">
-      <div style={{ paddingTop: "10vh" }}>
+      <Grid container spacing={1} style={{ paddingTop: "10vh", width: "100vw" }}>
         <ButtonWithLink to="documentary">
           Documentary
         </ButtonWithLink>
@@ -30,7 +32,10 @@ export const Navigator = () => {
         <ButtonWithLink to="archive">
           archive
         </ButtonWithLink>
-      </div>
+        <ButtonWithLink to="plaza">
+          Plaza
+        </ButtonWithLink>
+      </Grid>
     </AnimatedObject>
   );
   return router;
