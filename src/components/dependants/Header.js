@@ -1,13 +1,20 @@
 import React, { useContext } from 'react';
 import { gsap } from "gsap/all";
 
-import { LayoutContext } from 'contexts';
-import { Link } from "react-router-dom";
+import { LayoutContext, HeaderContext } from 'contexts';
+import { Link, withRouter } from "react-router-dom";
 import { Animator } from 'helpers/index';
 
-export const HeaderTop = () => {
+export const HeaderTop = withRouter((props) => {
+  const { displayBackButton, setDisplayBackButton } = useContext(HeaderContext);
   return <header className="nav-header" style={{ paddingLeft: "5vw", paddingRight: "5vw" }}>
-    <h1><Link to="/" id="logo">Memories</Link></h1>
+    <h1>{displayBackButton ? <span onClick={() => {
+      props.history.goBack();
+    }} id="logo">{`<- Back`}</span> : <Link style={{
+      cursor: "pointer"
+    }} onClick={() => {
+      setDisplayBackButton(false);
+    }} to="/" id="logo">Memories</Link>}</h1>
     <div className="burger" onClick={(e) => {
       if (!e.target.classList.contains("active")) {
         e.target.classList.add("active");
@@ -31,7 +38,7 @@ export const HeaderTop = () => {
       <div id="line2" className="line2"></div> */}
     </div>
   </header>;
-};
+});
 
 export const HeaderBottom = () => {
   // let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');

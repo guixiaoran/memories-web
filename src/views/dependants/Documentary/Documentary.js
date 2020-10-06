@@ -40,7 +40,7 @@ export const Documentary = () => {
   }, []);
 
   return (
-    <AnimatedObject initial="left">
+    <AnimatedObject initial="right" exit="out">
       <section className={classes.documentary} >
         <video id="documentryPlayer" style={{
           borderRadius: "0px",

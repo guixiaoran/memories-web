@@ -68,7 +68,7 @@ export const VideoStories = () => {
     };
   }, []);
   return <div style={{ width: "100%" }}>
-    <AnimatedObject initial="top">
+    <AnimatedObject initial="right">
       {videoStories.map((video, index) => {
         return <section key={`videoStory${index}`} style={index === videoStories.length - 1 && !desktop ? {
           paddingBottom: "20vh"

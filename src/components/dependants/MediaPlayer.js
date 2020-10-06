@@ -13,7 +13,8 @@ export const MediaPlayer = (props) => {
           controls: props.controls ? props.controls : ["play", "progress", "fullscreen", "settings"],
           fullscreen: {
             iosNative: true
-          }
+          },
+          autoplay: props.autoplay ? true : false
         });
       player.source = {
         type: props.type,
@@ -27,9 +28,9 @@ export const MediaPlayer = (props) => {
       if (player !== undefined)
         player.destroy();
     };
-  }, [props.id, props.url, props.title, props.type, props.controls]);
+  }, [props.id, props.url, props.title, props.type, props.controls, props.autoplay]);
   if (props.type === 'video')
-    return (<video id={props.id} />
+    return (<video id={props.id} style={props.style ? props.style : {}} className={props.className ? props.className : ""} />
     );
   else return <audio style={{ bottom: 0, position: "absolute" }} playsInline id={props.id} />;
 };
@@ -39,5 +40,8 @@ MediaPlayer.propTypes = {
   type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  controls: PropTypes.arrayOf([PropTypes.string])
+  autoplay: PropTypes.bool,
+  controls: PropTypes.arrayOf([PropTypes.string]),
+  style: PropTypes.object,
+  className: PropTypes.string
 };

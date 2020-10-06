@@ -190,7 +190,7 @@ export const Archive = () => {
     }, [archives]);
 
 
-    return <AnimatedObject initial="bottom">
+    return <AnimatedObject initial="right">
         <div className="main-archive" style={desktop ? null : { paddingTop: "20vh" }}>
             {
                 desktop ? <div id="container" /> : <MobileGallery items={filteredArchives} />

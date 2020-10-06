@@ -21,6 +21,7 @@ AnimationWrapper.propTypes = {
 export const AnimatedObject = (props) => {
     const { pageStyle, pageVariants, pageTransition } = useContext(AnimationContext);
     return (<motion.div
+        id="animationContainer"
         style={pageStyle}
         initial={props.initial}
         animate={props.animate}
