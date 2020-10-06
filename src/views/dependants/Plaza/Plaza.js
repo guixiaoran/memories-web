@@ -7,6 +7,7 @@ import { PositionalAudio, softShadows, FlyControls } from "drei";
 import { useSpring, a } from "react-spring/three";
 import { LoadingScreen } from 'components/index';
 import moment from "moment";
+import { PlazaConfig } from "configurations";
 
 
 const SpinningMesh = ({ position, args, media }) => {
@@ -72,7 +73,7 @@ export const Plaza = () => {
                     TextHelper.getRandomInteger(-d, d),
                   ],
                   color: 'pink',
-                  media: item.media[0].link
+                  media: PlazaConfig.useProxy ? PlazaConfig.mediaProxyUrlSuffix + item.media[0].link : item.media[0].link
                 });
             }
           }
