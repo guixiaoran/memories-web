@@ -7,6 +7,9 @@ import { HeaderContext } from "contexts";
 const useStyles = makeStyles(() => ({
   sidenav: {
     zIndex: 99,
+    '& .MuiButton-label': {
+      justifyContent: 'left'
+    },
     '& a': {
       position: "absolute",
       left: window.innerWidth - 150,
@@ -27,7 +30,7 @@ const ButtonWithLink = (props) => {
   const { setDisplayBackButton } = useContext(HeaderContext);
 
   let button = (
-    <Button lableStyle={{ float: 'left' }} onClick={() => {
+    <Button lableStyle={{ float: 'left', justifyContent: "left" }} onClick={() => {
       setDisplayBackButton(true);
     }} style={{
       top: ((window.innerHeight / 2) - (window.innerHeight / 6)) + props.index * 60,
@@ -64,9 +67,13 @@ const SideNav = () => {
 export const Navigator = () => {
   const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/ipan-v2-bucket/video/video/original/Video_DdF4JPKxC1rZ.mp4");
   const { setDisplayBackButton } = useContext(HeaderContext);
-
   useEffect(() => {
     setDisplayBackButton(false);
+    document.getElementById('animationContainer').style = {
+      transform: "none",
+      opacity: 1,
+      position: "unset"
+    };
   }, [setDisplayBackButton]);
   let router = (
     <AnimatedObject initial="fade" >
@@ -75,7 +82,7 @@ export const Navigator = () => {
           <div className="parallax hero" style={{
             overflow: "hidden"
           }}>
-            <video playsInline id="homeVideo" muted autoPlay style={{
+            <video playsInline loop id="homeVideo" muted autoPlay style={{
               height: 'auto',
               minHeight: window.innerHeight + 110,
               maxWidth: window.innerWidth,
