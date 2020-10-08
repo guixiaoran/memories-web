@@ -65,7 +65,7 @@ const SideNav = () => {
 };
 
 export const Navigator = () => {
-  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/ipan-v2-bucket/video/video/original/Video_DdF4JPKxC1rZ.mp4");
+  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories-prod/video/video/original/Video_zcgoScQXxDV0.mp4");
   const { setDisplayBackButton } = useContext(HeaderContext);
   useEffect(() => {
     setDisplayBackButton(false);

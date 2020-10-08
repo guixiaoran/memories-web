@@ -11,7 +11,7 @@ export const Home = () => {
   const { setDisplayBackButton } = useContext(HeaderContext);
   const [transationDone, setTransationDone] = useState(false);
   const [displayStartButton, setDisplayStartButton] = useState(false);
-  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/ipan-v2-bucket/video/video/original/Video_DdF4JPKxC1rZ.mp4");
+  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories-prod/video/video/original/Video_elPleecMCJAY.mp4");
   useEffect(() => {
     let body = document.querySelector("body");
     body.removeAttribute("class", "body-archive");
