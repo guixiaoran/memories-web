@@ -4,13 +4,11 @@ import PlayArrowOutlined from '@material-ui/icons/PlayArrowOutlined';
 import { Link } from "react-router-dom";
 import { Animator } from "helpers";
 import { HeaderContext } from 'contexts';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 
 export const Home = () => {
   const displayStartButtonType = "INTERVAL"; //ALWAYS, INTERVAL, AFTER_VIDEO
   const startButtonTIme = 3; // in seconds
-  const desktop = useMediaQuery('(min-width:1024px)');
   const { setDisplayBackButton } = useContext(HeaderContext);
   const [transationDone, setTransationDone] = useState(false);
   const [displayStartButton, setDisplayStartButton] = useState(false);
@@ -31,15 +29,15 @@ export const Home = () => {
   useEffect(() => {
     const videoPlayer = document.getElementById("homeVideo");
     switch (displayStartButtonType) {
-    case 'AFTER_VIDEO': videoPlayer.onended = function () {
-      setDisplayStartButton(true);
-    };
-      break;
-    case 'INTERVAL': setTimeout(() => {
-      setDisplayStartButton(true);
-    }, startButtonTIme * 1000);
-      break;
-    default: setDisplayStartButton(true);
+      case 'AFTER_VIDEO': videoPlayer.onended = function () {
+        setDisplayStartButton(true);
+      };
+        break;
+      case 'INTERVAL': setTimeout(() => {
+        setDisplayStartButton(true);
+      }, startButtonTIme * 1000);
+        break;
+      default: setDisplayStartButton(true);
     }
   }, [transationDone]);
   if (transationDone === false) return "";
@@ -57,20 +55,31 @@ export const Home = () => {
           <source src={videoLink} type="video/mp4" />
           Your browser does not support HTML5 video.
         </video>
-        <div className="content hero-title">
+        <div className="content hero-title" style={{
+          height: '100%',
+          textAlign: "center",
+          paddingTop: "20%",
+          fontFamily: "IBM Plex Sans"
+        }}>
           <h2>MEMORIES THAT MAKE US</h2>
           <h3>Storying Italian Migration after the end of the Second World War.</h3>
+          <Fab color="primary" variant="extended" aria-label="start" style={{
+            opacity: displayStartButton ? 1 : 0,
+            display: displayStartButton ? '' : 'none',
+            transition: "0.3s",
+            marginTop: '10px',
+            backgroundColor: '#3B0072'
+          }}>
+            <Link to="start" style={{
+              color: "white", display: 'flex',
+              alignItems: 'center'
+            }}>
+              <p>Start</p>
+              <PlayArrowOutlined />
+            </Link>
+          </Fab>
         </div>
-        <Fab color="primary" variant="extended" aria-label="start" style={{
-          position: "absolute",
-          left: desktop ? "50%" : "70%", bottom: "10%",
-          opacity: displayStartButton ? 1 : 0,
-          transition: "0.3s"
-        }}>
-          <Link to="start" style={{ color: "white", margin: "0 auto" }}>
-            <span>Start <PlayArrowOutlined /></span>
-          </Link>
-        </Fab>
+
       </div>
     </section>
   </>);
