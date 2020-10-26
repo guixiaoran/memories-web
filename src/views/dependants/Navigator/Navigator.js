@@ -10,6 +10,8 @@ import * as plazaBG from "assets/img/plaza.png";
 import * as videoStoriesBG from "assets/img/videoStories.png";
 import * as documentaryBG from "assets/img/documentary.png";
 
+const useImage = false;
+
 const useStyles = makeStyles(() => ({
   first: {
     borderRadius: '10px 0 0 0',
@@ -31,7 +33,7 @@ const useStyles = makeStyles(() => ({
       width: "220px",
       textDecoration: "none",
       color: 'black',
-      opacity: 0.5,
+      opacity: 0.7,
       backgroundSize: 'auto',
       backgroundPosition: 'center'
     },
@@ -117,7 +119,7 @@ const SideNav = () => {
 };
 
 export const Navigator = () => {
-  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories-prod/video/video/original/Video_zcgoScQXxDV0.mp4");
+  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_HC4h5GbAke3c.mp4");
   const { setDisplayBackButton } = useContext(HeaderContext);
   useEffect(() => {
     setDisplayBackButton(false);
@@ -131,22 +133,22 @@ export const Navigator = () => {
     <AnimatedObject initial="fade" >
       <div style={{
         position: "relative",
-        backgroundImage: `url(${navigatorBG})`,
+        backgroundImage: useImage ? `url(${navigatorBG})` : '',
         backgroundSize: 'cover'
       }} >
         <section className="primary">
           <div className="parallax hero" style={{
             overflow: "hidden"
           }}>
-            {/* <video playsInline loop id="homeVideo" muted autoPlay style={{
+            <video playsInline loop id="homeVideo" autoPlay style={{
               height: 'auto',
               minHeight: window.innerHeight + 110,
               maxWidth: window.innerWidth,
               objectFit: "cover"
             }}>
               <source src={videoLink} type="video/mp4" />
-          Your browser does not support HTML5 video.
-            </video> */}
+            Your browser does not support HTML5 video.
+            </video>
             <SideNav />
           </div>
         </section>

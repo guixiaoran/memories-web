@@ -12,7 +12,7 @@ export const Home = () => {
   const { setDisplayBackButton } = useContext(HeaderContext);
   const [transationDone, setTransationDone] = useState(false);
   const [displayStartButton, setDisplayStartButton] = useState(false);
-  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_HC4h5GbAke3c.mp4");
+  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_OfSmDJNpZSnZ.mp4");
   useEffect(() => {
     let body = document.querySelector("body");
     body.removeAttribute("class", "body-archive");
@@ -46,7 +46,7 @@ export const Home = () => {
       <div className="parallax hero" style={{
         overflow: "hidden"
       }}>
-        <video playsInline id="homeVideo" muted autoPlay style={{
+        <video loop playsInline id="homeVideo" muted autoPlay style={{
           height: 'auto',
           minHeight: window.innerHeight + 110,
           maxWidth: '100%',
