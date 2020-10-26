@@ -6,12 +6,15 @@ import { Animator } from "helpers";
 import { HeaderContext } from 'contexts';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
+
 export const Home = () => {
+  const displayStartButtonType = "INTERVAL"; //ALWAYS, INTERVAL, AFTER_VIDEO
+  const startButtonTIme = 3; // in seconds
   const desktop = useMediaQuery('(min-width:1024px)');
   const { setDisplayBackButton } = useContext(HeaderContext);
   const [transationDone, setTransationDone] = useState(false);
   const [displayStartButton, setDisplayStartButton] = useState(false);
-  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories-prod/video/video/original/Video_elPleecMCJAY.mp4");
+  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_HC4h5GbAke3c.mp4");
   useEffect(() => {
     let body = document.querySelector("body");
     body.removeAttribute("class", "body-archive");
@@ -27,10 +30,17 @@ export const Home = () => {
   }, [setDisplayBackButton]);
   useEffect(() => {
     const videoPlayer = document.getElementById("homeVideo");
-    if (videoPlayer)
-      videoPlayer.onended = function () {
-        setDisplayStartButton(true);
-      };
+    switch (displayStartButtonType) {
+    case 'AFTER_VIDEO': videoPlayer.onended = function () {
+      setDisplayStartButton(true);
+    };
+      break;
+    case 'INTERVAL': setTimeout(() => {
+      setDisplayStartButton(true);
+    }, startButtonTIme * 1000);
+      break;
+    default: setDisplayStartButton(true);
+    }
   }, [transationDone]);
   if (transationDone === false) return "";
   return (<>
@@ -55,7 +65,7 @@ export const Home = () => {
           position: "absolute",
           left: desktop ? "50%" : "70%", bottom: "10%",
           opacity: displayStartButton ? 1 : 0,
-          transition:"0.3s"
+          transition: "0.3s"
         }}>
           <Link to="start" style={{ color: "white", margin: "0 auto" }}>
             <span>Start <PlayArrowOutlined /></span>
