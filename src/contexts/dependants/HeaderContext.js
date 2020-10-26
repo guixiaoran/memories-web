@@ -4,7 +4,14 @@ export const HeaderContext = createContext();
 
 export const HeaderContextProvider = (props) => {
   const [displayBackButton, setDisplayBackButton] = useState(false);
-  return (<HeaderContext.Provider value={{ displayBackButton, setDisplayBackButton }}>
+  const [navigatorVideoPlayedOnce, setNavigatorVideoPlayedOnce] = useState(false);
+
+  return (<HeaderContext.Provider value={{
+    displayBackButton,
+    setDisplayBackButton,
+    navigatorVideoPlayedOnce,
+    setNavigatorVideoPlayedOnce
+  }}>
     {props.children}
   </HeaderContext.Provider>);
 };

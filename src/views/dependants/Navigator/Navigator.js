@@ -120,7 +120,8 @@ const SideNav = () => {
 
 export const Navigator = () => {
   const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_HC4h5GbAke3c.mp4");
-  const { setDisplayBackButton } = useContext(HeaderContext);
+  const [videoLink2] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_HC4h5GbAke3c.mp4");
+  const { setDisplayBackButton, navigatorVideoPlayedOnce, setNavigatorVideoPlayedOnce } = useContext(HeaderContext);
   useEffect(() => {
     setDisplayBackButton(false);
     document.getElementById('animationContainer').style = {
@@ -128,7 +129,10 @@ export const Navigator = () => {
       opacity: 1,
       position: "unset"
     };
-  }, [setDisplayBackButton]);
+    return () => {
+      setNavigatorVideoPlayedOnce(true);
+    };
+  }, [setDisplayBackButton, setNavigatorVideoPlayedOnce]);
   let router = (
     <AnimatedObject initial="fade" >
       <div style={{
@@ -140,13 +144,13 @@ export const Navigator = () => {
           <div className="parallax hero" style={{
             overflow: "hidden"
           }}>
-            <video playsInline loop id="homeVideo" autoPlay style={{
+            <video playsInline loop={navigatorVideoPlayedOnce} id="homeVideo" autoPlay style={{
               height: 'auto',
               minHeight: window.innerHeight + 110,
               maxWidth: window.innerWidth,
               objectFit: "cover"
             }}>
-              <source src={videoLink} type="video/mp4" />
+              <source src={navigatorVideoPlayedOnce ? videoLink : videoLink2} type="video/mp4" />
             Your browser does not support HTML5 video.
             </video>
             <SideNav />
