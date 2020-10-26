@@ -545,10 +545,8 @@ video {
 }
 
 #container {
-  background-image:  linear-gradient(transparent, rgb(0, 0, 0)), url("../assets/img/background-memories.jpg");
-  
-  /*background: radial-gradient( transparent, black) !important; 
-  background-color: rgba(0, 0, 0, 0.69);	color: #fff !important;*/
+  background-image:  linear-gradient(transparent, rgb(0, 0, 0)), url("../assets/img/background-memories.png");
+  background-size: cover;
   overflow: hidden;
   height: 100%;
 }
