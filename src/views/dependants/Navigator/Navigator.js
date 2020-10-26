@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, makeStyles } from '@material-ui/core';
 import { AnimatedObject } from "helpers/index";
 import { HeaderContext } from "contexts";
+import * as navigatorBG from "assets/img/navigatorBG.png";
 
 const useStyles = makeStyles(() => ({
   sidenav: {
@@ -77,7 +78,11 @@ export const Navigator = () => {
   }, [setDisplayBackButton]);
   let router = (
     <AnimatedObject initial="fade" >
-      <div style={{ position: "relative" }} >
+      <div style={{
+        position: "relative",
+        backgroundImage: `url(${navigatorBG})`,
+        backgroundSize: 'cover'
+      }} >
         <section className="primary">
           <div className="parallax hero" style={{
             overflow: "hidden"
