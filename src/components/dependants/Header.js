@@ -8,7 +8,9 @@ import { Animator } from 'helpers/index';
 export const HeaderTop = withRouter((props) => {
   const { displayBackButton, setDisplayBackButton } = useContext(HeaderContext);
   return <header className="nav-header" style={{ paddingLeft: "5vw", paddingRight: "5vw" }}>
-    <h1>{displayBackButton ? <span onClick={() => {
+    <h1>{displayBackButton ? <span style={{
+      cursor: 'pointer'
+    }} onClick={() => {
       props.history.goBack();
     }} id="logo">{`<- Back`}</span> : <Link style={{
       cursor: "pointer"
