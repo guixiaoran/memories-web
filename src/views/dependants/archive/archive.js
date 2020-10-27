@@ -5,6 +5,12 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { API, ArchiveAnimations, Animator, AnimatedObject } from 'helpers/index';
 import moment from "moment";
 import { LoadingScreen, Zoom, Image, MediaPlayer } from 'components/index';
+import {
+    BroadcastLine2x,
+    MemoryWalks2x,
+    VideoStories2x,
+    Vidicon2x
+} from "assets/icons";
 
 const galaryStyles = makeStyles(() => ({
     root: {
@@ -43,6 +49,30 @@ const galaryStyles = makeStyles(() => ({
     icon: {
         color: 'white',
     },
+    filters: {
+        position: "absolute",
+        bottom: 100,
+        width: "100%",
+        textAlign: "center",
+        zIndex: "12",
+        display: "flex",
+        justifyContent: "center",
+    },
+    filterIconContainer: {
+        backgroundColor: '#3B0072',
+        borderRadius: "50%",
+        padding: '10px',
+        opacity: 0.5,
+        transition: '0.3s',
+        '&:hover': {
+            opacity: 1
+        },
+        margin: '0 10px 0 10px'
+    },
+    filterIcon: {
+        height: "40px !important",
+        width: 'auto'
+    }
 }));
 
 
@@ -110,7 +140,10 @@ const MobileGallery = (props) => {
 
 let currentYear = 0;
 
+
 export const Archive = () => {
+    const classes = galaryStyles();
+
     const [archives, setArchives] = useState();
     const [filteredArchives, setFilteredArchives] = useState();
     const desktop = useMediaQuery('(min-width:1024px)');
@@ -216,12 +249,20 @@ export const Archive = () => {
                 </div>
             </div>
         </div>
-        <div className="menu-container">
-            <div id="menu">
-                <button id="all" onClick={() => { filterArchives() }}>ALL</button>
-                <button id="images" onClick={() => { filterArchives("image") }}>IMAGES</button>
-                <button id="audeo" onClick={() => { filterArchives("audio") }}>AUDIO</button>
-                <button id="video" onClick={() => { filterArchives("video") }}>VIDEO</button>
+        <div className="menu-container" >
+            <div className={classes.filters} >
+                <div className={classes.filterIconContainer} onClick={() => { filterArchives() }} >
+                    <Image className={classes.filterIcon} src={VideoStories2x} />
+                </div>
+                <div className={classes.filterIconContainer} onClick={() => { filterArchives("image") }}>
+                    <Image className={classes.filterIcon} src={MemoryWalks2x} />
+                </div>
+                <div className={classes.filterIconContainer} onClick={() => { filterArchives("video") }}>
+                    <Image className={classes.filterIcon} src={Vidicon2x} />
+                </div>
+                <div className={classes.filterIconContainer} onClick={() => { filterArchives("audio") }}>
+                    <Image className={classes.filterIcon} src={BroadcastLine2x} />
+                </div>
             </div>
         </div>
     </AnimatedObject>;
