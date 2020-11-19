@@ -73,7 +73,9 @@ export const VideoStories = () => {
         return <section key={`videoStory${index}`} style={index === videoStories.length - 1 && !desktop ? {
           paddingBottom: "20vh"
         } : {}} className="slide">
-          <div className="hero-img">
+          <div className="hero-img" style={{
+            minWidth: (window.screen.width / 10) * 5
+          }}>
             <TrackVisibility partialVisibility >
               {
                 ({ isVisible }) => <VideoStory isVisible={isVisible} video={video} className="videoPlayer" />

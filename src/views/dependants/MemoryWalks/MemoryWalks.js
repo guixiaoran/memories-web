@@ -80,7 +80,9 @@ export const MemoryWalks = () => {
             margin: 0
           }
         }}>
-          <div className="hero-img">
+          <div className="hero-img" style={{
+            minWidth: (window.screen.width / 10) * 5
+          }}>
             <TrackVisibility partialVisibility >
               {
                 ({ isVisible }) => <MemoryWalk url={video.url} isVisible={isVisible} _id={video._id} className="videoPlayer" />
