@@ -64,17 +64,18 @@ export const Plaza = () => {
         await response.sort((a, b) => moment(a.date).diff(b.date)).forEach(item => {
           if (item.media.length > 0) {
             if (item.media[0].type === "image") {
-              for (var i = 0; i < 20; i++)
-                tempCubes.push({
-                  speed: TextHelper.getRandomInteger(1, 3),
-                  position: [
-                    TextHelper.getRandomInteger(-d, d),
-                    TextHelper.getRandomInteger(-d, d),
-                    TextHelper.getRandomInteger(-d, d),
-                  ],
-                  color: 'pink',
-                  media: PlazaConfig.useProxy ? PlazaConfig.mediaProxyUrlSuffix + item.media[0].link : item.media[0].link
-                });
+              if (item.displayIn === 'PLAZA' || item.displayIn === 'BOTH')
+                for (var i = 0; i < 20; i++)
+                  tempCubes.push({
+                    speed: TextHelper.getRandomInteger(1, 3),
+                    position: [
+                      TextHelper.getRandomInteger(-d, d),
+                      TextHelper.getRandomInteger(-d, d),
+                      TextHelper.getRandomInteger(-d, d),
+                    ],
+                    color: 'pink',
+                    media: PlazaConfig.useProxy ? PlazaConfig.mediaProxyUrlSuffix + item.media[0].link : item.media[0].link
+                  });
             }
           }
         });

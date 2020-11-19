@@ -156,15 +156,16 @@ export const Archive = () => {
             API.getArchieves((response) => {
                 response.sort((a, b) => moment(a.date).diff(b.date)).forEach(item => {
                     if (item.media.length > 0) {
-                        data.push({
-                            title: item.title,
-                            content: item.content,
-                            url: item.media[0].link,
-                            type: item.media[0].type,
-                            category: item.category,
-                            poster: item.media[0].thumbnail,
-                            date: moment(item.date).get("year")
-                        });
+                        if (item.displayIn === 'ARCHIVE' || item.displayIn === 'BOTH')
+                            data.push({
+                                title: item.title,
+                                content: item.content,
+                                url: item.media[0].link,
+                                type: item.media[0].type,
+                                category: item.category,
+                                poster: item.media[0].thumbnail,
+                                date: moment(item.date).get("year")
+                            });
                     }
                 });
                 setArchives(data);
