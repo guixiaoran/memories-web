@@ -26,19 +26,21 @@ const useStyles = makeStyles(() => ({
     },
     '& a': {
       position: "absolute",
-      left: window.innerWidth - 200,
+      left: window.innerWidth - 300,
       transition: "0.3s",
       padding: "15px",
-      height: "100px",
-      width: "220px",
+      height: "150px",
+      width: "300px",
       textDecoration: "none",
       color: 'black',
-      opacity: 0.7,
+      opacity: 0.85,
       backgroundSize: 'auto',
       backgroundPosition: 'center'
     },
     '& a:hover': {
-      left: window.innerWidth - 220,
+      left: window.innerWidth - 340,
+      height:"165px",
+      width:"330",
       opacity: 1
 
     },
@@ -100,7 +102,7 @@ const SideNav = () => {
     {
       title: "Plaza",
       image: plazaBG,
-      to: "plaza"
+      to: "piazza"
     }
   ]);
   return (
@@ -120,7 +122,7 @@ const SideNav = () => {
 
 export const Navigator = () => {
   const [videoLink2] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_GWOtNfZx1jV4.mp4");
-  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_uwzOcFVxFSsH.mp4");
+  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_9nGaapDWtdoj.mp4");
   const { setDisplayBackButton, navigatorVideoPlayedOnce, setNavigatorVideoPlayedOnce } = useContext(HeaderContext);
   useEffect(() => {
     setDisplayBackButton(false);
