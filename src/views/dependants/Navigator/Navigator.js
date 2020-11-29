@@ -102,7 +102,7 @@ const SideNav = () => {
     {
       title: "Plaza",
       image: plazaBG,
-      to: "piazza"
+      to: "plaza"
     }
   ]);
   return (

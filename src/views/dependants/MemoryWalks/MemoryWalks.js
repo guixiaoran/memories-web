@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { Animator } from "helpers";
 import { AnimatedObject, API } from 'helpers/index';
 import Plyr from 'plyr';
+import * as memoryWalksBG from "assets/img/memoryWalks.png";
+import { Parallax } from 'react-parallax';
 
 
 const MemoryWalk = (props) => {
@@ -53,6 +55,7 @@ MemoryWalk.propTypes = {
 export const MemoryWalks = () => {
   const [memoryWalks, setMemoryWalks] = useState([]);
   const desktop = useMediaQuery('(min-width:1024px)');
+  const [parallaxBG] = useState(memoryWalksBG);
 
   useEffect(() => {
     API.getMemoryWalks((data) => {
@@ -68,47 +71,50 @@ export const MemoryWalks = () => {
   }, []);
   return <div style={{ width: "100%" }}>
     <AnimatedObject initial="right">
-
-      {memoryWalks.map((video, index) => {
-        return <section key={`videoStory${index}`} className="slide" style={{
-          marginTop: "5vh !important",
-          "@media screen and (max-width: 1024px)": {
-            marginTop: "5vh !important"
-          },
-          '& .plyr': {
-            width: "100%",
-            margin: 0
-          }
-        }}>
-          <div className="hero-img" style={{
-            minWidth: (window.screen.width / 10) * 5
+      <Parallax blur={1}
+        bgImage={parallaxBG}
+        strength={900}>
+        {memoryWalks.map((video, index) => {
+          return <section key={`videoStory${index}`} className="slide" style={{
+            marginTop: "5vh !important",
+            "@media screen and (max-width: 1024px)": {
+              marginTop: "5vh !important"
+            },
+            '& .plyr': {
+              width: "100%",
+              margin: 0
+            }
           }}>
-            <TrackVisibility partialVisibility >
-              {
-                ({ isVisible }) => <MemoryWalk url={video.url} isVisible={isVisible} _id={video._id} className="videoPlayer" />
-              }
-            </TrackVisibility>
-            <div className="reveal-img"></div>
-          </div >
-          <div className="hero-desc">
-            <div className="title">
-              <h2>{video.title}</h2>
-              <div className="title-swipe t-swipe1"></div>
+            <div className="hero-img" style={{
+              minWidth: (window.screen.width / 10) * 5
+            }}>
+              <TrackVisibility partialVisibility >
+                {
+                  ({ isVisible }) => <MemoryWalk url={video.url} isVisible={isVisible} _id={video._id} className="videoPlayer" />
+                }
+              </TrackVisibility>
+              <div className="reveal-img"></div>
+            </div >
+            <div className="hero-desc">
+              <div className="title">
+                <h2>{video.title}</h2>
+                <div className="title-swipe t-swipe1"></div>
+              </div>
+              <p>{video.description} </p>
+              <Link to={{
+                pathname: `memorywalks/detailed`,
+                params: {
+                  memory: video
+                }
+              }} className="explore" style={{
+                alignSelf: desktop ? 'self-start' : 'auto',
+                zIndex: 19
+              }}>EXPLORE</Link>
+              <div className="reveal-text"></div>
             </div>
-            <p>{video.description} </p>
-            <Link to={{
-              pathname: `memorywalks/detailed`,
-              params: {
-                memory: video
-              }
-            }} className="explore" style={{
-              alignSelf: desktop ? 'self-start' : 'auto',
-              zIndex: 19
-            }}>EXPLORE</Link>
-            <div className="reveal-text"></div>
-          </div>
-        </section>;
-      })}
+          </section>;
+        })}
+      </Parallax>
     </AnimatedObject>
   </div>;
 };
