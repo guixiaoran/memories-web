@@ -4,6 +4,8 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import TrackVisibility from 'react-on-screen';
 import { Animator, AnimatedObject, API } from "helpers";
 import Plyr from 'plyr';
+import { Parallax } from 'react-parallax';
+import * as plazaBG from "assets/img/plaza.png";
 
 
 const VideoStory = (props) => {
@@ -57,7 +59,7 @@ VideoStory.propTypes = {
 export const VideoStories = () => {
   const [videoStories, setVideoStories] = useState([]);
   const desktop = useMediaQuery('(min-width:1024px)');
-
+  const [parallaxBG] = useState(plazaBG);
   useEffect(() => {
     API.getVideoStories((data) => {
       setVideoStories(data);
@@ -69,30 +71,34 @@ export const VideoStories = () => {
   }, []);
   return <div style={{ width: "100%" }}>
     <AnimatedObject initial="right">
-      {videoStories.map((video, index) => {
-        return <section key={`videoStory${index}`} style={index === videoStories.length - 1 && !desktop ? {
-          paddingBottom: "20vh"
-        } : {}} className="slide">
-          <div className="hero-img" style={{
-            minWidth: (window.screen.width / 10) * 5
-          }}>
-            <TrackVisibility partialVisibility >
-              {
-                ({ isVisible }) => <VideoStory isVisible={isVisible} video={video} className="videoPlayer" />
-              }
-            </TrackVisibility>
-            <div className="reveal-img"></div>
-          </div >
-          <div className="hero-desc">
-            <div className="title">
-              <h2>{video.title}</h2>
-              <div className="title-swipe t-swipe1"></div>
+      <Parallax blur={1}
+        bgImage={parallaxBG}
+        strength={900}>
+        {videoStories.map((video, index) => {
+          return <section key={`videoStory${index}`} style={index === videoStories.length - 1 && !desktop ? {
+            paddingBottom: "20vh"
+          } : {}} className="slide">
+            <div className="hero-img" style={{
+              minWidth: (window.screen.width / 10) * 5
+            }}>
+              <TrackVisibility partialVisibility >
+                {
+                  ({ isVisible }) => <VideoStory isVisible={isVisible} video={video} className="videoPlayer" />
+                }
+              </TrackVisibility>
+              <div className="reveal-img"></div>
+            </div >
+            <div className="hero-desc">
+              <div className="title">
+                <h2>{video.title}</h2>
+                <div className="title-swipe t-swipe1"></div>
+              </div>
+              <p>{video.description} </p>
+              <div className="reveal-text"></div>
             </div>
-            <p>{video.description} </p>
-            <div className="reveal-text"></div>
-          </div>
-        </section>;
-      })}
+          </section>;
+        })}
+      </Parallax>
     </AnimatedObject>
   </div>;
 };

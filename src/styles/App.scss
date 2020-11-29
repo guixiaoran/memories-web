@@ -21,7 +21,6 @@ body {
 }
 
 #root{
-  background: #17181a ;
   font-family: "Montserrat", sans-serif;
   overflow-x: hidden;
   display: flex;
@@ -199,7 +198,6 @@ pointer-events: none;
   justify-content: space-between;
   align-items: center;
   color: white;
-  background: #17181a ;
 }
 
 
@@ -882,7 +880,6 @@ display: none;
 @media screen and (max-width: 1440px) {
  
 main {
-  overflow-x: hidden;
   width: 100% !important;
 }
 .nav-header {
