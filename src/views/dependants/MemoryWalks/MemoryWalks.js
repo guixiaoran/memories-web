@@ -60,7 +60,7 @@ export const MemoryWalks = () => {
   useEffect(() => {
     API.getMemoryWalks((data) => {
       setMemoryWalks(data);
-
+      window.scrollTo(0, 2);
       Animator.init(true);
     });
 

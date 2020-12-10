@@ -63,6 +63,7 @@ export const VideoStories = () => {
   useEffect(() => {
     API.getVideoStories((data) => {
       setVideoStories(data);
+      window.scrollTo(0, 2);
       Animator.init();
     });
     return () => {
