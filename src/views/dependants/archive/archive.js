@@ -251,7 +251,7 @@ export const Archive = () => {
             </div>
         </div>
         <div className="menu-container" >
-            <div className={classes.filters} >
+            <div id='filterButtons' className={classes.filters} >
                 <div className={classes.filterIconContainer} onClick={() => { filterArchives() }} >
                     <Image className={classes.filterIcon} src={VideoStories2x} />
                 </div>

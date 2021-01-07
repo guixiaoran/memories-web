@@ -20,6 +20,11 @@ const speedX = 0.175 * tilesSpacing / tilesRadius;
 const speedY = 50;
 const factor = 1 / 350;
 
+const removeElementUsingId = (id) => {
+  const elementToRemove = document.getElementById(id);
+  if (elementToRemove) elementToRemove.parentElement.removeChild(elementToRemove);
+};
+
 const createElementFromHTML = (htmlString) => {
   var div = document.createElement('div');
   div.innerHTML = htmlString.trim();
@@ -29,7 +34,7 @@ const createElementFromHTML = (htmlString) => {
 };
 
 const openMedia = (data) => {
-  console.info(data);
+  document.getElementById('filterButtons').style.display = 'none';
   const title = document.querySelector(".media-title");
   const date = document.querySelector(".media-date");
   const location = document.querySelector(".media-origin");
@@ -71,8 +76,7 @@ const openMedia = (data) => {
         iosNative: true
       }
     });
-  } else
-  if (data.type === "image") {
+  } else if (data.type === "image") {
     const img = document.createElement('img');
     const imgContainer = document.createElement('div');
     imgContainer.className = "container-img-archive";
@@ -82,7 +86,10 @@ const openMedia = (data) => {
     mediaContent.appendChild(img);
   }
   const box = document.getElementsByClassName('media-content')[0];
-  box.appendChild(createElementFromHTML(data.content));
+  const contentDIV = document.createElement('div');
+  contentDIV.id = "HTMLcontent";
+  contentDIV.appendChild(createElementFromHTML(data.content));
+  box.appendChild(contentDIV);
   let tileOpened = document.querySelector(".open-tile");
   tileOpened.style.opacity = 1;
   tileOpened.style.pointerEvents = "all";
@@ -93,13 +100,9 @@ let elements = [];
 const animateGlobal = () => {
   requestAnimationFrame(animateGlobal);
   TWEEN.update();
-
 };
 
 class ArchiveAnimations {
-
-
-
   constructor() {
     this.tileLength = 0;
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -185,6 +188,8 @@ class ArchiveAnimations {
       tileOpened.style.pointerEvents = "none";
       while (mediaContent.children[0]) mediaContent.removeChild(mediaContent.lastChild);
       layer.style.display = "block";
+      removeElementUsingId("HTMLcontent");
+      document.getElementById('filterButtons').style.display = 'flex';
     });
     buttonCloseMediaModal.addEventListener("touchstart", () => {
       const layer = document.querySelector(".layer-super");
@@ -236,9 +241,9 @@ class ArchiveAnimations {
   }
 
   /**
-       * 
-       * @param {Array} archieves 
-       */
+  * 
+  * @param {Array} archieves 
+  */
   async init(archieves, sendCurrentTileIndex) {
     this.tileLength = archieves.length;
     document.getElementById('container').innerHTML = "";
