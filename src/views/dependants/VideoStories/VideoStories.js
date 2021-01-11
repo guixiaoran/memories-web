@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import TrackVisibility from 'react-on-screen';
-import { Animator, AnimatedObject, API } from "helpers";
+import { Animator, AnimatedObject, API, ElementHelper } from "helpers";
 import Plyr from 'plyr';
 import { Parallax } from 'react-parallax';
 import * as plazaBG from "assets/img/plaza.png";
 
+const ParallaxHelper = (props) => {
+  if (ElementHelper.isItDesktop()) return <Parallax {...props} >{props.children}</Parallax>;
+  return props.children;
+};
 
 const VideoStory = (props) => {
   const [player, setPlayer] = useState();
@@ -72,7 +76,7 @@ export const VideoStories = () => {
   }, []);
   return <div style={{ width: "100%" }}>
     <AnimatedObject initial="right">
-      <Parallax blur={1}
+      <ParallaxHelper blur={1}
         bgImage={parallaxBG}
         strength={900}>
         {videoStories.map((video, index) => {
@@ -99,7 +103,7 @@ export const VideoStories = () => {
             </div>
           </section>;
         })}
-      </Parallax>
+      </ParallaxHelper>
     </AnimatedObject>
   </div>;
 };

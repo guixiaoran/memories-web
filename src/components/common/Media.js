@@ -12,7 +12,8 @@ export const Image = (props) => {
   const classes = useStyles();
   return (<img
     style={props.style !== undefined ? props.style instanceof Object ? props.style : {} : {}}
-    className={props.className !== undefined ? props.className : classes.responsiveImage} src={props.src} alt={props.alt !== undefined ? props.alt : String(props.src)} />);
+    className={props.className !== undefined ? props.className : classes.responsiveImage}
+    src={props.src} alt={props.alt !== undefined ? props.alt : String(props.src)} />);
 };
 Image.propTypes = {
   src: PropTypes.string.isRequired,

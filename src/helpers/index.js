@@ -6,6 +6,8 @@ import { useKeyPress, useLocalStorage, useLocation } from './hooks';
 import { socketInstance, useSocket, socketAuthCallback } from './socket';
 import Animator, { AnimationWrapper, AnimatedObject } from "./animations/Animator";
 import ArchiveAnimations from "./animations/Archive";
+import ElementHelper from './element/ElementHelper';
+
 export {
   axiosInstance,
   API,
@@ -20,5 +22,6 @@ export {
   Animator,
   AnimationWrapper,
   ArchiveAnimations,
-  AnimatedObject
+  AnimatedObject,
+  ElementHelper
 };

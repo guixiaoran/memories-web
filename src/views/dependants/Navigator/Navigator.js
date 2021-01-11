@@ -9,6 +9,7 @@ import * as memoryWalksBG from "assets/img/memoryWalks.png";
 import * as plazaBG from "assets/img/plaza.png";
 import * as videoStoriesBG from "assets/img/videoStories.png";
 import * as documentaryBG from "assets/img/documentary.png";
+import * as outTeamBG from "assets/img/ourTeam.jpg";
 
 const useImage = false;
 
@@ -39,8 +40,8 @@ const useStyles = makeStyles(() => ({
     },
     '& a:hover': {
       left: window.innerWidth - 340,
-      height:"165px",
-      width:"330",
+      height: "165px",
+      width: "330",
       opacity: 1
 
     },
@@ -60,7 +61,7 @@ const ButtonWithLink = (props) => {
       setDisplayBackButton(true);
     }} style={{
       backgroundImage: `url(${props.image})`,
-      top: ((window.innerHeight / 2) - (window.innerHeight / 3)) + props.index * 100,
+      top: ((window.innerHeight / 3) - (window.innerHeight / 4)) + props.index * 100,
     }} >
       <span style={{
         float: 'right',
@@ -103,6 +104,11 @@ const SideNav = () => {
       title: "Plaza",
       image: plazaBG,
       to: "plaza"
+    },
+    {
+      title: "Team",
+      image: outTeamBG,
+      to: "team"
     }
   ]);
   return (
