@@ -53,6 +53,15 @@ class API {
     }).catch(error => errorHelper(error));
   }
 
+  getTeamMembers(callback) {
+    return axiosInstance.get('teamMember/getAll').then((response) => {
+      performCallback(callback, response.data.data);
+    }).catch(error => {
+      errorHelper(error);
+    });
+  }
+
+
   logoutUser(callback) {
     logout();
     performCallback(callback);
