@@ -101,7 +101,7 @@ const SideNav = () => {
       to: "archive"
     },
     {
-      title: "Plaza",
+      title: "Piazza",
       image: plazaBG,
       to: "plaza"
     },

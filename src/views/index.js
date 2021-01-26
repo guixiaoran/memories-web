@@ -15,6 +15,8 @@ import { MemoryWalkDetailed } from "./dependants/MemoryWalkDetailed/MemoryWalkDe
 import { Navigator } from "./dependants/Navigator/Navigator";
 import { Plaza } from "./dependants/Plaza/Plaza";
 import { Team } from './dependants/Team/Team';
+import { ProjectStory } from './dependants/ProjectStory/ProjectStory';
+
 
 export {
   Example,
@@ -30,5 +32,6 @@ export {
   MemoryWalkDetailed,
   Navigator,
   Plaza,
-  Team
+  Team,
+  ProjectStory
 };

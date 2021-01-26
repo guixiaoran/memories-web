@@ -3,7 +3,7 @@ import { LoadingScreen } from 'components/index';
 import { Container, Grid, Typography, useMediaQuery } from '@material-ui/core';
 import { API } from 'helpers';
 
-export const Team = () => {
+export const ProjectStory = () => {
   const [projectStory, setProjectStory] = useState();
   let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
   useEffect(() => {
