@@ -23,7 +23,7 @@ export const ProjectStory = () => {
           </Typography>
         </Grid>
         <Grid item xs={12}>
-          <div dangerouslySetInnerHTML={{ __html: projectStory }} />
+          <div style={{ color: 'white', paddingTop: '20px' }} dangerouslySetInnerHTML={{ __html: projectStory }} />
         </Grid>
       </Grid>
     </Container>

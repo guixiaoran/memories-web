@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import { AnimatedObject } from "helpers/index";
 import { HeaderContext } from "contexts";
 import * as navigatorBG from "assets/img/navigatorBG.png";
@@ -10,6 +10,7 @@ import * as plazaBG from "assets/img/plaza.png";
 import * as videoStoriesBG from "assets/img/videoStories.png";
 import * as documentaryBG from "assets/img/documentary.png";
 import * as outTeamBG from "assets/img/ourTeam.jpg";
+import * as projectStoryBG from "assets/img/projectStory.jpg";
 
 const useImage = false;
 
@@ -21,6 +22,8 @@ const useStyles = makeStyles(() => ({
     borderRadius: '0 0 0 10px',
   },
   sidenav: {
+    background: 'black',
+    overflow: 'hidden',
     zIndex: 99,
     '& .MuiButton-label': {
       justifyContent: 'left'
@@ -29,14 +32,12 @@ const useStyles = makeStyles(() => ({
       position: "absolute",
       left: window.innerWidth - 300,
       transition: "0.3s",
-      padding: "15px",
       height: "150px",
       width: "300px",
       textDecoration: "none",
       color: 'black',
-      opacity: 0.85,
       backgroundSize: 'auto',
-      backgroundPosition: 'center'
+      backgroundPosition: 'center',
     },
     '& a:hover': {
       left: window.innerWidth - 340,
@@ -44,10 +45,19 @@ const useStyles = makeStyles(() => ({
       width: "330",
       opacity: 1
 
-    },
-    label: {
-
     }
+  },
+  label: {
+    float: 'right',
+    justifyContent: "right",
+    margin: "0 auto",
+    paddingRight: '10px',
+    paddingTop: '10px',
+    color: 'white',
+    background: 'rgba(0,0,0,0.3)',
+    width: '100%',
+    height: '100%',
+    textAlign: 'right',
   }
 }));
 
@@ -61,18 +71,13 @@ const ButtonWithLink = (props) => {
       setDisplayBackButton(true);
     }} style={{
       backgroundImage: `url(${props.image})`,
+      backgroungSize: 'cover',
       top: ((window.innerHeight / 3) - (window.innerHeight / 4)) + props.index * 100,
     }} >
-      <span style={{
-        float: 'right',
-        justifyContent: "right",
-        margin: "0 auto",
-        paddingRight: '10px',
-        color: 'white'
-      }}>
-        {props.children}
+      <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className={classes.label}>
+        <Typography variant='h4'>{props.children}</Typography>
       </span>
-    </Link >
+    </Link>
   );
   return button;
 };
@@ -109,6 +114,11 @@ const SideNav = () => {
       title: "Team",
       image: outTeamBG,
       to: "team"
+    },
+    {
+      title: "Story",
+      image: projectStoryBG,
+      to: "story"
     }
   ]);
   return (
