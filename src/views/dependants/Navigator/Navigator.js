@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
     '& .MuiButton-label': {
       justifyContent: 'left'
     },
-    '& a': {
+    '& p': {
       position: "absolute",
       left: window.innerWidth - 300,
       transition: "0.3s",
@@ -39,12 +39,28 @@ const useStyles = makeStyles(() => ({
       backgroundSize: 'auto',
       backgroundPosition: 'center',
     },
-    '& a:hover': {
+    '& p:hover': {
       left: window.innerWidth - 340,
-      height: "165px",
+      height: "200px",
       width: "330",
-      opacity: 1
-
+      opacity: 1,
+    },
+    '& .tooltiptext': {
+      visibility: 'hidden',
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0,0,0,0.80)',
+      color: 'white',
+      textAlign: 'center',
+      padding: '5px',
+      position: 'absolute',
+      zIndex: 105,
+    },
+    '& p:hover .tooltiptext': {
+      visibility: 'visible',
+    },
+    '& p:hover .makeStyles-label-6': {
+      visibility: 'hidden',
     }
   },
   label: {
@@ -58,15 +74,16 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
     textAlign: 'right',
-  }
+    visibility: 'visible',
+  },
 }));
 
 const ButtonWithLink = (props) => {
   const { setDisplayBackButton } = useContext(HeaderContext);
   const classes = useStyles();
+  let button = (<>
 
-  let button = (
-    <Link to={props.to} className={props.index === 0 ? classes.first : (props.index === props.size - 1 ? classes.last : '')
+    <Link component={Typography} to={props.to} className={props.index === 0 ? classes.first : (props.index === props.size - 1 ? classes.last : '')
     } onClick={() => {
       setDisplayBackButton(true);
     }} style={{
@@ -74,10 +91,11 @@ const ButtonWithLink = (props) => {
       backgroungSize: 'cover',
       top: ((window.innerHeight / 3) - (window.innerHeight / 4)) + props.index * 100,
     }} >
+      <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className='tooltiptext'>{props.helpText}</span>
       <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className={classes.label}>
         <Typography variant='h4'>{props.children}</Typography>
       </span>
-    </Link>
+    </Link></>
   );
   return button;
 };
@@ -88,37 +106,44 @@ const SideNav = () => {
     {
       title: "Documentary",
       image: documentaryBG,
-      to: "documentary"
+      to: "documentary",
+      helpText: 'This is a history of post-World War Two Italian migration stories to Victoria from 1945–1960 told by the people who lived it.'
     },
     {
       title: "Video Stories",
       image: videoStoriesBG,
-      to: "videostories"
+      to: "videostories",
+      helpText: 'Short videos of the first-hand accounts and intimate recollections of Italian migrants to Australia post-World War Two.'
     },
     {
       title: "Memory Walks",
       image: memoryWalksBG,
-      to: "memorywalks"
+      to: "memorywalks",
+      helpText: 'Short memory walks have people returning to either a key location, a space or environment to tell the story of that space as connected to their own migrant biography.'
     },
     {
       title: "Archive",
       image: archiveBG,
-      to: "archive"
+      to: "archive",
+      helpText: 'A new archive of Italian migrant stories in visual images and photographs.'
     },
     {
       title: "Piazza",
       image: plazaBG,
-      to: "plaza"
-    },
-    {
-      title: "Team",
-      image: outTeamBG,
-      to: "team"
+      to: "plaza",
+      helpText: 'Sharing stories through reconnection.'
     },
     {
       title: "Story",
       image: projectStoryBG,
-      to: "story"
+      to: "story",
+      helpText: 'Stories about Italian migration largely reflect the dual values of hardship and success, but rarely do they capture their affective and temporal entanglement. This project has digitally compiled its findings in documentary film, short video stories, and interactive archives of memories to be shared.'
+    },
+    {
+      title: "Team",
+      image: outTeamBG,
+      to: "team",
+      helpText: 'The team set out to create a reservoir of knowledge and understanding about what it was like to be an Italian migrant in Australia post-World War Two. '
     }
   ]);
   return (
@@ -128,6 +153,7 @@ const SideNav = () => {
           key={`button_${i}`}
           image={button.image} index={i}
           to={button.to}
+          helpText={button.helpText}
           size={buttons.length}>
           {button.title}
         </ButtonWithLink>)
