@@ -28,7 +28,7 @@ const useStyles = makeStyles(() => ({
     '& .MuiButton-label': {
       justifyContent: 'left'
     },
-    '& p': {
+    '& a': {
       position: "absolute",
       left: window.innerWidth - 300,
       transition: "0.3s",
@@ -40,7 +40,7 @@ const useStyles = makeStyles(() => ({
       backgroundPosition: 'center',
       cursor: 'pointer'
     },
-    '& p:hover': {
+    '& a:hover': {
       left: window.innerWidth - 340,
       height: "200px",
       width: "330",
@@ -57,10 +57,10 @@ const useStyles = makeStyles(() => ({
       position: 'absolute',
       zIndex: 105,
     },
-    '& p:hover .tooltiptext': {
+    '& a:hover .tooltiptext': {
       visibility: 'visible',
     },
-    '& p:hover .makeStyles-label-6': {
+    '& a:hover .makeStyles-label-6': {
       visibility: 'hidden',
     }
   },
@@ -84,7 +84,7 @@ const ButtonWithLink = (props) => {
   const classes = useStyles();
   let button = (<>
 
-    <Link component={Typography} to={props.to} className={props.index === 0 ? classes.first : (props.index === props.size - 1 ? classes.last : '')
+    <Link to={props.to} className={props.index === 0 ? classes.first : (props.index === props.size - 1 ? classes.last : '')
     } onClick={() => {
       setDisplayBackButton(true);
     }} style={{
