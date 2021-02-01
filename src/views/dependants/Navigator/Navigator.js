@@ -135,7 +135,7 @@ const SideNav = () => {
       helpText: 'Sharing stories through reconnection.'
     },
     {
-      title: "Story",
+      title: "The stories of the project",
       image: projectStoryBG,
       to: "story",
       helpText: 'Stories about Italian migration largely reflect the dual values of hardship and success, but rarely do they capture their affective and temporal entanglement. This project has digitally compiled its findings in documentary film, short video stories, and interactive archives of memories to be shared.'

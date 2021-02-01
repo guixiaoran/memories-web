@@ -71,6 +71,16 @@ class API {
     });
   }
 
+  getProjectStoryUsingId(id, callback) {
+    return axiosInstance.get(`projectStory/${id}`
+    ).then((response) => {
+      performCallback(callback, response.data.data);
+    }).catch(error => {
+      performCallback(callback, { error: true });
+      errorHelper(error);
+    });
+  }
+
 
 
   logoutUser(callback) {

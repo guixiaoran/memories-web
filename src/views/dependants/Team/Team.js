@@ -65,9 +65,9 @@ export const Team = () => {
           </Typography>
         </Grid>
         {
-          teamMembers.filter(member => member.isProject !== false).map((member, i) => <TeamMemberCard member={member} key={`member${i}`} />)
+          teamMembers.filter(member => member.isProject !== true).map((member, i) => <TeamMemberCard member={member} key={`member${i}`} />)
         }
-        {teamMembers.filter(member => member.isProject).length > 0 &&
+        {teamMembers.filter(member => member.isProject === true).length > 0 &&
           <Grid item xs={12}>
             <Typography variant='h3' style={{ color: 'white' }}>
               Our Project Partners

@@ -16,7 +16,7 @@ import { Navigator } from "./dependants/Navigator/Navigator";
 import { Plaza } from "./dependants/Plaza/Plaza";
 import { Team } from './dependants/Team/Team';
 import { ProjectStory } from './dependants/ProjectStory/ProjectStory';
-
+import { Stories } from './dependants/ProjectStory/Stories';
 
 export {
   Example,
@@ -33,5 +33,6 @@ export {
   Navigator,
   Plaza,
   Team,
-  ProjectStory
+  ProjectStory,
+  Stories
 };
