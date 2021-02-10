@@ -90,7 +90,7 @@ const ButtonWithLink = (props) => {
     }} style={{
       backgroundImage: `url(${props.image})`,
       backgroungSize: 'cover',
-      top: ((window.innerHeight / 3.2) - (window.innerHeight / 4)) + props.index * 90,
+      top: ((window.innerHeight / 2.9) - (window.innerHeight / 4)) + props.index * 90,
     }} >
       <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className='tooltiptext'>{props.helpText}</span>
       <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className={classes.label}>
