@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import { AnimatedObject } from "helpers/index";
 import { HeaderContext } from "contexts";
 import * as navigatorBG from "assets/img/navigatorBG.png";
@@ -10,6 +10,7 @@ import * as plazaBG from "assets/img/plaza.png";
 import * as videoStoriesBG from "assets/img/videoStories.png";
 import * as documentaryBG from "assets/img/documentary.png";
 import * as outTeamBG from "assets/img/ourTeam.jpg";
+import * as projectStoryBG from "assets/img/projectStory.jpg";
 
 const useImage = false;
 
@@ -21,6 +22,8 @@ const useStyles = makeStyles(() => ({
     borderRadius: '0 0 0 10px',
   },
   sidenav: {
+    background: 'black',
+    overflow: 'hidden',
     zIndex: 99,
     '& .MuiButton-label': {
       justifyContent: 'left'
@@ -29,50 +32,71 @@ const useStyles = makeStyles(() => ({
       position: "absolute",
       left: window.innerWidth - 300,
       transition: "0.3s",
-      padding: "15px",
-      height: "150px",
+      height: "90px",
       width: "300px",
       textDecoration: "none",
       color: 'black',
-      opacity: 0.85,
       backgroundSize: 'auto',
-      backgroundPosition: 'center'
+      backgroundPosition: 'center',
+      cursor: 'pointer'
     },
     '& a:hover': {
       left: window.innerWidth - 340,
-      height: "165px",
+      height: "200px",
       width: "330",
-      opacity: 1
-
+      opacity: 1,
     },
-    label: {
-
+    '& .tooltiptext': {
+      visibility: 'hidden',
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0,0,0,0.80)',
+      color: 'white',
+      textAlign: 'center',
+      padding: '5px',
+      position: 'absolute',
+      zIndex: 105,
+    },
+    '& a:hover .tooltiptext': {
+      visibility: 'visible',
+    },
+    '& a:hover .makeStyles-label-6': {
+      visibility: 'hidden',
     }
-  }
+  },
+  label: {
+    float: 'right',
+    justifyContent: "right",
+    margin: "0 auto",
+    paddingRight: '10px',
+    paddingTop: '10px',
+    color: 'white',
+    background: 'rgba(0,0,0,0.3)',
+    width: '100%',
+    height: '100%',
+    textAlign: 'right',
+    visibility: 'visible',
+  },
 }));
 
 const ButtonWithLink = (props) => {
   const { setDisplayBackButton } = useContext(HeaderContext);
   const classes = useStyles();
+  let button = (<>
 
-  let button = (
     <Link to={props.to} className={props.index === 0 ? classes.first : (props.index === props.size - 1 ? classes.last : '')
     } onClick={() => {
       setDisplayBackButton(true);
     }} style={{
       backgroundImage: `url(${props.image})`,
-      top: ((window.innerHeight / 3) - (window.innerHeight / 4)) + props.index * 100,
+      backgroungSize: 'cover',
+      top: ((window.innerHeight / 3.2) - (window.innerHeight / 4)) + props.index * 90,
     }} >
-      <span style={{
-        float: 'right',
-        justifyContent: "right",
-        margin: "0 auto",
-        paddingRight: '10px',
-        color: 'white'
-      }}>
-        {props.children}
+      <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className='tooltiptext'>{props.helpText}</span>
+      <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className={classes.label}>
+        <Typography variant='h4'>{props.children}</Typography>
       </span>
-    </Link >
+    </Link></>
   );
   return button;
 };
@@ -83,32 +107,44 @@ const SideNav = () => {
     {
       title: "Documentary",
       image: documentaryBG,
-      to: "documentary"
+      to: "documentary",
+      helpText: 'This is a history of post-World War Two Italian migration stories to Victoria from 1945–1960 told by the people who lived it.'
     },
     {
       title: "Video Stories",
       image: videoStoriesBG,
-      to: "videostories"
+      to: "videostories",
+      helpText: 'Short videos of the first-hand accounts and intimate recollections of Italian migrants to Australia post-World War Two.'
     },
     {
       title: "Memory Walks",
       image: memoryWalksBG,
-      to: "memorywalks"
+      to: "memorywalks",
+      helpText: 'Short memory walks have people returning to either a key location, a space or environment to tell the story of that space as connected to their own migrant biography.'
     },
     {
       title: "Archive",
       image: archiveBG,
-      to: "archive"
+      to: "archive",
+      helpText: 'A new archive of Italian migrant stories in visual images and photographs.'
     },
     {
-      title: "Plaza",
+      title: "Piazza",
       image: plazaBG,
-      to: "plaza"
+      to: "plaza",
+      helpText: 'Sharing stories through reconnection.'
+    },
+    {
+      title: "The stories of the project",
+      image: projectStoryBG,
+      to: "story",
+      helpText: 'Stories about Italian migration largely reflect the dual values of hardship and success, but rarely do they capture their affective and temporal entanglement. This project has digitally compiled its findings in documentary film, short video stories, and interactive archives of memories to be shared.'
     },
     {
       title: "Team",
       image: outTeamBG,
-      to: "team"
+      to: "team",
+      helpText: 'The team set out to create a reservoir of knowledge and understanding about what it was like to be an Italian migrant in Australia post-World War Two. '
     }
   ]);
   return (
@@ -118,6 +154,7 @@ const SideNav = () => {
           key={`button_${i}`}
           image={button.image} index={i}
           to={button.to}
+          helpText={button.helpText}
           size={buttons.length}>
           {button.title}
         </ButtonWithLink>)

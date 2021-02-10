@@ -53,6 +53,36 @@ class API {
     }).catch(error => errorHelper(error));
   }
 
+  getTeamMembers(callback) {
+    return axiosInstance.get('teamMember/getAll').then((response) => {
+      performCallback(callback, response.data.data);
+    }).catch(error => {
+      errorHelper(error);
+    });
+  }
+
+  getProjectStory(callback) {
+    return axiosInstance.get(`projectStory`
+    ).then((response) => {
+      performCallback(callback, response.data.data);
+    }).catch(error => {
+      performCallback(callback, { error: true });
+      errorHelper(error);
+    });
+  }
+
+  getProjectStoryUsingId(id, callback) {
+    return axiosInstance.get(`projectStory/${id}`
+    ).then((response) => {
+      performCallback(callback, response.data.data);
+    }).catch(error => {
+      performCallback(callback, { error: true });
+      errorHelper(error);
+    });
+  }
+
+
+
   logoutUser(callback) {
     logout();
     performCallback(callback);
