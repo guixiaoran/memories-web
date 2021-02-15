@@ -1,4 +1,4 @@
 {
     "useProxy": true,
-    "mediaProxyUrlSuffix": "https://cors-anywhere.herokuapp.com/"
+    "mediaProxyUrlSuffix": "http://135.90.135.165:8101/"
 }
