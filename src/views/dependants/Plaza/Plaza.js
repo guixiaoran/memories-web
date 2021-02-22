@@ -2,12 +2,16 @@ import React, { useRef, useState, Suspense, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { TextHelper, API } from "helpers";
 import { Canvas, useFrame } from "react-three-fiber";
-import { MeshBasicMaterial, TextureLoader } from 'three';
-import { PositionalAudio, softShadows, FlyControls } from "drei";
+import { MeshBasicMaterial, TextureLoader, RepeatWrapping, PlaneGeometry } from 'three';
+import { PositionalAudio, softShadows, Sky, PointerLockControls } from "drei";
 import { useSpring, a } from "react-spring/three";
 import { LoadingScreen } from 'components/index';
 import moment from "moment";
 import { PlazaConfig } from "configurations";
+import { grass } from "../../../assets/img/grass.jpg"
+import { usePlane } from "use-cannon";
+// import { Ground } from "../Ground/Ground";
+// import { Player } from "../Player/Player";
 
 
 const SpinningMesh = ({ position, args, media }) => {
@@ -15,7 +19,7 @@ const SpinningMesh = ({ position, args, media }) => {
   const mesh = useRef();
 
   //useFrame allows us to re-render/update rotation on each frame
-  useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.001));
+  // useFrame(() => (mesh.current.rotation.x = mesh.current.rotation.y += 0.001));
   //
 
   //Basic expand state
@@ -53,6 +57,20 @@ SpinningMesh.propTypes = {
   media: PropTypes.string.isRequired
 };
 
+const Floor = () => {
+
+  const texture = new TextureLoader().load(grass);
+  texture.wrapS = RepeatWrapping;
+  texture.wrapT = RepeatWrapping;
+  texture.repeat.set( 1000, 1000 );
+  return (
+    <mesh roation={[Math.PI / 2, 0, 0]} receiveShadow position={[0,0,0]} >
+      <planeBufferGeometry args={[1000, 1000]} />
+      <meshStandardMaterial map={texture} color="green" />
+    </mesh>
+  );
+};
+
 export const Plaza = () => {
   const d = 20;
   const [cubes, setCubes] = useState();
@@ -70,7 +88,7 @@ export const Plaza = () => {
                     speed: TextHelper.getRandomInteger(1, 3),
                     position: [
                       TextHelper.getRandomInteger(-d, d),
-                      TextHelper.getRandomInteger(-d, d),
+                      0,
                       TextHelper.getRandomInteger(-d, d),
                     ],
                     color: 'pink',
@@ -85,29 +103,23 @@ export const Plaza = () => {
 
     softShadows();
   }, []);
+  
+
   if (audioArgs === undefined || cubes === undefined) return <LoadingScreen />;
   return (
     <div style={{ height: "100vh" }}>
       <Canvas
         colorManagement
         shadowMap
-        camera={{ position: [-5, 2, 10], fov: 60 }}
+        camera={{ position: [-5, 0, 10], fov: 60 }}
       >
-        <ambientLight intensity={0.3} />
-        <directionalLight
-          castShadow
-          position={[0, 10, 0]}
-          intensity={1.5}
-          shadow-mapSize-width={1024}
-          shadow-mapSize-height={1024}
-          shadow-camera-far={50}
-          shadow-camera-left={-10}
-          shadow-camera-right={10}
-          shadow-camera-top={10}
-          shadow-camera-bottom={-10}
-        />
-        <pointLight position={[-10, 0, -20]} intensity={0.5} />
-        <pointLight position={[0, -10, 0]} intensity={1.5} />
+       
+
+        
+        {/* <Ground /> */}
+        
+        {/* <Player /> */}
+
         <Suspense fallback={null}>
           <group>
             {audioArgs.map(({ position, url }, index) => (
@@ -133,12 +145,36 @@ export const Plaza = () => {
             }
           </group>
         </Suspense>
-        <FlyControls
+        
+        <Sky sunPosition={[100, 10, 100]}  />
+
+        <Floor />
+
+        <ambientLight intensity={0.3} />
+        {/* <directionalLight
+          castShadow
+          position={[0, 10, 0]}
+          intensity={1.5}
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+          shadow-camera-far={50}
+          shadow-camera-left={-10}
+          shadow-camera-right={10}
+          shadow-camera-top={10}
+          shadow-camera-bottom={-10}
+        /> */}
+        <ambientLight intensity={0.3} />
+        {/* <pointLight position={[-10, 0, -20]} intensity={0.5} /> */}
+        <pointLight position={[0, -10, 0]} intensity={1.5} />
+        <PointerLockControls />
+
+        {/* <FlyControls
           movementSpeed={2}
           dragToLook={false}
-          rollSpeed={Math.PI / 15} //6
-        />
+          // rollSpeed={Math.PI / 15} //6
+        /> */}
       </Canvas>
     </div>
   );
 };
+
