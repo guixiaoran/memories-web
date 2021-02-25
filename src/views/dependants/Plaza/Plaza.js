@@ -11,7 +11,7 @@ import { LoadingScreen } from 'components/index';
 import moment from "moment";
 import { PlazaConfig } from "configurations";
 import { Player, Ground, Cube } from 'components/dependants/Piazza';
-import { CircusSound, ConcertSound } from 'assets/audio/index';
+import { MarketSound, ConcertSound } from 'assets/audio/index';
 import { Suspense } from 'react';
 import { Loader } from '@react-three/drei/index';
 
@@ -98,7 +98,7 @@ const PlazaInner = () => {
           <Player />
           <mesh scale={[0.0070, 0.0070, 0.0070]} position={[-14, 3.4, -28]}>
             <Tent />
-            <PositionalAudio loop distance={1} url={CircusSound} />
+            <PositionalAudio loop distance={1} url={MarketSound} />
           </mesh>
           <mesh>
             {
