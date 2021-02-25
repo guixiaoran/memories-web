@@ -11,15 +11,16 @@ import { LoadingScreen } from 'components/index';
 import moment from "moment";
 import { PlazaConfig } from "configurations";
 import { Player, Ground, Cube } from 'components/dependants/Piazza';
-import { CircusSound, ConcertSound } from 'assets/audio/index';
+import { MarketSound, ConcertSound } from 'assets/audio/index';
 import { Suspense } from 'react';
 import { Loader } from '@react-three/drei/index';
 
 
 const PlazaInner = () => {
   const [cubes, setCubes] = useState();
-  const [audioArgs] = useState([]);
   const fountain = useRef();
+  const marketSound = useRef();
+  const crowdSound = useRef();
 
   useEffect(() => {
     (() => {
@@ -83,12 +84,15 @@ const PlazaInner = () => {
       });
     })();
     softShadows();
+    return () => {
+      window.location.reload();
+    };
   }, []);
 
-  if (audioArgs === undefined || cubes === undefined) return <LoadingScreen />;
+  if (cubes === undefined) return <LoadingScreen />;
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader />} dispose={null}>
       <Canvas shadowMap gl={{ alpha: false }} camera={{ fov: 35 }}>
         <Sky sunPosition={[100, -4, 100]} />
         <ambientLight intensity={0.3} />
@@ -98,7 +102,7 @@ const PlazaInner = () => {
           <Player />
           <mesh scale={[0.0070, 0.0070, 0.0070]} position={[-14, 3.4, -28]}>
             <Tent />
-            <PositionalAudio loop distance={1} url={CircusSound} />
+            <PositionalAudio ref={marketSound} loop distance={1} url={MarketSound} />
           </mesh>
           <mesh>
             {
@@ -121,7 +125,7 @@ const PlazaInner = () => {
           <mesh ref={fountain} scale={[0.01, 0.01, 0.01]} position={[14, 0, -28]}>
             <Fountain />
 
-            <PositionalAudio loop distance={1} url={ConcertSound} />
+            <PositionalAudio ref={crowdSound} loop distance={1} url={ConcertSound} />
           </mesh>
         </Physics>
         <PointerLockControls />
