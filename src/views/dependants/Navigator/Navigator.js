@@ -186,6 +186,16 @@ export const Navigator = () => {
         backgroundSize: 'cover'
       }} >
         <section className="primary">
+          <div className="content hero-title" style={{
+            textAlign: "left",
+            paddingRight: "20%",
+            bottom: 0,
+            background: "linear-gradient(rgba(0,0,0,0),rgba(0,0,0,1))"
+          }}>
+            <h2 style={{
+              fontFamily: "'Dancing Script', cursive",
+            }}>Memories that make us</h2>
+          </div>
           <div className="parallax hero" style={{
             overflow: "hidden"
           }}>

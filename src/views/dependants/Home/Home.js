@@ -29,15 +29,15 @@ export const Home = () => {
   useEffect(() => {
     const videoPlayer = document.getElementById("homeVideo");
     switch (displayStartButtonType) {
-    case 'AFTER_VIDEO': videoPlayer.onended = function () {
-      setDisplayStartButton(true);
-    };
-      break;
-    case 'INTERVAL': setTimeout(() => {
-      setDisplayStartButton(true);
-    }, startButtonTIme * 1000);
-      break;
-    default: setDisplayStartButton(true);
+      case 'AFTER_VIDEO': videoPlayer.onended = function () {
+        setDisplayStartButton(true);
+      };
+        break;
+      case 'INTERVAL': setTimeout(() => {
+        setDisplayStartButton(true);
+      }, startButtonTIme * 1000);
+        break;
+      default: setDisplayStartButton(true);
     }
   }, [transationDone]);
   if (transationDone === false) return "";

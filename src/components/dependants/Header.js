@@ -17,7 +17,7 @@ export const HeaderTop = withRouter((props) => {
       cursor: "pointer"
     }} onClick={() => {
       setDisplayBackButton(false);
-    }} to="/" id="logo">Memories</Link>}</h1>
+    }} to="/" id="logo"><i className='material-icons'>home</i></Link>}</h1>
     <div className="burger" onClick={(e) => {
       if (!e.target.classList.contains("active")) {
         e.target.classList.add("active");
