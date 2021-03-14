@@ -13,6 +13,7 @@ import { Player, Ground, Cube } from 'components/dependants/Piazza';
 import { MarketSound, ConcertSound } from 'assets/audio/index';
 import { Suspense } from 'react';
 import { Loader } from '@react-three/drei/index';
+import ModelY from './ModelY';
 
 
 const PlazaInner = () => {
@@ -110,8 +111,13 @@ const PlazaInner = () => {
             <Player />
           </Suspense>
           <Suspense>
-            <mesh scale={[0.9, 0.9, 0.9]} rotation={[-3.08, 0.37, 3.12]} position={[-28, -2.1, -40]}>
+            <mesh scale={[0.15, 0.15, 0.15]} rotation={[-3.08, 1.30, 3.08]} position={[28, 0, -15]}>
               <ModelX />
+            </mesh >
+          </Suspense>
+          <Suspense>
+            <mesh scale={[0.15, 0.15, 0.15]} position={[-28, 0, -15]}>
+              <ModelY />
             </mesh >
           </Suspense>
           <Suspense>
