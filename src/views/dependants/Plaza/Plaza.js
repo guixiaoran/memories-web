@@ -51,7 +51,7 @@ const PlazaInner = () => {
                       0.4,
                       getZoneOneZ(),
                     ],
-                    media: PlazaConfig.useProxy ? PlazaConfig.mediaProxyUrlSuffix + item.media[0].link : item.media[0].link
+                    media: PlazaConfig.useProxy ? `${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_CORS_PORT}/${item.media[0].link}` : item.media[0].link
                   });
                 } else {
                   const getZoneTwoZ = () => {
@@ -73,7 +73,7 @@ const PlazaInner = () => {
                       0.4,
                       getZoneTwoZ(),
                     ],
-                    media: PlazaConfig.useProxy ? PlazaConfig.mediaProxyUrlSuffix + item.media[0].link : item.media[0].link
+                    media: PlazaConfig.useProxy ? `${process.env.REACT_APP_BASE_URL}:${process.env.REACT_APP_CORS_PORT}/${item.media[0].link}` : item.media[0].link
                   });
                 }
 
@@ -106,10 +106,8 @@ const PlazaInner = () => {
         <ambientLight intensity={0.3} />
         <pointLight castShadow intensity={0.8} position={[100, 100, 100]} />
         <Physics gravity={[0, -30, 0]}>
-          <Suspense>
-            <Ground />
-            <Player />
-          </Suspense>
+          <Ground />
+          <Player />
           <Suspense>
             <mesh scale={[0.15, 0.15, 0.15]} rotation={[-3.08, 1.30, 3.08]} position={[28, 0, -15]}>
               <ModelX />
@@ -126,7 +124,7 @@ const PlazaInner = () => {
               <PositionalAudio ref={marketSound} loop distance={1} url={MarketSound} />
             </mesh>
           </Suspense>
-          <Suspense>
+          <Suspense fallback={null} dispose={null}>
             <mesh>
               {
                 cubes.map((cube, i) => {
@@ -147,7 +145,7 @@ const PlazaInner = () => {
             </mesh>
           </Suspense>
           <Suspense>
-            <mesh ref={fountain} scale={[0.01, 0.01, 0.01]} position={[14, 0, -28]}>
+            <mesh ref={fountain} scale={[0.01, 0.01, 0.01]} position={[2, 0, -5]}>
               <Fountain />
               <PositionalAudio ref={crowdSound} loop distance={1} url={ConcertSound} />
             </mesh>

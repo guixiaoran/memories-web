@@ -2,7 +2,7 @@ import axios from 'axios';
 import { logout } from 'contexts/helpers';
 import { notify } from 'components';
 
-const baseURL = process.env.REACT_APP_BASE_URL + '/api/';
+const baseURL = process.env.REACT_APP_BASE_URL + ':' + process.env.REACT_APP_BASE_PORT + '/api/';
 
 export const axiosInstance = axios.create({
   baseURL: baseURL,
