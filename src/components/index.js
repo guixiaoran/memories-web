@@ -12,7 +12,7 @@ import { HeaderElements } from './helpers/HeaderElements';
 import { EnhancedEditor } from './common/EnhancedEditor';
 import { EnhancedDrawer } from './common/EnhancedDrawer';
 import { LoginCheck } from './helpers/LoginCheck.js';
-import { VideoCall } from './common/VideoCall';
+// import { VideoCall } from './common/VideoCall';
 import { Zoom } from "./dependants/Zoom";
 import { MediaPlayer } from "./dependants/MediaPlayer";
 export {
@@ -31,7 +31,7 @@ export {
   EnhancedEditor,
   EnhancedDrawer,
   LoginCheck,
-  VideoCall,
+  // VideoCall,
   Zoom,
   MediaPlayer
 };

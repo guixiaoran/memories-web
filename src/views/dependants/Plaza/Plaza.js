@@ -1,25 +1,34 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TextHelper, API } from "helpers";
 import { Canvas } from "react-three-fiber";
-import { Sky, PointerLockControls, softShadows, PositionalAudio, Stars } from "@react-three/drei";
+import { Sky, PointerLockControls, softShadows, PositionalAudio } from "@react-three/drei";
+// import { Stars } from "@react-three/drei";
 import { Physics } from "use-cannon";
-import Tent from './tent';
+// import Tent from './tent';
 import Fountain from './Fountain';
 import ModelX from './ModelX';
 import { LoadingScreen } from 'components/index';
 import moment from "moment";
 import { PlazaConfig } from "configurations";
 import { Player, Ground, Cube } from 'components/dependants/Piazza';
-import { MarketSound, ConcertSound } from 'assets/audio/index';
+import { ConcertSound } from 'assets/audio/index';
+// import { MarketSound } from 'assets/audio/index';
 import { Suspense } from 'react';
 import { Loader } from '@react-three/drei/index';
 import ModelY from './ModelY';
+import Model from './Model';
+import Model2 from './Model2';
+import Model3 from './Model3';
+import Model4 from './Model4';
+import Model5 from './Model5';
+// import Model6 from './Model6';
+
 
 
 const PlazaInner = () => {
   const [cubes, setCubes] = useState();
   const fountain = useRef();
-  const marketSound = useRef();
+  // const marketSound = useRef();
   const crowdSound = useRef();
 
   useEffect(() => {
@@ -93,67 +102,90 @@ const PlazaInner = () => {
 
   return (
     <Canvas shadowMap gl={{ alpha: false }} camera={{ fov: 35 }}>
-      <Suspense dispose={null}>
-        <Sky sunPosition={[100, -50, 100]} />
-        <Stars
-          radius={100} // Radius of the inner sphere (default=100)
-          depth={50} // Depth of area where stars should fit (default=50)
-          count={5000} // Amount of stars (default=5000)
-          factor={4} // Size factor (default=4)
-          saturation={0} // Saturation 0-1 (default=0)
-          fade={true} // Faded dots (default=false)
-        />
-        <ambientLight intensity={0.3} />
-        <pointLight castShadow intensity={0.8} position={[100, 100, 100]} />
-        <Physics gravity={[0, -30, 0]}>
-          <Ground />
-          <Player />
-          <Suspense>
-            <mesh scale={[0.15, 0.15, 0.15]} rotation={[-3.08, 1.30, 3.08]} position={[28, 0, -15]}>
-              <ModelX />
-            </mesh >
-          </Suspense>
-          <Suspense>
-            <mesh scale={[0.15, 0.15, 0.15]} position={[-28, 0, -15]}>
-              <ModelY />
-            </mesh >
-          </Suspense>
-          <Suspense>
-            <mesh scale={[0.0070, 0.0070, 0.0070]} position={[-14, 3.4, -28]}>
-              <Tent />
-              <PositionalAudio ref={marketSound} loop distance={1} url={MarketSound} />
-            </mesh>
-          </Suspense>
-          <Suspense fallback={null} dispose={null}>
-            <mesh>
-              {
-                cubes.map((cube, i) => {
-                  if (i / 2 === 0)
-                    return <Cube key={`${i}_cube`} imageUrl={cube.media} position={cube.position} />;
-                  else return null;
-                })
-              }
-            </mesh>
-            <mesh>
-              {
-                cubes.map((cube, i) => {
-                  if (i / 2 !== 0)
-                    return <Cube key={`${i}_cube`} imageUrl={cube.media} position={cube.position} />;
-                  else return null;
-                })
-              }
-            </mesh>
-          </Suspense>
-          <Suspense>
-            <mesh ref={fountain} scale={[0.01, 0.01, 0.01]} position={[2, 0, -5]}>
-              <Fountain />
-              <PositionalAudio ref={crowdSound} loop distance={1} url={ConcertSound} />
-            </mesh>
-          </Suspense>
-        </Physics>
-        <PointerLockControls />
-      </Suspense>
-    </Canvas>
+      <Sky sunPosition={[0, 5, 50]} />
+
+      <ambientLight intensity={0.7} />
+      <pointLight castShadow intensity={0.8} position={[100, 100, 100]} />
+      <Physics gravity={[0, -30, 0]}>
+        <Ground />
+        <Player />
+        <Suspense>
+          <mesh scale={[0.15, 0.15, 0.15]} rotation={[-3.08, 1.30, 3.08]} position={[28, 0, -15]}>
+            <ModelX />
+          </mesh >
+        </Suspense>
+        <Suspense>
+          <mesh scale={[0.15, 0.15, 0.15]} position={[-40, 0, -20]}>
+            <ModelY />
+          </mesh >
+        </Suspense>
+
+        <Suspense>
+          <mesh scale={[0.15, 0.15, 0.15]} rotation={[0, 0.50, 0]} position={[0, 0, -120]}>
+            <Model />
+          </mesh >
+        </Suspense>
+
+        <Suspense>
+          <mesh scale={[0.07, 0.07, 0.07]} rotation={[0, 0.75, 0]} position={[-33, 0, 20]}>
+            <Model2 />   
+          </mesh >
+        </Suspense>
+
+        <Suspense>
+          <mesh scale={[0.15, 0.15, 0.15]} rotation={[0, -0.75, 0]} position={[-60, 0, -100]}>
+            <Model3 />
+          </mesh >
+        </Suspense>
+
+        <Suspense>
+          <mesh scale={[0.15, 0.15, 0.15]} rotation={[0, 0.75, 0]} position={[20, 0, 80]}>
+            <Model4 />
+          </mesh >
+        </Suspense>
+
+
+        <Suspense>
+          <mesh scale={[0.15, 0.15, 0.15]} position={[0, 0, 50]}>
+            <Model5 />
+          </mesh >
+        </Suspense>
+
+        {/* <Suspense>
+          <mesh scale={[0.0070, 0.0070, 0.0070]} position={[-14, 3.4, -28]}>
+            <Tent />
+            <PositionalAudio ref={marketSound} loop distance={1} url={MarketSound} />
+          </mesh>
+        </Suspense> */}
+        <Suspense fallback={null} dispose={null}>
+          <mesh>
+            {
+              cubes.map((cube, i) => {
+                if (i / 2 === 0)
+                  return <Cube key={`${i}_cube`} imageUrl={cube.media} position={cube.position} />;
+                else return null;
+              })
+            }
+          </mesh>
+          <mesh>
+            {
+              cubes.map((cube, i) => {
+                if (i / 2 !== 0)
+                  return <Cube key={`${i}_cube`} imageUrl={cube.media} position={cube.position} />;
+                else return null;
+              })
+            }
+          </mesh>
+        </Suspense>
+        <Suspense>
+          <mesh ref={fountain} scale={[0.01, 0.01, 0.01]} position={[2, 0, -5]}>
+            <Fountain />
+            <PositionalAudio ref={crowdSound} loop distance={1} url={ConcertSound} />
+          </mesh>
+        </Suspense>
+      </Physics>
+      <PointerLockControls />
+    </Canvas >
   );
 };
 

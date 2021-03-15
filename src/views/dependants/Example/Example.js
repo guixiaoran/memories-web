@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Grid, Typography, Button, Card, CardContent, CardActions, makeStyles } from '@material-ui/core';
-import { EnhancedEditor, EnhancedDrawer, EnhancedModal, VideoCall } from 'components';
+import { EnhancedEditor, EnhancedDrawer, EnhancedModal } from 'components';
 import { useLocation } from 'helpers';
 
 const useStyles = makeStyles(theme => ({
@@ -94,7 +94,7 @@ export const Example = () => {
               <Typography gutterBottom variant="h5" component="h2">
                 Video Call Example
               </Typography>
-              <VideoCall />
+              {/* <VideoCall /> */}
 
             </CardContent>
           </Card>
