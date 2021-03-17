@@ -153,9 +153,9 @@ export const VideoStories = () => {
                 },
               }}
             >
-              <MenuItem value={'STORIES'}>Stories</MenuItem>
-              <MenuItem value={'ARIVALS'}>Arivals</MenuItem>
-              <MenuItem value={'STORYTELLER'}>Story Tellers</MenuItem>
+              <MenuItem value={'STORIES'}>Storie / Stories</MenuItem>
+              <MenuItem value={'ARIVALS'}>Arrivi /Arrivals</MenuItem>
+              <MenuItem value={'STORYTELLER'}>Cantastorie / Story Tellers</MenuItem>
             </Select>
           </FormControl>
           {videoStories.filter(story => story.type.toUpperCase() === select).map((video, index) => {

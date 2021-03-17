@@ -74,7 +74,7 @@ export const Home = () => {
               color: "white", display: 'flex',
               alignItems: 'center'
             }}>
-              <p>Start</p>
+              <p>Comincia Qui / Start Here</p>
               <PlayArrowOutlined />
             </Link>
           </Fab>
