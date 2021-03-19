@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link } from 'react-router-dom';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography, useMediaQuery } from '@material-ui/core';
 import { AnimatedObject } from "helpers/index";
 import { HeaderContext } from "contexts";
 import * as navigatorBG from "assets/img/navigatorBG.png";
@@ -132,7 +132,8 @@ const SideNav = () => {
       title: "Piazza",
       image: plazaBG,
       to: "plaza",
-      helpText: 'Sharing stories through reconnection.'
+      helpText: 'Sharing stories through reconnection.',
+      disableOnMobile: true
     },
     {
       title: "The stories of the project",
@@ -147,10 +148,15 @@ const SideNav = () => {
       helpText: 'The team set out to create a reservoir of knowledge and understanding about what it was like to be an Italian migrant in Australia post-World War Two. '
     }
   ]);
+  let isItDesktop = useMediaQuery('(min-width:786px) and (min-height:600px)');
   return (
     <div id="navigationSidebar" className={classes.sidenav}>
       {
-        buttons.map((button, i) => <ButtonWithLink
+        buttons.filter((item) => {
+          if (isItDesktop) return true;
+          else if (item.disableOnMobile !== true) return true;
+          else return false;
+        }).map((button, i) => <ButtonWithLink
           key={`button_${i}`}
           image={button.image} index={i}
           to={button.to}
