@@ -240,9 +240,16 @@ export const Archive = () => {
                     <div className="media-title">
                         <h1>TITLE</h1>
                     </div>
-                    <div className="sub-card">
-                        <div className="media-file" />
+                    <div id='content' style={{
+                        display: 'grid',
+                        'grid-template-columns': 'auto auto auto',
+                        padding: '10px'
+                    }}>
+                        <div className="sub-card">
+                            <div className="media-file" />
+                        </div>
                     </div>
+
                 </div>
                 <div className="media-description-container">
                     <div className="media-date">12/03/2019</div>
@@ -266,5 +273,5 @@ export const Archive = () => {
                 </div>
             </div>
         </div>
-    </AnimatedObject>;
+    </AnimatedObject >;
 }
