@@ -55,11 +55,6 @@ const openMedia = (data) => {
     video.appendChild(source);
     let mediaContent = document.querySelector(".media-file");
     mediaContent.appendChild(video);
-    // globalPlayerVariable = new Plyr(video, {
-    //     playsinline: true,
-    //     clickToPlay: false,
-    //     controls: ["play", "progress", "fullscreen", "settings"],
-    // });
   } else if (data.type === 'audio') {
     const audio = document.createElement('audio');
     audio.id = id;
@@ -85,7 +80,7 @@ const openMedia = (data) => {
     let mediaContent = document.querySelector(".media-file");
     mediaContent.appendChild(img);
   }
-  const box = document.getElementsByClassName('media-content')[0];
+  const box = document.getElementById('content');
   const contentDIV = document.createElement('div');
   contentDIV.id = "HTMLcontent";
   contentDIV.appendChild(createElementFromHTML(data.content));
