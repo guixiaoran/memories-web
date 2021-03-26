@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { makeStyles, Typography, useMediaQuery } from '@material-ui/core';
 import { AnimatedObject } from "helpers/index";
 import { HeaderContext } from "contexts";
@@ -101,6 +101,34 @@ const ButtonWithLink = (props) => {
   return button;
 };
 
+const ButtonWithoutSafari = withRouter((props) => {
+  const { setDisplayBackButton } = useContext(HeaderContext);
+  const classes = useStyles();
+  let button = (<>
+    <a href='/plaza' className={props.index === 0 ? classes.first : (props.index === props.size - 1 ? classes.last : '')
+    } onClick={() => {
+      var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification));
+      if (isSafari) {
+        alert("Your Browser is not Supported");
+      }
+      else {
+        setDisplayBackButton(true);
+        props.history.push(props.to);
+      }
+    }} style={{
+      backgroundImage: `url(${props.image})`,
+      backgroungSize: 'cover',
+      top: ((window.innerHeight / 2.9) - (window.innerHeight / 4)) + props.index * 90,
+    }} >
+      <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className='tooltiptext'>{props.helpText}</span>
+      <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className={classes.label}>
+        <Typography variant='h4'>{props.children}</Typography>
+      </span>
+    </a></>
+  );
+  return button;
+});
+
 const SideNav = () => {
   const classes = useStyles();
   const [buttons] = useState([
@@ -133,7 +161,8 @@ const SideNav = () => {
       image: plazaBG,
       to: "plaza",
       helpText: 'Sharing stories through reconnection.',
-      disableOnMobile: true
+      disableOnMobile: true,
+      disableSafari: true,
     },
     {
       title: "The stories of the project",
@@ -156,7 +185,14 @@ const SideNav = () => {
           if (isItDesktop) return true;
           else if (item.disableOnMobile !== true) return true;
           else return false;
-        }).map((button, i) => <ButtonWithLink
+        }).map((button, i) => button.disableSafari === true ? <ButtonWithoutSafari
+          key={`button_${i}`}
+          image={button.image} index={i}
+          to={button.to}
+          helpText={button.helpText}
+          size={buttons.length}>
+          {button.title}
+        </ButtonWithoutSafari> : <ButtonWithLink
           key={`button_${i}`}
           image={button.image} index={i}
           to={button.to}
