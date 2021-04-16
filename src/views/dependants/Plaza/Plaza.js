@@ -17,9 +17,9 @@ import { AllegroSound } from 'assets/audio/index';
 import { Suspense } from 'react';
 import { Loader } from '@react-three/drei/index';
 import ModelY from './ModelY';
-import Model from './Model';
+// import Model from './Model';
 import Model2 from './Model2';
-import Model3 from './Model3';
+// import Model3 from './Model3';
 import Model4 from './Model4';
 import Model5 from './Model5';
 // import Model6 from './Model6';
@@ -139,43 +139,43 @@ const PlazaInner = () => {
         <Ground />
         <Player />
         <Suspense>
-          <mesh scale={[0.15, 0.15, 0.15]} rotation={[-3.08, 1.30, 3.08]} position={[23, 0, -10]}>
+          <mesh scale={[0.15, 0.15, 0.15]} rotation={[-3.08, 1.30, 3.08]} position={[30, 0, 4]}>
             <ModelX />
           </mesh >
         </Suspense>
         <Suspense>
-          <mesh scale={[0.15, 0.15, 0.15]} position={[-35, 0, -15]}>
+          <mesh scale={[0.15, 0.15, 0.15]} position={[-33, 0, 9]}>
             <ModelY />
           </mesh >
         </Suspense>
 
-        <Suspense>
+        {/* <Suspense>
           <mesh scale={[0.15, 0.15, 0.15]} rotation={[0, 0.50, 0]} position={[0, 0, -115]}>
             <Model />
           </mesh >
-        </Suspense>
+        </Suspense> */}
 
         <Suspense>
-          <mesh scale={[0.07, 0.07, 0.07]} rotation={[0, 0.75, 0]} position={[-28, 0, 15]}>
+          <mesh scale={[0.07, 0.07, 0.07]} rotation={[0, -0.64, 0]} position={[-26, 0, -35]}>
             <Model2 />
           </mesh >
         </Suspense>
 
-        <Suspense>
+        {/* <Suspense>
           <mesh scale={[0.15, 0.15, 0.15]} rotation={[0, -0.75, 0]} position={[-55, 0, -95]}>
             <Model3 />
           </mesh >
-        </Suspense>
+        </Suspense> */}
 
         <Suspense>
-          <mesh scale={[0.15, 0.15, 0.15]} rotation={[0, 0.75, 0]} position={[15, 0, 75]}>
+          <mesh scale={[0.15, 0.15, 0.15]} rotation={[0, 2.72 , 0]} position={[57, 0, -20]}>
             <Model4 />
           </mesh >
         </Suspense>
 
 
         <Suspense>
-          <mesh scale={[0.15, 0.15, 0.15]} position={[0, 0, 45]}>
+          <mesh scale={[0.15, 0.15, 0.15]} position={[5, 0, 25]}>
             <Model5 />
           </mesh >
         </Suspense>
