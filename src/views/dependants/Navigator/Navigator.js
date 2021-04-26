@@ -103,6 +103,7 @@ const ButtonWithLink = (props) => {
 
 const ButtonWithoutSafari = withRouter((props) => {
   const { setDisplayBackButton } = useContext(HeaderContext);
+  const [isOpen, setIsOpen] = useSate(false);
   const classes = useStyles();
   let button = (<>
     <a href='/plaza' className={props.index === 0 ? classes.first : (props.index === props.size - 1 ? classes.last : '')
@@ -112,8 +113,7 @@ const ButtonWithoutSafari = withRouter((props) => {
         alert("Your Browser is not Supported");
       }
       else {
-        setDisplayBackButton(true);
-        props.history.push(props.to);
+        setIsOpen(true);
       }
     }} style={{
       backgroundImage: `url(${props.image})`,
@@ -124,7 +124,17 @@ const ButtonWithoutSafari = withRouter((props) => {
       <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className={classes.label}>
         <Typography variant='h4'>{props.children}</Typography>
       </span>
-    </a></>
+    </a>
+    <ConfirmationDailog isOpen={isOpen} title="Piazza" message="Use W,S,A,D to control and space to jump" onSubmit={(e) => {
+      setDisplayBackButton(true);
+      props.history.push(props.to);
+      setIsOpen(false);
+    }}
+      onCancel={() => {
+        setIsOpen(false);
+      }}
+    />
+  </>
   );
   return button;
 });

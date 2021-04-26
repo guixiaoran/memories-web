@@ -15,6 +15,7 @@ import { LoginCheck } from './helpers/LoginCheck.js';
 // import { VideoCall } from './common/VideoCall';
 import { Zoom } from "./dependants/Zoom";
 import { MediaPlayer } from "./dependants/MediaPlayer";
+import { ConfirmationDailog } from './dependants/ConfirmationDialog';
 export {
   EnhancedNotification as Notification,
   notify,
@@ -31,6 +32,7 @@ export {
   EnhancedEditor,
   EnhancedDrawer,
   LoginCheck,
+  ConfirmationDailog,
   // VideoCall,
   Zoom,
   MediaPlayer
