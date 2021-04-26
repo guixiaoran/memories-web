@@ -22,13 +22,17 @@ import Model2 from './Model2';
 // import Model3 from './Model3';
 import Model4 from './Model4';
 import Model5 from './Model5';
+import Vespa from './Vespa';
+import Statue from './Statue';
+import Icecream from './Icecream';
 // import Model6 from './Model6';
 
 
-
+const cubeSize=50;
 const PlazaInner = () => {
   const [cubes, setCubes] = useState();
   const fountain = useRef();
+  //const vespa = useRef();
   // const marketSound = useRef();
   const allegroSound = useRef();
 
@@ -127,13 +131,13 @@ const PlazaInner = () => {
 
   return (
     <Canvas shadowMap gl={{ alpha: false }} camera={{ fov: 35 }}>
-      <Sky sunPosition={[0, 5, 50]} >
+      <Sky sunPosition={[100, 5, 50]} >
 
       </Sky>
 
 
 
-      <ambientLight intensity={0.7} />
+      <ambientLight intensity={1} />
       <pointLight castShadow intensity={0.8} position={[100, 100, 100]} />
       <Physics gravity={[0, -30, 0]}>
         <Ground />
@@ -168,14 +172,14 @@ const PlazaInner = () => {
         </Suspense> */}
 
         <Suspense>
-          <mesh scale={[0.15, 0.15, 0.15]} rotation={[0, 2.72 , 0]} position={[57, 0, -20]}>
+          <mesh scale={[0.15, 0.15, 0.15]} rotation={[0, 2.72 , 0]} position={[57, 0.01, -15]}>
             <Model4 />
           </mesh >
         </Suspense>
 
 
         <Suspense>
-          <mesh scale={[0.15, 0.15, 0.15]} position={[5, 0, 25]}>
+          <mesh scale={[0.15, 0.15, 0.15]} position={[5, 0, 18]}>
             <Model5 />
           </mesh >
         </Suspense>
@@ -191,7 +195,7 @@ const PlazaInner = () => {
             {
               cubes.map((cube, i) => {
                 if (i / 2 === 0)
-                  return <Cube key={`${i}_cube`} imageUrl={cube.media} position={cube.position} scale={[20, 20, 20]} />;
+                  return <Cube key={`${i}_cube`} imageUrl={cube.media} position={cube.position} scale={[cubeSize, 100, cubeSize]} />;
                 else return null;
               })
             }
@@ -200,7 +204,7 @@ const PlazaInner = () => {
             {
               cubes.map((cube, i) => {
                 if (i / 2 !== 0)
-                  return <Cube key={`${i}_cube`} imageUrl={cube.media} position={cube.position} scale={[20, 20, 20]} />;
+                  return <Cube key={`${i}_cube`} imageUrl={cube.media} position={cube.position} scale={[100, cubeSize, cubeSize]} />;
                 else return null;
               })
             }
@@ -212,8 +216,28 @@ const PlazaInner = () => {
             <Fountain />
           </mesh>
         </Suspense>
+
         <Suspense>
-          <mesh ref={fountain} scale={[0.01, 0.01, 0.01]} position={[0, -5, -5]}>
+          <mesh scale={[0.10, 0.10, 0.10]} position={[2, 0, -15]}>
+            <Vespa />
+          </mesh >
+        </Suspense>
+
+        <Suspense>
+          <mesh scale={[0.008, 0.008, 0.008]} position={[10, 0, -10]} rotation={[-1.6,0,0]}>
+            <Statue />
+          </mesh >
+        </Suspense>
+        <Suspense>
+          <mesh scale={[0.008, 0.008, 0.008]} position={[-3, 0, -10]} rotation={[-1.6,0,0]}>
+            <Icecream />
+          </mesh >
+        </Suspense>
+     
+
+     
+        <Suspense>
+          <mesh ref={fountain} scale={[0.01, 0.01, 0.01]} position={[0, -5, -5]} >
             <PositionalAudio ref={allegroSound} loop distance={50} url={AllegroSound} />
 
             <Fountain />
