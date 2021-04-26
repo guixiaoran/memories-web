@@ -103,7 +103,7 @@ const ButtonWithLink = (props) => {
 
 const ButtonWithoutSafari = withRouter((props) => {
   const { setDisplayBackButton } = useContext(HeaderContext);
-  const [isOpen, setIsOpen] = useSate(false);
+  const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
   let button = (<>
     <a href='/plaza' className={props.index === 0 ? classes.first : (props.index === props.size - 1 ? classes.last : '')
