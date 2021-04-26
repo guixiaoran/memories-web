@@ -11,6 +11,7 @@ import * as videoStoriesBG from "assets/img/videoStories.png";
 import * as documentaryBG from "assets/img/documentary.png";
 import * as outTeamBG from "assets/img/ourTeam.jpg";
 import * as projectStoryBG from "assets/img/projectStory.jpg";
+import { ConfirmationDailog } from 'components';
 
 const useImage = false;
 
