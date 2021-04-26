@@ -7,7 +7,7 @@ import { HeaderContext } from 'contexts';
 
 
 export const Home = () => {
-  const displayStartButtonType = "INTERVAL"; //ALWAYS, INTERVAL, AFTER_VIDEO
+  const displayStartButtonType = "ALWAYS"; //ALWAYS, INTERVAL, AFTER_VIDEO
   const startButtonTIme = 3; // in seconds
   const { setDisplayBackButton } = useContext(HeaderContext);
   const [transationDone, setTransationDone] = useState(false);
