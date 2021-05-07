@@ -18,10 +18,12 @@ const galaryStyles = makeStyles(() => ({
         flexWrap: 'wrap',
         justifyContent: 'space-around',
         overflow: 'hidden',
+        height: '90vh',
+        width: '100vw'
     },
     gridList: {
         width: 500,
-        height: 450,
+        height: '65vh',
         // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
         transform: 'translateZ(0)',
         "@media screen and (max-width: 1024px)": {
@@ -130,7 +132,9 @@ const MobileGallery = (props) => {
 
     if (tileData === undefined) return <LoadingScreen />
     return <div className={classes.root}>
-        <GridList cellHeight={200} spacing={0} className={classes.gridList}>
+        <GridList cellHeight={200}
+            spacing={0}
+            className={classes.gridList}>
             {tileData.map((tile) => (
                 renderItem(tile)
             ))}
@@ -225,7 +229,7 @@ export const Archive = () => {
 
 
     return <AnimatedObject initial="right">
-        <div className="main-archive" style={desktop ? null : { paddingTop: "20vh" }}>
+        <div className="main-archive" style={desktop ? null : { paddingTop: "10vh" }}>
             {
                 desktop ? <div id="container" /> : <MobileGallery items={filteredArchives} />
             }
