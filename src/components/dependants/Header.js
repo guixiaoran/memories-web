@@ -13,7 +13,7 @@ export const HeaderTop = withRouter((props) => {
       fontSize: 18
     }} onClick={() => {
       props.history.goBack();
-    }} id="logo">{`<- Back`}</button> : <Link style={{
+    }} id="logo">{`Back`}</button> : <Link style={{
       cursor: "pointer"
     }} onClick={() => {
       setDisplayBackButton(false);
