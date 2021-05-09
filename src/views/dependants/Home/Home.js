@@ -56,7 +56,7 @@ export const Home = () => {
           Your browser does not support HTML5 video.
         </video>
         <div className="content hero-title" style={{
-          height: '100%',
+          height: '100vh',
           textAlign: "center",
           paddingTop: "20%",
           fontFamily: "IBM Plex Sans"
@@ -79,7 +79,6 @@ export const Home = () => {
             </Link>
           </Fab>
         </div>
-
       </div>
     </section>
   </>);
