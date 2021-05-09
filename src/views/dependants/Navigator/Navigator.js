@@ -42,7 +42,6 @@ const useStyles = makeStyles(() => ({
       cursor: 'pointer'
     },
     '& a:hover': {
-      left: window.innerWidth - 340,
       height: "200px",
       width: "330",
       opacity: 1,
@@ -93,7 +92,21 @@ const ButtonWithLink = (props) => {
       backgroungSize: 'cover',
       top: ((window.innerHeight / 2.9) - (window.innerHeight / 4)) + props.index * 90,
     }} >
-      <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className='tooltiptext'>{props.helpText}</span>
+      <span style={props.index === 0 ? {
+        borderRadius: '10px 0 0 0',
+        display: 'flex',
+        'justify-content': 'center',
+        'align-items': 'center'
+      } : props.index === props.size - 1 ? {
+        borderRadius: '0 0 0 10px',
+        display: 'flex',
+        'justify-content': 'center',
+        'align-items': 'center'
+      } : {
+        display: 'flex',
+        'justify-content': 'center',
+        'align-items': 'center'
+      }} className='tooltiptext'>{props.helpText}</span>
       <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className={classes.label}>
         <Typography variant='h4'>{props.children}</Typography>
       </span>
@@ -121,7 +134,21 @@ const ButtonWithoutSafari = withRouter((props) => {
       backgroungSize: 'cover',
       top: ((window.innerHeight / 2.9) - (window.innerHeight / 4)) + props.index * 90,
     }} >
-      <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className='tooltiptext'>{props.helpText}</span>
+      <span style={props.index === 0 ? {
+        borderRadius: '10px 0 0 0',
+        display: 'flex',
+        'justify-content': 'center',
+        'align-items': 'center'
+      } : props.index === props.size - 1 ? {
+        borderRadius: '0 0 0 10px',
+        display: 'flex',
+        'justify-content': 'center',
+        'align-items': 'center'
+      } : {
+        display: 'flex',
+        'justify-content': 'center',
+        'align-items': 'center'
+      }} className='tooltiptext'>{props.helpText}</span>
       <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className={classes.label}>
         <Typography variant='h4'>{props.children}</Typography>
       </span>

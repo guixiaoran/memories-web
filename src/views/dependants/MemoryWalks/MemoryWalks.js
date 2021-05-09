@@ -85,7 +85,14 @@ export const MemoryWalks = () => {
         '& .plyr': {
           width: "100%",
           margin: 0
-        }
+        },
+        backgroundColor: 'rgba(23, 24, 26, 0.6) !important',
+        height: '100%',
+        width: '90vw',
+        paddingLeft: '2vw',
+        paddingRight: '2vw',
+        borderRadius: '20px',
+        opacity: '0.95'
       }}>
         <div className="hero-img" style={{
           minWidth: (window.screen.width / 10) * 5
@@ -97,7 +104,10 @@ export const MemoryWalks = () => {
           </TrackVisibility>
           <div className="reveal-img"></div>
         </div >
-        <div className="hero-desc">
+        <div className="hero-desc" style={{
+          transform: 'translate(-40%)',
+          fontSize: '2.5rem !important'
+        }}>
           <div className="title">
             <h2>{video.title}</h2>
             <div className="title-swipe t-swipe1"></div>
@@ -123,7 +133,11 @@ export const MemoryWalks = () => {
       <ParallaxHelper blur={1}
         bgImage={parallaxBG}
         strength={900}>
-        <InternalComponent />
+        <div style={{
+          width: '100vw'
+        }}>
+          <InternalComponent />
+        </div>
       </ParallaxHelper>
     </AnimatedObject>
   </div >;

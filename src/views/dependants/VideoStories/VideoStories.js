@@ -6,7 +6,7 @@ import { Animator, AnimatedObject, API, ElementHelper } from "helpers";
 import Plyr from 'plyr';
 import { Parallax } from 'react-parallax';
 import * as plazaBG from "assets/img/plaza.png";
-import { MenuItem, FormControl, InputLabel, Select, makeStyles } from '@material-ui/core';
+import { MenuItem, FormControl, InputLabel, Select, makeStyles, Typography } from '@material-ui/core';
 
 const ParallaxHelper = (props) => {
   if (ElementHelper.isItDesktop()) return <Parallax {...props} >{props.children}</Parallax>;
@@ -160,21 +160,34 @@ export const VideoStories = () => {
           </FormControl>
           {videoStories.filter(story => story.type.toUpperCase() === select).map((video, index) => {
             return <section key={`videoStory${index}`} style={index === videoStories.length - 1 && !desktop ? {
-              paddingBottom: "20vh"
-            } : {}} className="slide">
+              paddingBottom: "20vh",
+            } : {
+              backgroundColor: 'rgba(23, 24, 26, 0.6) !important',
+              height: '100%',
+              width: '90vw',
+              paddingLeft: '2vw',
+              paddingRight: '2vw',
+              borderRadius: '20px',
+              opacity: '0.95'
+            }} className="slide">
               <div className="hero-img" style={{
-                minWidth: (window.screen.width / 10) * 5
+                minWidth: (window.screen.width / 10) * 5,
               }}>
-                <TrackVisibility partialVisibility >
+                <TrackVisibility partialVisibility   >
                   {
                     ({ isVisible }) => <VideoStory isVisible={isVisible} video={video} className="videoPlayer" />
                   }
                 </TrackVisibility>
                 <div className="reveal-img"></div>
               </div >
-              <div className="hero-desc">
+              <div className="hero-desc" style={{
+                transform: 'translate(-40%)',
+                fontSize: '2.5rem !important'
+              }}>
                 <div className="title">
-                  <h2>{video.title}</h2>
+                  <h2 style={{
+
+                  }}>{video.title}</h2>
                   <div className="title-swipe t-swipe1"></div>
                 </div>
                 <p>{video.description} </p>

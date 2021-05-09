@@ -27,8 +27,10 @@ const removeElementUsingId = (id) => {
 
 const createElementFromHTML = (htmlString) => {
   var div = document.createElement('div');
+  div.style.display = 'flex';
+  div.style.alignItems = 'center';
+  div.style.justifyContent = 'center';
   div.innerHTML = htmlString.trim();
-
   // Change this to div.childNodes to support multiple top-level nodes
   return div.firstChild;
 };

@@ -23,7 +23,6 @@ import Model2 from './Model2';
 import Model4 from './Model4';
 import Model5 from './Model5';
 import Vespa from './Vespa';
-import Statue from './Statue';
 import Icecream from './Icecream';
 // import Model6 from './Model6';
 
@@ -147,12 +146,6 @@ const PlazaInner = () => {
         <Suspense>
           <mesh scale={[0.10, 0.10, 0.10]} position={[2, 0, -15]}>
             <Vespa />
-          </mesh >
-        </Suspense>
-
-        <Suspense>
-          <mesh scale={[0.008, 0.008, 0.008]} position={[10, 0, -10]} rotation={[-1.6, 0, 0]}>
-            <Statue />
           </mesh >
         </Suspense>
         <Suspense>
