@@ -83,13 +83,16 @@ const PlazaInner = () => {
 
   return (
     <Canvas shadowMap gl={{ alpha: false }} camera={{ fov: 35 }}>
-      <Sky sunPosition={[100, 5, 50]} >
-      </Sky>
+      <Sky sunPosition={[100, 5, 50]} />
       <ambientLight intensity={1} />
       <pointLight castShadow intensity={0.8} position={[100, 100, 100]} />
       <Physics gravity={[0, -30, 0]}>
-        <Ground />
-        <Player />
+        <Suspense>
+          <Ground />
+        </Suspense>
+        <Suspense>
+          <Player />
+        </Suspense>
         <Suspense>
           <mesh scale={[0.15, 0.15, 0.15]} rotation={[-3.08, 1.30, 3.08]} position={[30, 0, 4]}>
             <ModelX />
