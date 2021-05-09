@@ -107,7 +107,7 @@ const ButtonWithoutSafari = withRouter((props) => {
   const [isOpen, setIsOpen] = useState(false);
   const classes = useStyles();
   let button = (<>
-    <a href='#!' className={props.index === 0 ? classes.first : (props.index === props.size - 1 ? classes.last : '')
+    <Link className={props.index === 0 ? classes.first : (props.index === props.size - 1 ? classes.last : '')
     } onClick={() => {
       var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && window['safari'].pushNotification));
       if (isSafari) {
@@ -125,15 +125,14 @@ const ButtonWithoutSafari = withRouter((props) => {
       <span style={props.index === 0 ? { borderRadius: '10px 0 0 0' } : props.index === props.size - 1 ? { borderRadius: '0 0 0 10px' } : {}} className={classes.label}>
         <Typography variant='h4'>{props.children}</Typography>
       </span>
-    </a>
+    </Link>
     <ConfirmationDailog isOpen={isOpen} title="Piazza" message="Use W,S,A,D to control and space to jump" onSubmit={(e) => {
       setDisplayBackButton(true);
       props.history.push(props.to);
       setIsOpen(false);
+    }} onCancel={() => {
+      setIsOpen(false);
     }}
-      onCancel={() => {
-        setIsOpen(false);
-      }}
     />
   </>
   );
