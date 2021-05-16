@@ -104,11 +104,10 @@ export const MemoryWalks = () => {
           </TrackVisibility>
           <div className="reveal-img"></div>
         </div >
-        <div className="hero-desc" style={desktop ? {
-          transform: 'translate(-40%)',
-          fontSize: '2.5rem !important'
-        } : {}}>
-          <div className="title">
+        <div className="hero-desc">
+          <div className="title" style={{
+            alignSelf: 'stretch'
+          }}>
             <h2>{video.title}</h2>
             <div className="title-swipe t-swipe1"></div>
           </div>

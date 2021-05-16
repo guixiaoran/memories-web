@@ -6,7 +6,7 @@ import { Animator, AnimatedObject, API, ElementHelper } from "helpers";
 import Plyr from 'plyr';
 import { Parallax } from 'react-parallax';
 import * as plazaBG from "assets/img/plaza.png";
-import { MenuItem, FormControl, InputLabel, Select, makeStyles, Typography } from '@material-ui/core';
+import { MenuItem, FormControl, InputLabel, Select, makeStyles } from '@material-ui/core';
 
 const ParallaxHelper = (props) => {
   if (ElementHelper.isItDesktop()) return <Parallax {...props} >{props.children}</Parallax>;
@@ -180,14 +180,11 @@ export const VideoStories = () => {
                 </TrackVisibility>
                 <div className="reveal-img"></div>
               </div >
-              <div className="hero-desc" style={desktop ? {
-                transform: 'translate(-40%)',
-                fontSize: '2.5rem !important'
-              } : {}}>
-                <div className="title">
-                  <h2 style={{
-
-                  }}>{video.title}</h2>
+              <div className="hero-desc" >
+                <div className="title" style={{
+                  alignSelf: 'stretch'
+                }}>
+                  <h2>{video.title}</h2>
                   <div className="title-swipe t-swipe1"></div>
                 </div>
                 <p>{video.description} </p>
