@@ -20,7 +20,7 @@ export const AppRoutes = (props) => {
       <Route exact path='/videostories' render={() => <Layout><VideoStories {...props} /></Layout>} />
       <Route exact path='/memorywalks' render={() => <Layout><MemoryWalks {...props} /></Layout>} />
       <Route exact path='/memorywalks/detailed' render={() => <Layout><MemoryWalkDetailed {...props} /></Layout>} />
-      <Route exact path='/archive' render={() => <Layout><Archive {...props} /></Layout>} />
+      <Route exact path='/archive' render={() => <Archive {...props} />} />
       <Route exact path='/plaza' render={() => <Layout><Plaza {...props} /></Layout>} />
       <Route exact path='/team' render={() => <Layout><Team {...props} /></Layout>} />
       <Route exact path='/story' render={() => <Layout><Stories {...props} /></Layout>} />

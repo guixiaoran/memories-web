@@ -8,7 +8,7 @@ const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 const documentryStyles = makeStyles({
   documentary: {
-    width: "100%",
+    width: "100vw",
     borderRadius: "0px",
     '& .plyr': {
       width: "100%",

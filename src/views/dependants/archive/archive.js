@@ -4,7 +4,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import { API, ArchiveAnimations, Animator, AnimatedObject } from 'helpers/index';
 import moment from "moment";
-import { LoadingScreen, Zoom, Image, MediaPlayer } from 'components/index';
+import { LoadingScreen, Zoom, Image, MediaPlayer, HeaderTop } from 'components/index';
 import {
     BroadcastLine2x,
     MemoryWalks2x,
@@ -229,6 +229,7 @@ export const Archive = () => {
 
 
     return <AnimatedObject initial="right">
+        <HeaderTop />
         <div className="main-archive" style={desktop ? null : { paddingTop: "10vh" }}>
             {
                 desktop ? <div id="container" /> : <MobileGallery items={filteredArchives} />
