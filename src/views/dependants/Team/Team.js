@@ -14,8 +14,8 @@ const TeamMemberCard = (props) => {
         overflow: 'auto'
       }}>
         <CardContent>
-          <Grid container spacing={1}>
-            <Grid item xs={2}>
+          <Grid container alignItems='center' spacing={1}>
+            <Grid item xs={4} sm={2}>
               <Avatar
                 style={{
                   width: theme.spacing(10),
@@ -25,7 +25,7 @@ const TeamMemberCard = (props) => {
                 alt={props.member.name}
               />
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={8} sm={10}>
               <h2>{props.member.name}</h2>
               <p className="title">{props.member.position}</p>
             </Grid>
