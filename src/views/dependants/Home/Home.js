@@ -61,7 +61,7 @@ export const Home = () => {
           paddingTop: "20%",
           fontFamily: "IBM Plex Sans"
         }}>
-          <h2>MEMORIES THAT MAKE US</h2>
+          <h2>{"Le memorie che ci creano".toUpperCase()}</h2>
           <h3>Storying Italian Migration after the end of the Second World War.</h3>
           <Fab color="primary" variant="extended" aria-label="start" style={{
             opacity: displayStartButton ? 1 : 0,
