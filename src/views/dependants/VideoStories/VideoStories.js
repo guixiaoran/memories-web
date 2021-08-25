@@ -159,38 +159,48 @@ export const VideoStories = () => {
             </Select>
           </FormControl>
           {videoStories.filter(story => story.type.toUpperCase() === select).map((video, index) => {
-            return <section key={`videoStory${index}`} style={index === videoStories.length - 1 && !desktop ? {
+            return (<div key={`videoStory${index}`} style={index === videoStories.length - 1 && !desktop ? {
               paddingBottom: "20vh",
             } : {
-              backgroundColor: 'rgba(23, 24, 26, 0.6) !important',
               height: '100%',
-              width: '90vw',
-              paddingLeft: '2vw',
-              paddingRight: '2vw',
-              borderRadius: '20px',
-              opacity: '0.95'
-            }} className="slide">
-              <div className="hero-img" style={{
-                minWidth: (window.screen.width / 10) * 5,
-              }}>
-                <TrackVisibility partialVisibility   >
-                  {
-                    ({ isVisible }) => <VideoStory isVisible={isVisible} video={video} className="videoPlayer" />
-                  }
-                </TrackVisibility>
-                <div className="reveal-img"></div>
-              </div >
-              <div className="hero-desc" >
-                <div className="title" style={{
-                  alignSelf: 'stretch'
+              width: '100%',
+              minHeight: '100vh'
+            }}>
+              <section style={index === videoStories.length - 1 && !desktop ? {
+                height: '80vh',
+                minHeight: '80vh',
+              } : {
+                backgroundColor: 'rgba(23, 24, 26, 0.6) !important',
+                width: '90vw',
+                height: '80vh',
+                minHeight: '80vh',
+                paddingLeft: '2vw',
+                paddingRight: '2vw',
+                borderRadius: '20px',
+                opacity: '0.95'
+              }} className="slide">
+                <div className="hero-img" style={{
+                  minWidth: (window.screen.width / 10) * 5,
                 }}>
-                  <h2>{video.title}</h2>
-                  <div className="title-swipe t-swipe1"></div>
+                  <TrackVisibility partialVisibility   >
+                    {
+                      ({ isVisible }) => <VideoStory isVisible={isVisible} video={video} className="videoPlayer" />
+                    }
+                  </TrackVisibility>
+                  <div className="reveal-img"></div>
+                </div >
+                <div className="hero-desc" >
+                  <div className="title" style={{
+                    alignSelf: 'stretch'
+                  }}>
+                    <h2>{video.title}</h2>
+                    <div className="title-swipe t-swipe1"></div>
+                  </div>
+                  <p>{video.description} </p>
+                  <div className="reveal-text"></div>
                 </div>
-                <p>{video.description} </p>
-                <div className="reveal-text"></div>
-              </div>
-            </section>;
+              </section>
+            </div>);
           })}
         </div>
       </ParallaxHelper>

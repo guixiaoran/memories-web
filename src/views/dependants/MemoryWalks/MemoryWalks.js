@@ -77,54 +77,64 @@ export const MemoryWalks = () => {
 
   const InternalComponent = () => {
     return <>{memoryWalks.map((video, index) => {
-      return <section key={`videoStory${index}`} className="slide" style={{
-        marginTop: "5vh !important",
-        "@media screen and (max-width: 1024px)": {
-          marginTop: "5vh !important"
-        },
-        '& .plyr': {
-          width: "100%",
-          margin: 0
-        },
-        backgroundColor: 'rgba(23, 24, 26, 0.6) !important',
+      return <div key={`videoStory${index}`} style={index === memoryWalks.length - 1 && !desktop ? {
+        paddingBottom: "20vh",
+      } : {
         height: '100%',
-        width: '90vw',
-        paddingLeft: '2vw',
-        paddingRight: '2vw',
-        borderRadius: '20px',
-        opacity: '0.95'
-      }}>
-        <div className="hero-img" style={{
-          minWidth: (window.screen.width / 10) * 5
+        width: '100%',
+        minHeight: '100vh'
+      }} >
+        <section className="slide" style={{
+          marginTop: "5vh !important",
+          "@media screen and (max-width: 1024px)": {
+            marginTop: "5vh !important"
+          },
+          '& .plyr': {
+            width: "100%",
+            margin: 0
+          },
+          backgroundColor: 'rgba(23, 24, 26, 0.6) !important',
+          height: '80vh',
+          minHeight: '80vh',
+          width: '90vw',
+          paddingLeft: '2vw',
+          paddingRight: '2vw',
+          borderRadius: '20px',
+          opacity: '0.95'
         }}>
-          <TrackVisibility partialVisibility >
-            {
-              ({ isVisible }) => <MemoryWalk url={video.url} isVisible={isVisible} _id={video._id} className="videoPlayer" />
-            }
-          </TrackVisibility>
-          <div className="reveal-img"></div>
-        </div >
-        <div className="hero-desc">
-          <div className="title" style={{
-            alignSelf: 'stretch'
+          <div className="hero-img" style={{
+            minWidth: (window.screen.width / 10) * 5
           }}>
-            <h2>{video.title}</h2>
-            <div className="title-swipe t-swipe1"></div>
+            <TrackVisibility partialVisibility >
+              {
+                ({ isVisible }) => <MemoryWalk url={video.url} isVisible={isVisible} _id={video._id} className="videoPlayer" />
+              }
+            </TrackVisibility>
+            <div className="reveal-img"></div>
+          </div >
+          <div className="hero-desc">
+            <div className="title" style={{
+              alignSelf: 'stretch'
+            }}>
+              <h2>{video.title}</h2>
+              <div className="title-swipe t-swipe1"></div>
+            </div>
+            <p>{video.description} </p>
+            <Link to={{
+              pathname: `memorywalks/detailed`,
+              params: {
+                memory: video
+              }
+            }} className="explore" style={{
+              alignSelf: desktop ? 'self-start' : 'auto',
+              zIndex: 19
+            }}>EXPLORE</Link>
+            <div className="reveal-text"></div>
           </div>
-          <p>{video.description} </p>
-          <Link to={{
-            pathname: `memorywalks/detailed`,
-            params: {
-              memory: video
-            }
-          }} className="explore" style={{
-            alignSelf: desktop ? 'self-start' : 'auto',
-            zIndex: 19
-          }}>EXPLORE</Link>
-          <div className="reveal-text"></div>
-        </div>
-      </section>;
-    })}</>;
+        </section>
+      </div>;
+    })
+    }</>;
   };
 
   return <div style={{ width: "100%" }}>
