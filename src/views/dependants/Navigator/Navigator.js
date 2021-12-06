@@ -243,8 +243,8 @@ const SideNav = () => {
 };
 
 export const Navigator = () => {
-  const [videoLink2] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_GWOtNfZx1jV4.mp4");
-  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_9nGaapDWtdoj.mp4");
+  const [videoLink2] = useState("https://memories-s3-bucket.s3.ap-southeast-2.amazonaws.com/video/video/original/Video_2ZYg9FmKlYQI.mp4");
+  const [videoLink] = useState("https://memories-s3-bucket.s3.ap-southeast-2.amazonaws.com/video/video/original/Video_Ze6wdztSEB1L.mp4");
   const { setDisplayBackButton, navigatorVideoPlayedOnce, setNavigatorVideoPlayedOnce } = useContext(HeaderContext);
   useEffect(() => {
     setDisplayBackButton(false);
