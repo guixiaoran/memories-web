@@ -4,6 +4,7 @@ import PlayArrowOutlined from '@material-ui/icons/PlayArrowOutlined';
 import { Link } from "react-router-dom";
 import { Animator } from "helpers";
 import { HeaderContext } from 'contexts';
+import * as title from "assets/img/title.png";
 
 
 export const Home = () => {
@@ -12,7 +13,7 @@ export const Home = () => {
   const { setDisplayBackButton } = useContext(HeaderContext);
   const [transationDone, setTransationDone] = useState(false);
   const [displayStartButton, setDisplayStartButton] = useState(false);
-  const [videoLink] = useState("https://memories-s3-bucket.s3.ap-southeast-2.amazonaws.com/video/video/original/Video_Ze6wdztSEB1L.mp4");
+  const [videoLink] = useState("https://memories-s3-bucket.s3.ap-southeast-2.amazonaws.com/video/video/original/Video_wl01Qrcyo94b.mp4");
   useEffect(() => {
     let body = document.querySelector("body");
     body.removeAttribute("class", "body-archive");
@@ -61,7 +62,10 @@ export const Home = () => {
           paddingTop: "20%",
           fontFamily: "IBM Plex Sans"
         }}>
-          <h2>{"Le memorie che ci creano".toUpperCase()}</h2>
+          <img src={title} style={{
+            width:"100%"
+          }} />
+          {/*<h2>{"Le memorie che ci creano".toUpperCase()}</h2>*/}
           <h3>Storying Italian Migration after the end of the Second World War.</h3>
           <Fab color="primary" variant="extended" aria-label="start" style={{
             opacity: displayStartButton ? 1 : 0,

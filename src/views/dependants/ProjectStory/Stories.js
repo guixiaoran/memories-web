@@ -33,7 +33,7 @@ const Story = (props) => {
 
 export const Stories = () => {
   const [stories, setStories] = useState();
-  const [videoLink] = useState("https://s3.au-syd.cloud-object-storage.appdomain.cloud/memories/video/video/original/Video_OfSmDJNpZSnZ.mp4");
+  const [videoLink] = useState("https://memories-s3-bucket.s3.ap-southeast-2.amazonaws.com/video/video/original/Video_wl01Qrcyo94b.mp4");
 
   let isItDesktop = useMediaQuery('(min-width:600px) and (min-height:600px)');
   useEffect(() => {
