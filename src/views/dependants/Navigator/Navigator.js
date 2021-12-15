@@ -153,7 +153,7 @@ const ButtonWithoutSafari = withRouter((props) => {
         <Typography variant='h4'>{props.children}</Typography>
       </span>
     </Link>
-    <ConfirmationDailog isOpen={isOpen} title="Piazza" message="Use W,S,A,D to control and space to jump" onSubmit={() => {
+    <ConfirmationDailog isOpen={isOpen} title="Piazza" message="Use W,S,A,D to control and space to jump, this is an experimental feature, if slow or not working properly, try to reload the page" onSubmit={() => {
       setDisplayBackButton(true);
       props.history.push(props.to);
       setIsOpen(false);

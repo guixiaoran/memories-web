@@ -51,7 +51,7 @@ export const Documentary = () => {
           width: "100%"
         }}>
           <source
-            src="https://memories-s3-bucket.s3.ap-southeast-2.amazonaws.com/video/video/original/Video_8dHpPM0FPUdZ.mp4"
+            src="https://memories-s3-bucket.s3.ap-southeast-2.amazonaws.com/video/video/original/Video_aT29DkOTtUb5.mp4"
             type="video/mp4" />
         </video>
       </section>
